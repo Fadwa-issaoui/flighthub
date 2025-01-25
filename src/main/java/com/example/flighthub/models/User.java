@@ -6,6 +6,15 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private Role role;
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Role getRole() {
+        return role;
+    }
 
     // Getters and Setters
     public int getUserId() {
