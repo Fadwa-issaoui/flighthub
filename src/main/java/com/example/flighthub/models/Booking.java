@@ -3,10 +3,11 @@ package com.example.flighthub.models;
 public class Booking {
 
     private int bookingId;
-    private int userId; // Reference to a user
-    private int flightId; // Reference to a flight
-    private String bookingDate;
     private String status; // e.g., Confirmed, Canceled, Pending
+    private String bookingDate;
+
+    private int passengerId; // Reference to a user
+    private int flightId; // Reference to a flight
 
     // Getters and Setters
     public int getBookingId() {
@@ -17,12 +18,12 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getPassengerId() {
+        return passengerId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setPassengerId(int userId) {
+        this.passengerId = userId;
     }
 
     public int getFlightId() {
@@ -53,7 +54,7 @@ public class Booking {
     public String toString() {
         return "Booking{" +
                 "bookingId=" + bookingId +
-                ", userId=" + userId +
+                ", userId=" + passengerId +
                 ", flightId=" + flightId +
                 ", bookingDate='" + bookingDate + '\'' +
                 ", status='" + status + '\'' +
