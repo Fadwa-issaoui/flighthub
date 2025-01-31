@@ -18,12 +18,11 @@ public class BookingController {
     @FXML
     private void createBooking() {
         try {
-            Booking booking = Booking.builder()
-                                    .status(txtStatus.getText())
-                                    .bookingDate(txtBookingDate.getText())
-                                    .passengerId(Integer.parseInt(txtPassengerId.getText()))
-                                    .flightId(Integer.parseInt(txtFlightId.getText()))
-                                    .build();
+            Booking booking = new Booking();
+            booking.setStatus(txtStatus.getText());
+            booking.setBookingDate(txtBookingDate.getText());
+            booking.setPassengerId(Integer.parseInt(txtPassengerId.getText()));
+            booking.setFlightId(Integer.parseInt(txtFlightId.getText()));
             bookingService.createBooking(booking);
             System.out.println("Booking Created!");
         } catch (Exception e) {
@@ -53,12 +52,13 @@ public class BookingController {
     @FXML
     private void updateBooking() {
         try {
-            Booking booking = Booking.builder()
-                    .status(txtStatus.getText())
-                    .bookingDate(txtBookingDate.getText())
-                    .passengerId(Integer.parseInt(txtPassengerId.getText()))
-                    .flightId(Integer.parseInt(txtFlightId.getText()))
-                    .build();
+            Booking booking = new Booking();
+            booking.setStatus(txtStatus.getText());
+            booking.setBookingDate(txtBookingDate.getText());
+            booking.setPassengerId(Integer.parseInt(txtPassengerId.getText()));
+            booking.setFlightId(Integer.parseInt(txtFlightId.getText()));
+            bookingService.createBooking(booking);
+            System.out.println("Booking Created!");
             bookingService.updateBooking(booking);
             System.out.println("Booking Updated!");
         } catch (Exception e) {

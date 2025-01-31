@@ -2,7 +2,6 @@ package com.example.flighthub.models;
 
 import lombok.Builder;
 
-@Builder
 public class Booking {
 
     private int bookingId;
