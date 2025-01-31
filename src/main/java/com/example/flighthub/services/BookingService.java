@@ -1,7 +1,7 @@
 package com.example.flighthub.services;
 
 import com.example.flighthub.models.Booking;
-import databaseConnection.DatabaseConnection;
+import com.example.flighthub.databaseConnection.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

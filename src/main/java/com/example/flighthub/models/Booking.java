@@ -1,5 +1,8 @@
 package com.example.flighthub.models;
 
+import lombok.Builder;
+
+@Builder
 public class Booking {
 
     private int bookingId;
@@ -9,6 +12,7 @@ public class Booking {
     private int passengerId; // Reference to a user
     private int flightId; // Reference to a flight
 
+    public Booking(){}
     // Getters and Setters
     public int getBookingId() {
         return bookingId;
