@@ -134,6 +134,7 @@ public class FlightService {
             flight.setDepartureTime("2023-10-25 10:00:00");
             flight.setArrivalTime("2023-10-25 12:00:00");
             flight.setPrice(199.99);
+            flightService.createFlight(flight);
     }
 
 }
