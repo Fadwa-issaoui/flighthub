@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.car.LocationController">
+    <Label text="Gestion des Locations de Voitures" />
+
+    <!-- Table to display locations -->
+    <TableView fx:id="locationTable">
+        <columns>
+            <TableColumn text="ID" fx:id="idCol"/>
+            <TableColumn text="Client" fx:id="customerCol"/>
+            <TableColumn text="Voiture" fx:id="carCol"/>
+            <TableColumn text="Durée" fx:id="daysCol"/>
+            <TableColumn text="Total" fx:id="totalCol"/>
+        </columns>
+    </TableView>
+
+    <!-- Buttons to manage the locations -->
+    <HBox spacing="10">
+        <Button text="Ajouter" fx:id="addButton" onAction="#handleAdd"/>
+        <Button text="Modifier" fx:id="updateButton" onAction="#handleUpdate"/>
+        <Button text="Supprimer" fx:id="deleteButton" onAction="#handleDelete"/>
+    </HBox>
+</HBox>

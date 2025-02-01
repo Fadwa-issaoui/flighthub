@@ -10,6 +10,8 @@ import javafx.application.Platform;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -79,7 +81,9 @@ public class SplashScreen implements Initializable {
                                 System.out.println("FXML file not found!");
                             }*/ // i added this block cause i had a prblm with the stackpane, but it is resolved, i just added fx:id= "stackpane" in fxml
                             //root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
-                            root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Flights.fxml"));
+                            //root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Flights.fxml"));
+                            root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/CarLocation.fxml"));
+                            //root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/CarLocation.fxml"));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -101,7 +105,7 @@ public class SplashScreen implements Initializable {
                     }
                 });
 
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 

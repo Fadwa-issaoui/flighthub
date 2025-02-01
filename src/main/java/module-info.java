@@ -11,6 +11,7 @@ module Main {
     opens com.example.flighthub.controllers.login to javafx.fxml;
     opens com.example.flighthub.controllers.flight to javafx.fxml;
     opens com.example.flighthub.models to javafx.base;
+    opens com.example.flighthub.controllers.car to javafx.fxml;
 
     exports Main;
     exports com.example.flighthub.controllers.flight to javafx.fxml;

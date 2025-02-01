@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.stage.StageStyle;
 
+
 import java.io.IOException;
 
 public class Main extends Application {
