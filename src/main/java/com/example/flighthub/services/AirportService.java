@@ -2,9 +2,7 @@ package com.example.flighthub.services;
 
 import com.example.flighthub.databaseConnection.DatabaseConnection;
 import com.example.flighthub.models.Airport;
-import com.example.flighthub.databaseConnection.DatabaseConnection;
 
-import java.sql.Connection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +13,13 @@ public class AirportService {
 
     // CREATE - Ajouter un nouvel aéroport
     public void createAirport(Airport airport) {
-        String query = "INSERT INTO airport (airportId, name, location, code) VALUES (?, ?, ?, ?)";
-        try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+        String query = "INSERT INTO airport (name, location, code) VALUES (?, ?, ?)";
+        try(
+                PreparedStatement pstmt = databaseConnection.getConnection().prepareStatement(query)) {
 
-            pstmt.setInt(1, airport.getAirportId());
-            pstmt.setString(2, airport.getName());
-            pstmt.setString(3, airport.getLocation());
-            pstmt.setString(4, airport.getCode());
+            pstmt.setString(1, airport.getName());
+            pstmt.setString(2, airport.getLocation());
+            pstmt.setString(3, airport.getCode());
 
             pstmt.executeUpdate();
             System.out.println("✅ Aéroport ajouté avec succès : " + airport);
@@ -34,11 +31,11 @@ public class AirportService {
 
     // READ - Obtenir un aéroport par ID
     public Airport getAirportById(int airportId) {
-        String query = "SELECT * FROM airports WHERE airportId = ?";
+        String query = "SELECT * FROM airport WHERE airportId = ?";
         Airport airport = null;
 
-        try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try(
+                PreparedStatement pstmt = databaseConnection.getConnection().prepareStatement(query)) {
 
             pstmt.setInt(1, airportId);
             ResultSet rs = pstmt.executeQuery();
@@ -60,10 +57,10 @@ public class AirportService {
 
     // UPDATE - Mettre à jour un aéroport
     public void updateAirport(Airport airport) {
-        String query = "UPDATE airports SET name = ?, location = ?, code = ? WHERE airportId = ?";
+        String query = "UPDATE airport SET name = ?, location = ?, code = ? WHERE airportId = ?";
 
-        try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try(
+                PreparedStatement pstmt = databaseConnection.getConnection().prepareStatement(query)) {
 
             pstmt.setString(1, airport.getName());
             pstmt.setString(2, airport.getLocation());
@@ -80,10 +77,10 @@ public class AirportService {
 
     // DELETE - Supprimer un aéroport par ID
     public void deleteAirport(int airportId) {
-        String query = "DELETE FROM airports WHERE airportId = ?";
+        String query = "DELETE FROM airport WHERE airportId = ?";
 
-        try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+        try(
+             PreparedStatement pstmt = databaseConnection.getConnection().prepareStatement(query)) {
 
             pstmt.setInt(1, airportId);
             pstmt.executeUpdate();
@@ -97,10 +94,10 @@ public class AirportService {
     // READ ALL - Obtenir tous les aéroports
     public List<Airport> getAllAirports() {
         List<Airport> airports = new ArrayList<>();
-        String query = "SELECT * FROM airports";
+        String query = "SELECT * FROM airport";
 
-        try (Connection conn = databaseConnection.getConnection();
-             Statement stmt = conn.createStatement();
+        try (
+             Statement stmt = databaseConnection.getConnection().createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
@@ -121,11 +118,36 @@ public class AirportService {
 
     public static void main(String[] args) {
         AirportService airportService = new AirportService();
-        Airport airport = new Airport();
-        airport.setAirportId(1);
-        airport.setCode("eya");
 
-        airportService.createAirport(airport);
+        // Creating a new airport
+        Airport newAirport = new Airport();
+        newAirport.setName("Aéroport de Tunis");
+        newAirport.setLocation("Tunis, Tunisie");
+        newAirport.setCode("TUN");
+        airportService.createAirport(newAirport);
+
+
+        // Retrieving an airport by ID
+        Airport retrievedAirport = airportService.getAirportById(1);
+        if (retrievedAirport != null) {
+            System.out.println("Aéroport récupéré: " + retrievedAirport);
+
+            // Updating airport
+            retrievedAirport.setLocation("Tunis, Tunisia");
+            airportService.updateAirport(retrievedAirport);
+        } else {
+            System.out.println("Aéroport non trouvé !");
+        }
+
+        // Deleting an airport
+        airportService.deleteAirport(1);
+
+        // Retrieve all airports
+        List<Airport> allAirports = airportService.getAllAirports();
+        System.out.println("Tous les aéroports: ");
+        for (Airport airport : allAirports) {
+            System.out.println(airport);
+        }
     }
 }
 
