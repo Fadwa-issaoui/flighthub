@@ -1,4 +1,4 @@
-package databaseConnection;
+package com.example.flighthub.databaseConnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

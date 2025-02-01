@@ -1,4 +1,4 @@
-package SceneBuilder.Login;
+package com.example.flighthub.controllers.login;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

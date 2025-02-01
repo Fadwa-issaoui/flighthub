@@ -1,4 +1,4 @@
-package SceneBuilder.Login;
+package com.example.flighthub.controllers.login;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.application.Platform;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;

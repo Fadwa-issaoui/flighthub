@@ -2,7 +2,7 @@ package com.example.flighthub.services;
 
 import com.example.flighthub.models.Role;
 import com.example.flighthub.models.User;
-import databaseConnection.DatabaseConnection;
+import com.example.flighthub.databaseConnection.DatabaseConnection;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
