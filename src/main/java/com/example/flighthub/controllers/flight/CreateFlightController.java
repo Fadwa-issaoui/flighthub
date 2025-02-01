@@ -43,6 +43,8 @@ public class CreateFlightController {
         initializeTimeComboBox(departureTimeComboBox);
         initializeTimeComboBox(arrivalTimeComboBox);
 
+        //Style for create Button moved to fxml
+        //  createButton.setStyle("-fx-background-color: #5067e9; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15; -fx-background-radius: 5;");
         createButton.setOnAction(event -> createFlight());
     }
 

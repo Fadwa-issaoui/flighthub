@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -22,8 +24,10 @@ public class FlightController {
 
     private final FlightService flightService = new FlightService();
 
+    /* @FXML
+     private HBox header;*/
     @FXML
-    private TableView<Flight> flightsTable;
+    private TableView<Flight> flightTable;
     @FXML
     private TableColumn<Flight, Integer> idColumn;
     @FXML
@@ -38,9 +42,15 @@ public class FlightController {
     private TableColumn<Flight, Void> detailsColumn;
     @FXML
     private Button addButton;
+  /*  @FXML
+    private Text flightHubText;*/
+
+
 
     @FXML
     public void initialize() {
+      /*  header.setStyle("-fx-background-color: #5067e9; -fx-padding: 15;");
+        flightHubText.setFill(javafx.scene.paint.Color.WHITE);*/
         // Initialize table columns
         idColumn.setCellValueFactory(new PropertyValueFactory<>("flightId"));
         flightNumberColumn.setCellValueFactory(new PropertyValueFactory<>("flightNumber"));
@@ -56,11 +66,11 @@ public class FlightController {
         addButton.setOnAction(event -> handleAddButton());
     }
 
-    // Method to load flights data into the table
+    // Method to load flight data into the table
     private void loadFlights() {
-        List<Flight> flights = flightService.getAllFlights();
-        ObservableList<Flight> observableFlights = FXCollections.observableArrayList(flights);
-        flightsTable.setItems(observableFlights);
+        List<Flight> flight = flightService.getAllFlights();
+        ObservableList<Flight> observableFlights = FXCollections.observableArrayList(flight);
+        flightTable.setItems(observableFlights);
     }
 
     // Method to handle the detail button action
