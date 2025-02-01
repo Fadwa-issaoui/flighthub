@@ -5,9 +5,13 @@ module Main {
     requires java.sql;
     requires static lombok;
 
+
     opens Main to javafx.fxml;
     // Allow JavaFX to access controllers
+    opens com.example.flighthub.controllers.login to javafx.fxml;
+    opens com.example.flighthub.controllers.flight to javafx.fxml;
+    opens com.example.flighthub.models to javafx.base;
 
     exports Main;
-    opens com.example.flighthub.controllers.login to javafx.fxml;
+    exports com.example.flighthub.controllers.flight to javafx.fxml;
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.flighthub.controllers.flight.FlightController">
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Text text="Flights" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Button fx:id="addButton" text="Add" />
+    </HBox>
+
+
+    <TableView fx:id="flightsTable">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="flightNumberColumn" text="Flight Number" prefWidth="150" />
+            <TableColumn fx:id="departureTimeColumn" text="Departure Time" prefWidth="100"/>
+            <TableColumn fx:id="arrivalTimeColumn" text="Arrival Time" prefWidth="100" />
+            <TableColumn fx:id="priceColumn" text="Price" prefWidth="100" />
+            <TableColumn fx:id="detailsColumn" text="Details" prefWidth="100" />
+        </columns>
+    </TableView>
+
+</VBox>

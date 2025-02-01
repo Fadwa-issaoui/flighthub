@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.flighthub.controllers.flight.CreateFlightController">
+
+    <Text text="Create New Flight" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Flight Number:" GridPane.rowIndex="0" />
+        <TextField fx:id="flightNumberField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Aircraft ID:" GridPane.rowIndex="1" />
+        <TextField fx:id="aircraftIdField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Departure Airport ID:" GridPane.rowIndex="2"/>
+        <TextField fx:id="departureAirportIdField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <Label text="Arrival Airport ID:" GridPane.rowIndex="3"/>
+        <TextField fx:id="arrivalAirportIdField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+        <Label text="Departure Date:" GridPane.rowIndex="4"/>
+        <DatePicker fx:id="departureDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+        <Label text="Departure Time:" GridPane.rowIndex="5"/>
+        <ComboBox fx:id="departureTimeComboBox"  GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+        <Label text="Arrival Date:" GridPane.rowIndex="6"/>
+        <DatePicker fx:id="arrivalDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+        <Label text="Arrival Time:" GridPane.rowIndex="7"/>
+        <ComboBox fx:id="arrivalTimeComboBox"  GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+        <Label text="Price:" GridPane.rowIndex="8"/>
+        <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+    </GridPane>
+
+    <Button fx:id="createButton" text="Create" />
+</VBox>
