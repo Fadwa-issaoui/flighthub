@@ -15,7 +15,7 @@ public class AirportService {
 
     // CREATE - Ajouter un nouvel aéroport
     public void createAirport(Airport airport) {
-        String query = "INSERT INTO airports (airportId, name, location, code) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO airport (airportId, name, location, code) VALUES (?, ?, ?, ?)";
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
@@ -117,6 +117,15 @@ public class AirportService {
         }
 
         return airports;
+    }
+
+    public static void main(String[] args) {
+        AirportService airportService = new AirportService();
+        Airport airport = new Airport();
+        airport.setAirportId(1);
+        airport.setCode("eya");
+
+        airportService.createAirport(airport);
     }
 }
 

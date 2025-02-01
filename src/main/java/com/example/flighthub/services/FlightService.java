@@ -1,6 +1,7 @@
 package com.example.flighthub.services;
 
 import com.example.flighthub.databaseConnection.DatabaseConnection;
+import com.example.flighthub.models.Airport;
 import com.example.flighthub.models.Flight;
 import java.sql.Connection;
 import java.sql.*;
@@ -18,7 +19,7 @@ public class FlightService {
 
     // Create a new flight record
     public boolean createFlight(Flight flight) {
-        String query = "INSERT INTO flights (flight_number, aircraft_id, departure_airport_id, arrival_airport_id, departure_time, arrival_time, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO flight (flight_number, aircraft_id, departure_airport_id, arrival_airport_id, departure_time, arrival_time, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, flight.getFlightNumber());
@@ -120,5 +121,19 @@ public class FlightService {
         }
         return flight;
     }
-}
+        public static void main(String[] args) {
+            FlightService flightService = new FlightService();
+            Flight flight = new Flight();
 
+            // Set flight details
+            flight.setFlightId(23);
+            flight.setFlightNumber("FL123");
+            flight.setAircraftId(1);
+            flight.setDepartureAirportId(101);
+            flight.setArrivalAirportId(202);
+            flight.setDepartureTime("2023-10-25 10:00:00");
+            flight.setArrivalTime("2023-10-25 12:00:00");
+            flight.setPrice(199.99);
+    }
+
+}
