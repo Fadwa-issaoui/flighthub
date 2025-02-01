@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.HelloController"
+            prefWidth="600" prefHeight="400">
+    <VBox alignment="CENTER" spacing="10" prefWidth="600" prefHeight="400">
+        <Label text="Ajouter un Vol" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+
+        <GridPane hgap="10" vgap="10" alignment="CENTER">
+            <Label text="Numéro de Vol:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="flightNumberField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Label text="ID de l'Avion:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="aircraftIdField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+            <Label text="ID de l'Aéroport de Départ:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField fx:id="departureAirportIdField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+            <Label text="ID de l'Aéroport d'Arrivée:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <TextField fx:id="arrivalAirportIdField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <Label text="Heure de Départ:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <TextField fx:id="departureTimeField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            <Label text="Heure d'Arrivée:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+            <TextField fx:id="arrivalTimeField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+            <Label text="Prix:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+            <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+        </GridPane>
+
+        <Button text="Ajouter le Vol" onAction="#handleAddFlight" style="-fx-font-size: 14px; -fx-padding: 5 15;"/>
+    </VBox>
+</AnchorPane>
