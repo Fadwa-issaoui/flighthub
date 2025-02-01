@@ -17,8 +17,9 @@ public class Main extends Application {
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();*/
+        Parent root = FXMLLoader.load(getClass().getResource("/com/example/flighthub/Air_add.fxml"));
 
-        Parent root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/SplashScreen.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("/resources/com.example.flighthub/Air_add.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
@@ -26,6 +27,8 @@ public class Main extends Application {
         stage.show();
 
     }
+
+
 
     public static void main(String[] args) {
         launch();

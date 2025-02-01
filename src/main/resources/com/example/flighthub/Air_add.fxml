@@ -10,26 +10,24 @@
             fx:controller="com.example.flighthub.controllers.aircraft.AircraftController"
             prefWidth="900" prefHeight="600">
 
-    <!-- ✅ Conteneur pour gérer l'image de fond et le contenu -->
     <StackPane prefWidth="900" prefHeight="600">
 
-        <!-- ✅ Image d'avion en arrière-plan -->
+        <!-- Image d'arrière-plan -->
         <ImageView fitWidth="900" fitHeight="600">
             <image>
-               <Image url="@/images/img.png"/>
+                <Image url="@/images/img.png"/>
             </image>
-
         </ImageView>
 
-        <!-- ✅ Conteneur principal semi-transparent -->
+        <!-- Conteneur principal -->
         <VBox alignment="CENTER" spacing="15" prefWidth="900" prefHeight="600"
               style="-fx-background-color: rgba(255, 255, 255, 0.8); -fx-padding: 20;">
 
-            <!-- ✅ Titre -->
+            <!-- Titre -->
             <Label text="Gestion des Avions"
                    style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
 
-            <!-- ✅ Formulaire de saisie -->
+            <!-- Formulaire -->
             <GridPane hgap="10" vgap="10" alignment="CENTER">
                 <Label text="ID de l'Avion:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                 <TextField fx:id="aircraftIdField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
@@ -44,7 +42,7 @@
                 <CheckBox fx:id="isAvailableCheckBox" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
             </GridPane>
 
-            <!-- ✅ Boutons centrés et stylisés -->
+            <!-- Boutons -->
             <HBox spacing="20" alignment="CENTER">
                 <Button text="Ajouter" onAction="#handleAddAircraft"
                         style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"/>
@@ -54,7 +52,7 @@
                         style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"/>
             </HBox>
 
-            <!-- ✅ TableView bien stylisée -->
+            <!-- TableView -->
             <TableView fx:id="aircraftTableView" prefHeight="300" prefWidth="800"
                        style="-fx-border-color: #2980b9; -fx-border-width: 2px; -fx-background-color: white;">
                 <columns>

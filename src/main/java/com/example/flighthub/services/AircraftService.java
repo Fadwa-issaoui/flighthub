@@ -116,7 +116,7 @@ public class AircraftService {
         Aircraft aircraft = new Aircraft();
 
         // Set aircraft details
-        aircraft.setAircraftId(1);
+        aircraft.setAircraftId(2);
         aircraft.setModel("Boeing 737");
         aircraft.setCapacity(150);
         aircraft.setAvailable(true);

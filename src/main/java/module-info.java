@@ -9,5 +9,7 @@ module Main {
     // Allow JavaFX to access controllers
 
     exports Main;
-    opens com.example.flighthub.controllers.login to javafx.fxml;
+    opens com.example.flighthub.controllers.aircraft to javafx.fxml;
+    opens com.example.flighthub to javafx.fxml;
+
 }
