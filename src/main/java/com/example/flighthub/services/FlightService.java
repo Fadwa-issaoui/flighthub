@@ -1,8 +1,8 @@
 package com.example.flighthub.services;
 
+import com.example.flighthub.databaseConnection.DatabaseConnection;
 import com.example.flighthub.models.Flight;
-import databaseConnection.DatabaseConnection;
-
+import java.sql.Connection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import java.util.List;
 public class FlightService {
 
     private Connection connection;
+    private static DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
     public FlightService() {
         connection = DatabaseConnection.getInstance().getConnection();

@@ -1,8 +1,10 @@
 package com.example.flighthub.services;
 
+import com.example.flighthub.databaseConnection.DatabaseConnection;
 import com.example.flighthub.models.Airport;
-import databaseConnection.DatabaseConnection;
+import com.example.flighthub.databaseConnection.DatabaseConnection;
 
+import java.sql.Connection;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

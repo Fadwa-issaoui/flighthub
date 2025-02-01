@@ -1,4 +1,4 @@
-package com.example.flighthub;
+package com.example.flighthub.controllers.booking;
 
 import com.example.flighthub.models.Flight;
 import com.example.flighthub.services.FlightService;

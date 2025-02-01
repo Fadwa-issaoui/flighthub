@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.HelloController"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.booking.HelloController"
             prefWidth="600" prefHeight="400">
     <VBox alignment="CENTER" spacing="10" prefWidth="600" prefHeight="400">
         <Label text="Ajouter un Vol" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
