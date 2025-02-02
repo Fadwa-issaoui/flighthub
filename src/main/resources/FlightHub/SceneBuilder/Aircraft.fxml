@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.flighthub.controllers.aircraft.AircraftController"
+            prefWidth="900" prefHeight="600">
+
+    <StackPane prefWidth="900" prefHeight="600">
+
+        <!-- Image d'arrière-plan -->
+        <ImageView fitWidth="900" fitHeight="600">
+            <image>
+                <Image url="@../../images/img.png"/>
+            </image>
+        </ImageView>
+
+        <!-- Conteneur principal -->
+        <VBox alignment="CENTER" spacing="15" prefWidth="900" prefHeight="600"
+              style="-fx-background-color: rgba(255, 255, 255, 0.8); -fx-padding: 20;">
+
+            <!-- Titre -->
+            <Label text="Gestion des Avions"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+            <!-- Formulaire -->
+            <GridPane hgap="10" vgap="10" alignment="CENTER">
+                <Label text="ID de l'Avion:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="aircraftIdField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Label text="Modèle:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="modelField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Capacité:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField fx:id="capacityField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="Disponible:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <CheckBox fx:id="isAvailableCheckBox" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            </GridPane>
+
+            <!-- Boutons -->
+            <HBox spacing="20" alignment="CENTER">
+                <Button text="Ajouter" onAction="#handleAddAircraft"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"/>
+                <Button text="Modifier" onAction="#handleUpdateAircraft"
+                        style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"/>
+                <Button text="Supprimer" onAction="#handleDeleteAircraft"
+                        style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;"/>
+            </HBox>
+
+            <!-- TableView -->
+            <TableView fx:id="aircraftTableView" prefHeight="300" prefWidth="800"
+                       style="-fx-border-color: #2980b9; -fx-border-width: 2px; -fx-background-color: white;">
+                <columns>
+                    <TableColumn fx:id="colAircraftId" text="ID" prefWidth="150"/>
+                    <TableColumn fx:id="colModel" text="Modèle" prefWidth="250"/>
+                    <TableColumn fx:id="colCapacity" text="Capacité" prefWidth="200"/>
+                    <TableColumn fx:id="colAvailable" text="Disponible" prefWidth="200"/>
+                </columns>
+            </TableView>
+
+        </VBox>
+    </StackPane>
+</AnchorPane>

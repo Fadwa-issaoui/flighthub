@@ -1,21 +1,23 @@
 package com.example.flighthub.models;
 
 public class User {
-
     private int userId;
     private String username;
-    private String email;
     private String password;
-    private Role role;
+    private Role role;  // Add role here
+    private String email;
 
-    public void setRole(Role role) {
-        this.role = role;
+    public User(){
+
     }
 
-    public Role getRole() {
-        return role;
+    public User(int userId, String name, String email, String password, Role role){
+        this.userId=userId;
+        this.username=name;
+        this.email=email;
+        this.password=password;
+        this.role=role;
     }
-
     // Getters and Setters
     public int getUserId() {
         return userId;
@@ -33,14 +35,6 @@ public class User {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -49,14 +43,19 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getMail(){
+        return email;
+    }
+
+    public void setMail(String email){
+        this.email=email;
     }
 }
-

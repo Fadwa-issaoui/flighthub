@@ -1,13 +1,22 @@
 package com.example.flighthub.models;
 
 public class Airport {
-
     private int airportId;
-   // private String name;
+    private String name;
     private String location;
-   // private String code;
+    private String code;
 
-    // Getters and Setters
+    public Airport() {
+        // Default constructor
+    }
+
+    public Airport(int airportId, String name, String location, String code) {
+        this.airportId = airportId;
+        this.name = name;
+        this.location = location;
+        this.code = code;
+    }
+
     public int getAirportId() {
         return airportId;
     }
@@ -16,13 +25,13 @@ public class Airport {
         this.airportId = airportId;
     }
 
-  //  public String getName() {
-    //    return name;
-  //  }
+    public String getName() {
+        return name;
+    }
 
-  //  public void setName(String name) {
-   //     this.name = name;
-   // }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getLocation() {
         return location;
@@ -32,22 +41,21 @@ public class Airport {
         this.location = location;
     }
 
-  //  public String getCode() {
-     //   return code;
-   // }
+    public String getCode() {
+        return code;
+    }
 
-   // public void setCode(String code) {
-     //   this.code = code;
-   // }
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     @Override
     public String toString() {
         return "Airport{" +
                 "airportId=" + airportId +
-            //    ", name='" + name + '\'' +
+                ", name='" + name + '\'' +
                 ", location='" + location + '\'' +
-           //     ", code='" + code + '\'' +
+                ", code='" + code + '\'' +
                 '}';
     }
 }
-

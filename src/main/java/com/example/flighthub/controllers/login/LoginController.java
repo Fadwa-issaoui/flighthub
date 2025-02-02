@@ -48,13 +48,13 @@ public class LoginController {
 
             if (loginSuccess) {
                 showAlert("Success", "Login successful!", Alert.AlertType.INFORMATION);
-                openDashboard();
+                openAirportDashboard();
             } else {
                 showAlert("Login Failed", "Invalid username or password.", Alert.AlertType.ERROR);
             }
         } catch (SQLException | NoSuchAlgorithmException e) {
             showAlert("Error", "Database error: " + e.getMessage(), Alert.AlertType.ERROR);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -67,16 +67,17 @@ public class LoginController {
         alert.showAndWait();
     }
 
-    private void openDashboard() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/Airport.fxml"));
+    private void openAirportDashboard() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/AdminDashboard.fxml"));
         Parent root = loader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Dashboard");
-        stage.show();
+        Stage dashboardStage = new Stage();
+        dashboardStage.setScene(new Scene(root));
+        dashboardStage.setTitle("Admin Dashboard");
+        dashboardStage.show();
 
-        // Close the login window
+        // Fermer la fenêtre de connexion
         Stage loginStage = (Stage) textfieldSignInUser.getScene().getWindow();
         loginStage.close();
     }
+
 }

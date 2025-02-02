@@ -12,9 +12,9 @@ public class DatabaseConnection {
     private Connection connection;
 
     // Database credentials
-    private final String url = "jdbc:mysql://sql7.freesqldatabase.com:3306/sql7759503";
-    private final String username = "sql7759503";
-    private final String password = "BxveREZkFJ";
+    private final String url = "jdbc:mysql://localhost:3306/flighthub";
+    private final String username = "root";
+    private final String password = "";
 
     // Private constructor to prevent instantiation
     private DatabaseConnection() {
