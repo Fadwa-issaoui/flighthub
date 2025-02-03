@@ -10,7 +10,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.dashboard.AdminDashboardController">
    <center>
-      <StackPane fx:id="stackPaneDashAdmin" prefHeight="684.0" prefWidth="1128.0" style="-fx-background-color: #ECF0F1;">
+      <StackPane fx:id="stackPaneDashAdmin" prefHeight="800.0" prefWidth="1050.0" style="-fx-background-color: #ECF0F1;">
          <!-- Dynamically Changing Content Here -->
       </StackPane>
    </center>
