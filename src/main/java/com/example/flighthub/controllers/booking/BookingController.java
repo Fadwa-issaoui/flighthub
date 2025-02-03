@@ -19,6 +19,10 @@ public class BookingController {
     private void createBooking() {
         try {
             Booking booking = new Booking();
+            booking.setStatus(txtStatus.getText());
+            booking.setBookingDate(txtBookingDate.getText());
+            booking.setPassengerId(Integer.parseInt(txtPassengerId.getText()));
+            booking.setFlightId(Integer.parseInt(txtFlightId.getText()));
             bookingService.createBooking(booking);
             System.out.println("Booking Created!");
         } catch (Exception e) {
@@ -49,6 +53,13 @@ public class BookingController {
     private void updateBooking() {
         try {
             Booking booking = bookingService.getBookingById(Integer.parseInt(txtBookingId.getText()));
+            booking.setStatus(txtStatus.getText());
+            booking.setBookingDate(txtBookingDate.getText());
+            booking.setPassengerId(Integer.parseInt(txtPassengerId.getText()));
+            booking.setFlightId(Integer.parseInt(txtFlightId.getText()));
+            bookingService.createBooking(booking);
+            System.out.println("Booking Created!");
+
             bookingService.updateBooking(booking);
             System.out.println("Booking Updated!");
         } catch (Exception e) {
