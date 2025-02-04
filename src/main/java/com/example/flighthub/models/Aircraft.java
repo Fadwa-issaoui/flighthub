@@ -7,6 +7,13 @@ public class Aircraft {
     private int capacity;
     private boolean isAvailable;
 
+    public Aircraft() {}
+    public Aircraft(int aircraftId, String model, int capacity, boolean isAvailable) {
+        this.aircraftId = aircraftId;
+        this.model = model;
+        this.capacity = capacity;
+        this.isAvailable = isAvailable;
+    }
     // Getters and Setters
     public int getAircraftId() {
         return aircraftId;

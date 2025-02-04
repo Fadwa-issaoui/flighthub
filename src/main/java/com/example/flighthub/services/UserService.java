@@ -100,8 +100,8 @@ public class UserService {
 
     public static void main(String[] args) {
         UserService userService = new UserService();
-        userService.removeUser(1);
-        User user = new User(1,"test","test@mail.com","testpwd", Role.ADMIN);
+       // userService.removeUser(1);
+        User user = new User(12,"tes12t","tes12t@mail.com","tes12tpwd", Role.AGENT);
         var n = userService.addUser(user);
 
         if (n > 0) {

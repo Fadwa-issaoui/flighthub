@@ -11,8 +11,9 @@ module Main {
 
     exports Main to javafx.graphics;
     opens com.example.flighthub.models to javafx.base;
+    opens com.example.flighthub.controllers.user to javafx.fxml;
     opens com.example.flighthub.controllers.aircraft to javafx.fxml;
     opens com.example.flighthub.controllers.dashboard to javafx.fxml;
     opens com.example.flighthub.controllers.login to javafx.fxml;
     opens com.example.flighthub.controllers.Airport to javafx.fxml; // Open Airport package for reflection
-}
+} 

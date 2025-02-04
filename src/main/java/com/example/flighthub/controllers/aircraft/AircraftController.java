@@ -1,12 +1,12 @@
 package com.example.flighthub.controllers.aircraft;
+
 import com.example.flighthub.models.Aircraft;
-
-
+import com.example.flighthub.services.AircraftService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AircraftController {
 
@@ -29,21 +29,106 @@ public class AircraftController {
     @FXML
     private TableColumn<Aircraft, Boolean> colAvailable;
 
-    // Method for adding an aircraft
+    private AircraftService aircraftService = new AircraftService();
+    private ObservableList<Aircraft> aircraftList = FXCollections.observableArrayList();
+
+    @FXML
+    public void initialize() {
+        // Set up table columns
+        colAircraftId.setCellValueFactory(new PropertyValueFactory<>("aircraftId"));
+        colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
+        colCapacity.setCellValueFactory(new PropertyValueFactory<>("capacity"));
+        colAvailable.setCellValueFactory(new PropertyValueFactory<>("available"));
+
+        // Set the data in TableView
+        aircraftTableView.setItems(aircraftList);
+
+        // Load data from database
+        loadAircraftData();
+    }
+
+    private void loadAircraftData() {
+        aircraftList.setAll(aircraftService.getAllAircrafts()); // Load from DB
+    }
+
     @FXML
     public void handleAddAircraft() {
-        System.out.println("Adding aircraft");
+        try {
+            int id = Integer.parseInt(aircraftIdField.getText());
+            String model = modelField.getText();
+            int capacity = Integer.parseInt(capacityField.getText());
+            boolean isAvailable = isAvailableCheckBox.isSelected();
+
+            Aircraft aircraft = new Aircraft(id, model, capacity, isAvailable);
+            if (aircraftService.createAircraft(aircraft)) {
+                aircraftList.add(aircraft);  // Add to TableView
+                aircraftTableView.refresh(); // Refresh UI
+                clearFields();
+            } else {
+                showAlert("Error", "Failed to add aircraft.");
+            }
+        } catch (NumberFormatException e) {
+            showAlert("Input Error", "Please enter valid numbers for ID and Capacity.");
+        }
     }
 
-    // Method for updating an aircraft
     @FXML
     public void handleUpdateAircraft() {
-        System.out.println("Updating aircraft");
+        Aircraft selected = aircraftTableView.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            if (modelField.getText().isEmpty() || capacityField.getText().isEmpty()) {
+                showAlert("Input Error", "Model and capacity fields cannot be empty.");
+                return;
+            }
+
+            try {
+                int capacity = Integer.parseInt(capacityField.getText());
+                boolean isAvailable = isAvailableCheckBox.isSelected();
+
+                // Ensure we use the existing ID and modify the correct row
+                Aircraft updatedAircraft = new Aircraft(selected.getAircraftId(), modelField.getText(), capacity, isAvailable);
+
+                if (aircraftService.updateAircraft(updatedAircraft)) {
+                    loadAircraftData();  // Reload the TableView from DB to reflect changes
+                    clearFields();
+                } else {
+                    showAlert("Error", "Failed to update aircraft.");
+                }
+            } catch (NumberFormatException e) {
+                showAlert("Input Error", "Please enter a valid number for capacity.");
+            }
+        } else {
+            showAlert("Selection Error", "Please select an aircraft to update.");
+        }
     }
 
-    // Method for deleting an aircraft
+
+
     @FXML
     public void handleDeleteAircraft() {
-        System.out.println("Deleting aircraft");
+        Aircraft selected = aircraftTableView.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            if (aircraftService.deleteAircraft(selected.getAircraftId())) {
+                aircraftList.remove(selected);  // Remove from TableView
+            } else {
+                showAlert("Error", "Failed to delete aircraft.");
+            }
+        } else {
+            showAlert("Selection Error", "Please select an aircraft to delete.");
+        }
+    }
+
+    private void clearFields() {
+        aircraftIdField.clear();
+        modelField.clear();
+        capacityField.clear();
+        isAvailableCheckBox.setSelected(false);
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
