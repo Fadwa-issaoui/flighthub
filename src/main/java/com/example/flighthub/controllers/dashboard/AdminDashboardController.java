@@ -12,6 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import com.example.flighthub.services.AdminDashboardService;
 
+import java.io.IOException;
+
 public class AdminDashboardController {
 
     @FXML
@@ -28,6 +30,9 @@ public class AdminDashboardController {
     private StackPane stackPaneDashAdmin;  // This is the container for the central content
 
     private AdminDashboardService dashboardService;
+
+    @FXML
+    private Button buttonLogout;
 
     public AdminDashboardController() {
         dashboardService = new AdminDashboardService(); // Initialize service
@@ -64,6 +69,28 @@ public class AdminDashboardController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void handleLogout() {
+        try {
+            // Get the current stage (dashboard window) and close it
+            Stage stage = (Stage) buttonLogout.getScene().getWindow();
+            stage.close();
+
+            // Load the login window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml")); // Adjust path if needed
+            Parent root = loader.load();
+
+            // Create new stage for the login window
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.setTitle("Login");
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Initialize the controller and load initial data
     @FXML

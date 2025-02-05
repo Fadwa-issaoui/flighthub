@@ -16,4 +16,4 @@ module Main {
     opens com.example.flighthub.controllers.dashboard to javafx.fxml;
     opens com.example.flighthub.controllers.login to javafx.fxml;
     opens com.example.flighthub.controllers.Airport to javafx.fxml; // Open Airport package for reflection
-} 
+}
