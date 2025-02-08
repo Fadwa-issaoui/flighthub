@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:controller="com.example.flighthub.controllers.user.UserController" fx:id="paneUserInterface" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="756.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="paneUserInterface" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="756.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.user.UserController">
    <children>
       <ImageView fx:id="imgUserInterface" fitHeight="910.0" fitWidth="1135.0" layoutX="-7.0" layoutY="-107.0" opacity="0.07" pickOnBounds="true" preserveRatio="true">
          <image>

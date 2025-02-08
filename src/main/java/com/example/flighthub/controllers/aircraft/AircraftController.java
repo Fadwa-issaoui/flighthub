@@ -55,9 +55,14 @@ public class AircraftController {
     public void handleAddAircraft() {
         try {
             int id = Integer.parseInt(aircraftIdField.getText());
-            String model = modelField.getText();
+            String model = modelField.getText().trim();
             int capacity = Integer.parseInt(capacityField.getText());
             boolean isAvailable = isAvailableCheckBox.isSelected();
+
+            if (model.isEmpty()) {
+                showAlert("Input Error", "Model field cannot be empty.");
+                return;
+            }
 
             Aircraft aircraft = new Aircraft(id, model, capacity, isAvailable);
             if (aircraftService.createAircraft(aircraft)) {
@@ -76,8 +81,10 @@ public class AircraftController {
     public void handleUpdateAircraft() {
         Aircraft selected = aircraftTableView.getSelectionModel().getSelectedItem();
         if (selected != null) {
-            if (modelField.getText().isEmpty() || capacityField.getText().isEmpty()) {
-                showAlert("Input Error", "Model and capacity fields cannot be empty.");
+            String model = modelField.getText().trim();
+
+            if (model.isEmpty()) {
+                showAlert("Input Error", "Model field cannot be empty.");
                 return;
             }
 
@@ -85,8 +92,7 @@ public class AircraftController {
                 int capacity = Integer.parseInt(capacityField.getText());
                 boolean isAvailable = isAvailableCheckBox.isSelected();
 
-                // Ensure we use the existing ID and modify the correct row
-                Aircraft updatedAircraft = new Aircraft(selected.getAircraftId(), modelField.getText(), capacity, isAvailable);
+                Aircraft updatedAircraft = new Aircraft(selected.getAircraftId(), model, capacity, isAvailable);
 
                 if (aircraftService.updateAircraft(updatedAircraft)) {
                     loadAircraftData();  // Reload the TableView from DB to reflect changes
@@ -101,6 +107,8 @@ public class AircraftController {
             showAlert("Selection Error", "Please select an aircraft to update.");
         }
     }
+
+
 
 
 

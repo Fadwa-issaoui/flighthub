@@ -3,12 +3,11 @@ package com.example.flighthub.services;
 import com.example.flighthub.models.Role;
 import com.example.flighthub.models.User;
 import com.example.flighthub.databaseConnection.DatabaseConnection;
+import javafx.scene.control.Alert;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserService {
 
@@ -25,26 +24,53 @@ public class UserService {
 
         return hexString.toString();
     }
-    // Add a new user
+
+    // Validate password length (must be at least 8 characters)
+    private boolean isValidPassword(String password) {
+        return password.length() >= 8;
+    }
+
+    // Add a new user with a specified ID (no auto-increment)
     public int addUser(User user) {
         try {
-            PreparedStatement ps = connection.getConnection().prepareStatement("INSERT INTO user (userId, username, email, password, role) VALUES (?, ?,?, ?, ?)");
-            ps.setInt(1, user.getUserId());
+            // Check password length
+            if (!isValidPassword(user.getPassword())) {
+                showAlert("Password Error", "Password must be at least 8 characters long.");
+                return 0;  // Invalid password length
+            }
+
+            // Check if the userId already exists
+            PreparedStatement checkStmt = connection.getConnection().prepareStatement(
+                    "SELECT COUNT(*) FROM user WHERE userId = ?");
+            checkStmt.setInt(1, user.getUserId());
+            ResultSet resultSet = checkStmt.executeQuery();
+            resultSet.next();
+            int count = resultSet.getInt(1);
+
+            if (count > 0) {
+                return 0;  // User ID already exists
+            }
+
+            // Insert user with the specified ID
+            PreparedStatement ps = connection.getConnection().prepareStatement(
+                    "INSERT INTO user (userId, username, email, password, role) VALUES (?, ?, ?, ?, ?)");
+            ps.setInt(1, user.getUserId()); // Use the user-entered ID
             ps.setString(2, user.getUsername());
             var pass = hashPassword(user.getPassword());
             ps.setString(3, user.getMail());
             ps.setString(4, pass);
             ps.setString(5, user.getRole().toString());
-            return ps.executeUpdate();
-        } catch (SQLException e) {
+
+            int affectedRows = ps.executeUpdate();
+
+            return affectedRows;
+        } catch (SQLException | NoSuchAlgorithmException e) {
             e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
         }
         return 0;
     }
 
-    // Remove an existing user by username
+    // Remove an existing user by userId
     public void removeUser(int userId) {
         try {
             PreparedStatement ps = connection.getConnection().prepareStatement("DELETE FROM user WHERE userId = ?");
@@ -54,22 +80,36 @@ public class UserService {
             e.printStackTrace();
         }
     }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     // Update an existing user's information
     public void updateUser(User user) {
         try {
-            PreparedStatement ps = connection.getConnection().prepareStatement("UPDATE user SET username=?, email=?, password = ?, role = ? WHERE userId = ?");
+            // Check password length before updating
+            if (!isValidPassword(user.getPassword())) {
+                showAlert("Password Error", "Password must be at least 8 characters long.");
+                return;  // Invalid password length, stop the update
+            }
+
+            PreparedStatement ps = connection.getConnection().prepareStatement(
+                    "UPDATE user SET username = ?, email = ?, password = ?, role = ? WHERE userId = ?");
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getMail());
             ps.setString(3, user.getPassword());
             ps.setString(4, user.getRole().toString());
+            ps.setInt(5, user.getUserId());  // Set userId for update
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Get user by username
+    // Get user by userId
     public User getUser(int userID) {
         User user = null;
         try {
@@ -78,9 +118,9 @@ public class UserService {
             ResultSet resultSet = ps.executeQuery();
 
             if (resultSet.next()) {
-                int id = resultSet.getInt("userID");
+                int id = resultSet.getInt("userId");
                 String email = resultSet.getString("email");
-                String userName = resultSet.getString("userName");
+                String userName = resultSet.getString("username");
                 String password = resultSet.getString("password");
                 String roleString = resultSet.getString("role");
                 Role role = Role.valueOf(roleString.toUpperCase());
@@ -100,14 +140,13 @@ public class UserService {
 
     public static void main(String[] args) {
         UserService userService = new UserService();
-       // userService.removeUser(1);
-        User user = new User(12,"tes12t","tes12t@mail.com","tes12tpwd", Role.AGENT);
-        var n = userService.addUser(user);
+        User user = new User(0, "test12", "test12@mail.com", "test", Role.AGENT); // Password too short (less than 8 characters)
+        int result = userService.addUser(user);
 
-        if (n > 0) {
-            System.out.println("User ID: " + user.getUserId());
+        if (result > 0) {
+            System.out.println("User added successfully. User ID: " + user.getUserId());
         } else {
-            System.out.println("User not found.");
+            System.out.println("Failed to add user. Password must be at least 8 characters long.");
         }
     }
 }

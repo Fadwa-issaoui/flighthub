@@ -2,6 +2,7 @@ package com.example.flighthub.services;
 
 import com.example.flighthub.databaseConnection.DatabaseConnection;
 import com.example.flighthub.models.Aircraft;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,23 +17,48 @@ public class AircraftService {
         this.connection = databaseConnection.getConnection();
     }
 
-    // Create a new aircraft record
+    // CREATE - Add a new aircraft
     public boolean createAircraft(Aircraft aircraft) {
-        String query = "INSERT INTO aircraft (aircraftId, model, capacity, isAvailable) VALUES (?, ?, ?, ?)";
+        if (aircraft.getModel() == null || aircraft.getModel().trim().isEmpty()) {
+            showAlert("Input Error", "Model field cannot be empty.");
+            return false; // Prevent insertion
+        }
 
+        String query = "INSERT INTO aircraft (aircraftId, model, capacity, isAvailable) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, aircraft.getAircraftId());
             ps.setString(2, aircraft.getModel());
             ps.setInt(3, aircraft.getCapacity());
             ps.setBoolean(4, aircraft.isAvailable());
 
-            int result = ps.executeUpdate();
-            return result > 0;
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.err.println("Error creating aircraft: " + e.getMessage());
             return false;
         }
     }
+
+    // UPDATE - Update an existing aircraft
+    public boolean updateAircraft(Aircraft aircraft) {
+        if (aircraft.getModel() == null || aircraft.getModel().trim().isEmpty()) {
+            showAlert("Input Error", "Model field cannot be empty.");
+            return false; // Prevent update
+        }
+
+        String query = "UPDATE aircraft SET model = ?, capacity = ?, isAvailable = ? WHERE aircraftId = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, aircraft.getModel());
+            ps.setInt(2, aircraft.getCapacity());
+            ps.setBoolean(3, aircraft.isAvailable());
+            ps.setInt(4, aircraft.getAircraftId());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error updating aircraft: " + e.getMessage());
+            return false;
+        }
+    }
+
 
     // Get all aircrafts
     public List<Aircraft> getAllAircrafts() {
@@ -78,23 +104,6 @@ public class AircraftService {
         return aircraft;
     }
 
-    // Update an aircraft
-    public boolean updateAircraft(Aircraft aircraft) {
-        String query = "UPDATE aircraft SET model = ?, capacity = ?, isAvailable = ? WHERE aircraftId = ?";
-
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, aircraft.getModel());
-            ps.setInt(2, aircraft.getCapacity());
-            ps.setBoolean(3, aircraft.isAvailable());
-            ps.setInt(4, aircraft.getAircraftId());
-
-            int result = ps.executeUpdate();
-            return result > 0;
-        } catch (SQLException e) {
-            System.err.println("Error updating aircraft: " + e.getMessage());
-            return false;
-        }
-    }
 
     // Delete an aircraft by ID
     public boolean deleteAircraft(int aircraftId) {
@@ -133,5 +142,13 @@ public class AircraftService {
         for (Aircraft a : aircrafts) {
             System.out.println(a);
         }
+
+
+    }
+    public void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

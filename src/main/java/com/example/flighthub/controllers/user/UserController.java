@@ -1,5 +1,6 @@
 package com.example.flighthub.controllers.user;
 
+import com.example.flighthub.Validator.InputValidator;
 import com.example.flighthub.models.Role;
 import com.example.flighthub.models.User;
 import com.example.flighthub.services.UserService;
@@ -69,19 +70,39 @@ public class UserController {
     public void handleAddUser() {
         try {
             int id = Integer.parseInt(textfieldId.getText());
+
+            // Check if the user ID already exists in the database
+            User existingUser = userService.getUser(id);
+            if (existingUser != null) {
+                showAlert("Input Error", "User ID already exists.");
+                return; // Stop execution if the user ID already exists
+            }
+
             String username = textfieldUsername.getText();
             String email = textfieldEmail.getText();
             String password = textfieldPassword.getText();
             Role role = Role.valueOf(textfieldRole.getText().toUpperCase());
 
+            if (username.isEmpty()){
+                showAlert("Input Error", "Username cannot be empty.");
+                return;
+            }
+            if (!InputValidator.isValidEmail(email)) {
+                showAlert("Input Error", "Invalid email format.");
+                return; // Stop execution if email is invalid
+            }
+
+            // Use the same ID as entered, don't change it
             User user = new User(id, username, email, password, role);
             if (userService.addUser(user) > 0) {
                 userList.add(user);
                 tableviewUser.refresh();
-                clearFields();
+                clearFields(); // Clear fields after adding the user
             } else {
                 showAlert("Error", "Failed to add user.");
             }
+        } catch (NumberFormatException e) {
+            showAlert("Input Error", "Please enter a valid user ID.");
         } catch (IllegalArgumentException e) {
             showAlert("Input Error", "Invalid role. Use ADMIN, AGENT, etc.");
         }
@@ -92,11 +113,24 @@ public class UserController {
         User selectedUser = tableviewUser.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
             try {
+                String email = textfieldEmail.getText();
+
+                if (textfieldUsername.getText().isEmpty()){
+                    showAlert("Input Error", "Username cannot be empty.");
+                    return;
+                }
+                if (!InputValidator.isValidEmail(email)) {
+                    showAlert("Input Error", "Invalid email format.");
+                    return; // Stop execution if email is invalid
+                }
+
+                // Update selected user fields with the new data
                 selectedUser.setUsername(textfieldUsername.getText());
-                selectedUser.setMail(textfieldEmail.getText());
+                selectedUser.setMail(email);
                 selectedUser.setPassword(textfieldPassword.getText());
                 selectedUser.setRole(Role.valueOf(textfieldRole.getText().toUpperCase()));
 
+                // Update the user in the database
                 userService.updateUser(selectedUser);
                 tableviewUser.refresh();
                 clearFields();
