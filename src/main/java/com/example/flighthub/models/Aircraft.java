@@ -22,6 +22,11 @@ public class Aircraft {
         this.capacity = capacity;
         this.isAvailable = isAvailable;
     }
+
+    public int getAircraftId() {
+        return aircraftId;
+    }
+
     // Getters and Setters
     public int getFlightId() {
         return aircraftId;
