@@ -10,6 +10,8 @@ import javafx.application.Platform;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,9 +34,6 @@ public class SplashScreen implements Initializable {
         @Override
         public void run() {
             try {
-                Thread.sleep(5000); // Splash screen stays for 5 seconds
-                Platform.runLater(() -> {
-                    try {
                         Parent root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
                         Stage loginStage = new Stage();
                         loginStage.setScene(new Scene(root));
@@ -47,7 +46,8 @@ public class SplashScreen implements Initializable {
                         throw new RuntimeException(e);
                     }
                 });
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
+
                 throw new RuntimeException(e);
             }
         }
