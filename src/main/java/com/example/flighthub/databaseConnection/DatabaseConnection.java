@@ -8,22 +8,15 @@ public class DatabaseConnection {
     // Singleton instance
     private static DatabaseConnection instance;
 
-    // Database connection object
-    private Connection connection;
-
     // Database credentials
     private final String url = "jdbc:mysql://localhost:3306/flighthub";
     private final String username = "root";
+
     private final String password = "";
 
     // Private constructor to prevent instantiation
     private DatabaseConnection() {
-        try {
-            // Initialize the connection
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error connecting to the database", e);
-        }
+        // Constructor is now empty, connection will be established when requested
     }
 
     // Public method to get the singleton instance
@@ -38,8 +31,8 @@ public class DatabaseConnection {
         return instance;
     }
 
-    // Public method to get the connection
-    public Connection getConnection() {
-        return connection;
+    // Public method to get a new connection (must be closed manually)
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(url, username, password);
     }
 }

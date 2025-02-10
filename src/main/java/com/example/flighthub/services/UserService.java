@@ -140,6 +140,7 @@ public class UserService {
 
     public static void main(String[] args) {
         UserService userService = new UserService();
+
         User user = new User(0, "test12", "test12@mail.com", "test", Role.AGENT); // Password too short (less than 8 characters)
         int result = userService.addUser(user);
 
@@ -148,5 +149,6 @@ public class UserService {
         } else {
             System.out.println("Failed to add user. Password must be at least 8 characters long.");
         }
+
     }
 }
