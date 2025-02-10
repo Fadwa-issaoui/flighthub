@@ -78,8 +78,9 @@ public class SplashScreen implements Initializable {
                             if (url == null) {
                                 System.out.println("FXML file not found!");
                             }*/ // i added this block cause i had a prblm with the stackpane, but it is resolved, i just added fx:id= "stackpane" in fxml
-                            //root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
-                            root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Flights.fxml"));
+
+                            root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
+                           // root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Flights.fxml"));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

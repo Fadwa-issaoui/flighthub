@@ -1,6 +1,7 @@
 package com.example.flighthub.services;
 
 import com.example.flighthub.databaseConnection.DatabaseConnection;
+import com.example.flighthub.models.Aircraft;
 import com.example.flighthub.models.Flight;
 
 import java.sql.Connection;
@@ -32,6 +33,7 @@ public class FlightService {
 
             pstmt.executeUpdate();
             System.out.println("Flight created successfully.");
+
 
         } catch (SQLException e) {
             e.printStackTrace();
