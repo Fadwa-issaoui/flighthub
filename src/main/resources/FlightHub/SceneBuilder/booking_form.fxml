@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="645.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <left>
+        <AnchorPane prefHeight="647.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+
+                <!-- Logo and Flight Details Container -->
+                <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="80.0" prefWidth="580.0">
+
+                    <!-- Logo -->
+                    <ImageView fitHeight="58.0" fitWidth="143.0" layoutX="0.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                            <Image url="@../../images/logoTranspAzrek.png" />
+                        </image>
+                    </ImageView>
+
+                    <!-- Flight Details Section (Stylish Format) -->
+                    <AnchorPane layoutX="150.0" layoutY="5.0" prefHeight="70.0" prefWidth="420.0">
+
+                        <Label layoutX="14.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" text="Selected Flight" />
+
+                        <!-- From and To Section -->
+                        <AnchorPane layoutX="14.0" layoutY="32.0" prefHeight="30.0" prefWidth="420.0">
+
+                            <Label layoutX="0.0" layoutY="0.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="From:" />
+                            <Label layoutX="50.0" layoutY="0.0" style="-fx-font-size: 14px; -fx-text-fill: #5067E9;" text="[Origin]" />
+
+                            <!-- Flight Path Arrow -->
+                            <Line endX="190.0" endY="12.0" startX="130.0" startY="12.0" stroke="black" strokeWidth="2.0" />
+                            <Label layoutX="155.0" layoutY="-2.0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #5067E9;" text="✈" />
+
+                            <Label layoutX="200.0" layoutY="0.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="To:" />
+                            <Label layoutX="230.0" layoutY="0.0" style="-fx-font-size: 14px; -fx-text-fill: #5067E9;" text="[Destination]" />
+
+                            <!-- Date Section -->
+                            <Label layoutX="320.0" layoutY="0.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Date:" />
+                            <Label layoutX="355.0" layoutY="0.0" style="-fx-font-size: 14px; -fx-text-fill: #5067E9;" text="[Date]" />
+
+                        </AnchorPane>
+                    </AnchorPane>
+                </AnchorPane>
+
+                <!-- Reservation Title -->
+                <Label layoutX="25.0" layoutY="100.0" prefHeight="35.0" prefWidth="222.0" text="Reservation Details">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+
+                <!-- Passenger Name -->
+                <Label layoutX="25.0" layoutY="150.0" prefHeight="27.0" prefWidth="149.0" text="Passenger Name">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField layoutX="25.0" layoutY="180.0" prefHeight="26.0" prefWidth="260.0" promptText="First Name" />
+                <TextField layoutX="295.0" layoutY="180.0" prefHeight="26.0" prefWidth="268.0" promptText="Last Name" />
+
+                <!-- Date of Birth -->
+                <Label layoutX="25.0" layoutY="220.0" prefHeight="27.0" prefWidth="121.0" text="Date of Birth">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <DatePicker layoutX="25.0" layoutY="250.0" prefWidth="260.0" promptText="Select Date of Birth" />
+
+                <!-- Nationality -->
+                <Label layoutX="25.0" layoutY="290.0" prefHeight="27.0" prefWidth="121.0" text="Nationality">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <ChoiceBox layoutX="25.0" layoutY="320.0" prefHeight="26.0" prefWidth="260.0" />
+
+                <!-- Passport Number -->
+                <Label layoutX="25.0" layoutY="370.0" prefHeight="27.0" prefWidth="153.0" text="Passport Number">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <TextField layoutX="25.0" layoutY="400.0" prefHeight="26.0" prefWidth="260.0" promptText="Enter Passport Number" />
+
+                <!-- Buttons -->
+                <Button layoutX="480.0" layoutY="550.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="83.0" style="-fx-background-color: #5067E9; -fx-text-fill: white;" text="Submit" />
+                <Button layoutX="25.0" layoutY="550.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="83.0" text="Back" />
+            </children>
+        </AnchorPane>
+    </left>
+</BorderPane>

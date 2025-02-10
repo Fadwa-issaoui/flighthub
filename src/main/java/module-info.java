@@ -8,10 +8,14 @@ module Main {
     exports com.example.flighthub.controllers.login to javafx.fxml;
 
     exports com.example.flighthub.controllers.Airport to javafx.fxml; // Export Airport package to javafx.fxml
+ opens Main to javafx.fxml;
+    exports Main;
 
     exports Main to javafx.graphics;
+     exports com.example.flighthub.controllers.booking;
     opens com.example.flighthub.models to javafx.base;
     opens com.example.flighthub.models to javafx.base;
+   opens com.example.flighthub.controllers.booking to javafx.fxml, javafx.graphics;
     opens com.example.flighthub.controllers.car to javafx.fxml;
     opens com.example.flighthub.controllers.user to javafx.fxml;
     opens com.example.flighthub.controllers.flight to javafx.fxml;
