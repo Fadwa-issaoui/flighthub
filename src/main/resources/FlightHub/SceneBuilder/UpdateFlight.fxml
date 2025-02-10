@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox spacing="15" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.flighthub.controllers.flight.UpdateFlightController"
+      style="-fx-padding: 20;">
+
+    <Text text="Update Flight" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-fill: #5067e9;" />
+
+    <GridPane hgap="10" vgap="10" alignment="CENTER">
+        <Label text="Flight Number:" GridPane.rowIndex="0" style="-fx-font-size: 14px;"/>
+        <TextField fx:id="flightNumberField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Aircraft ID:" GridPane.rowIndex="1" style="-fx-font-size: 14px;"/>
+        <TextField fx:id="aircraftIdField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Departure Airport ID:" GridPane.rowIndex="2" style="-fx-font-size: 14px;"/>
+        <TextField fx:id="departureAirportIdField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <Label text="Arrival Airport ID:" GridPane.rowIndex="3" style="-fx-font-size: 14px;"/>
+        <TextField fx:id="arrivalAirportIdField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+        <Label text="Departure Date:" GridPane.rowIndex="4" style="-fx-font-size: 14px;"/>
+        <DatePicker fx:id="departureDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+        <Label text="Departure Time:" GridPane.rowIndex="5" style="-fx-font-size: 14px;"/>
+        <ComboBox fx:id="departureTimeComboBox"  GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+        <Label text="Arrival Date:" GridPane.rowIndex="6" style="-fx-font-size: 14px;"/>
+        <DatePicker fx:id="arrivalDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+        <Label text="Arrival Time:" GridPane.rowIndex="7" style="-fx-font-size: 14px;"/>
+        <ComboBox fx:id="arrivalTimeComboBox"  GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+        <Label text="Price:" GridPane.rowIndex="8" style="-fx-font-size: 14px;"/>
+        <TextField fx:id="priceField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+    </GridPane>
+
+    <Button fx:id="updateButton" text="Update" style="-fx-background-color: #5067e9; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15; -fx-background-radius: 5;"/>
+</VBox>
