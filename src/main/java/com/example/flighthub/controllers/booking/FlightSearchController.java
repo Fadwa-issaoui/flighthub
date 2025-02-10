@@ -4,8 +4,13 @@ import com.example.flighthub.databaseConnection.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,15 +39,30 @@ public class FlightSearchController {
     private Label noFlightsLabel;
     @FXML
     private Button searchAgainButton;
-
+    @FXML
+    private Button homeButton;
 
 
     private String departure;
     private String destination;
     private LocalDate date;
+    @FXML
+    private void goToHome() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/agent_dashboard.fxml"));
+            Parent root = loader.load();
 
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Navigation Error", "Could not load the dashboard.");
+        }
+    }
     public void initialize() {
         reloadLocations(); // Load locations when the page loads
+        homeButton.setOnAction(event -> goToHome());
     }
 
     public void setFlightData(String departure, String destination, LocalDate date) {

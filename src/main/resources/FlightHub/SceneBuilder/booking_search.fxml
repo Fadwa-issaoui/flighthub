@@ -24,21 +24,6 @@
                         <Font size="11.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="153.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Home" wrappingWidth="30.48516845703125">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                  </Text>
-                  <Text fill="WHITE" layoutX="192.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Flights" wrappingWidth="36.88519287109375">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                  </Text>
-                  <Text fill="WHITE" layoutX="229.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact" wrappingWidth="43.28521728515625">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                  </Text>
                   <ImageView fitHeight="37.0" fitWidth="139.0" layoutX="21.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/logoTransAbyedh.png" />
@@ -54,6 +39,9 @@
                         <Image url="@../../images/iconAvatar.png" />
                      </image>
                   </ImageView>
+                  <Button fx:id="homeButton" layoutX="144.0" layoutY="10.0" mnemonicParsing="false" text="Home" />
+                  <Button layoutX="200.0" layoutY="10.0" mnemonicParsing="false" text="Flights" />
+                  <Button layoutX="258.0" layoutY="10.0" mnemonicParsing="false" text="Contact" />
                </children>
             </Pane>
             <Pane layoutX="19.0" layoutY="88.0" prefHeight="70.0" prefWidth="562.0" style="-fx-background-color: #FFFFFF;">
@@ -61,7 +49,7 @@
                   <ChoiceBox fx:id="departureChoiceBox" layoutX="23.0" layoutY="23.0" prefHeight="25.0" prefWidth="125.0" />
                   <ChoiceBox fx:id="destinationChoiceBox" layoutX="157.0" layoutY="23.0" prefHeight="25.0" prefWidth="124.0" />
                   <DatePicker fx:id="datePicker" layoutX="295.0" layoutY="23.0" prefHeight="25.0" prefWidth="156.0" />
-                  <Button fx:id="searchAgainButton" layoutX="460.0" layoutY="20.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="82.0" text="Search" onAction="#handleSearchAgainButtonAction" />
+                  <Button fx:id="searchAgainButton" layoutX="460.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleSearchAgainButtonAction" prefHeight="28.0" prefWidth="82.0" text="Search" />
                </children>
             </Pane>
             <Text layoutX="50.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose flights: " wrappingWidth="129.68511962890625">
