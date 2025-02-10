@@ -1,13 +1,22 @@
 package com.example.flighthub.models;
 
 public class Airport {
-
     private int airportId;
     private String name;
     private String location;
     private String code;
 
-    // Getters and Setters
+    public Airport() {
+        // Default constructor
+    }
+
+    public Airport(int airportId, String name, String location, String code) {
+        this.airportId = airportId;
+        this.name = name;
+        this.location = location;
+        this.code = code;
+    }
+
     public int getAirportId() {
         return airportId;
     }
@@ -50,4 +59,3 @@ public class Airport {
                 '}';
     }
 }
-

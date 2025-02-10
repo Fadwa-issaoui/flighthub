@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="paneUserInterface" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="756.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.user.UserController">
+   <children>
+      <ImageView fx:id="imgUserInterface" fitHeight="910.0" fitWidth="1135.0" layoutX="-7.0" layoutY="-107.0" opacity="0.07" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/1FlightBlue.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="textfieldId" layoutX="76.0" layoutY="81.0" prefHeight="42.0" prefWidth="49.0" promptText="Id" />
+      <TextField fx:id="textfieldUsername" layoutX="161.0" layoutY="81.0" prefHeight="42.0" prefWidth="171.0" promptText="Username" />
+      <TextField fx:id="textfieldEmail" layoutX="363.0" layoutY="81.0" prefHeight="42.0" prefWidth="171.0" promptText="Email" />
+      <TextField fx:id="textfieldPassword" layoutX="564.0" layoutY="81.0" prefHeight="42.0" prefWidth="171.0" promptText="Password" />
+      <TextField fx:id="textfieldRole" layoutX="767.0" layoutY="81.0" prefHeight="42.0" prefWidth="171.0" promptText="Role" />
+      <ImageView fx:id="iconUser" fitHeight="42.0" fitWidth="49.0" layoutX="14.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/userIcon.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="buttonAdd" layoutX="964.0" layoutY="81.0" mnemonicParsing="false" onAction="#handleAddUser" prefHeight="42.0" prefWidth="71.0" text="Add" textFill="#5067e9">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Separator fx:id="separatorUserInterface" layoutX="1.0" layoutY="189.0" prefHeight="0.0" prefWidth="1072.0" style="-fx-background-color: #5067e9;" />
+      <TextField fx:id="textfieldSearch" layoutX="393.0" layoutY="231.0" prefHeight="42.0" prefWidth="171.0" promptText="Write here" />
+      <Button fx:id="buttonSearch" layoutX="614.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleSearchUser" prefHeight="42.0" prefWidth="100.0" text="Search" textFill="#5067e9">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tableviewUser" layoutX="229.0" layoutY="302.0" prefHeight="379.0" prefWidth="709.0">
+        <columns>
+          <TableColumn fx:id="columnId" prefWidth="108.0000228881836" text="Id" />
+          <TableColumn fx:id="columnUsername" prefWidth="164.79998779296875" text="Username" />
+            <TableColumn fx:id="columnEmail" prefWidth="268.0000915527344" text="Email" />
+            <TableColumn fx:id="columnRole" prefWidth="165.79998779296875" text="Role" />
+        </columns>
+      </TableView>
+      <Button fx:id="buttonDelete" layoutX="600.0" layoutY="700.0" mnemonicParsing="false" onAction="#handleDeleteUser" prefHeight="42.0" prefWidth="100.0" text="Delete" textFill="#5067e9">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttonModify" layoutX="437.0" layoutY="700.0" mnemonicParsing="false" onAction="#handleModifyUser" prefHeight="42.0" prefWidth="100.0" text="Modify" textFill="#5067e9">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
