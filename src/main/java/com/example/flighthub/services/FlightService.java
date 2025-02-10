@@ -1,10 +1,7 @@
 package com.example.flighthub.services;
 
-
 import com.example.flighthub.databaseConnection.DatabaseConnection;
-import com.example.flighthub.models.Flight;
-
-import com.example.flighthub.databaseConnection.DatabaseConnection;
+import com.example.flighthub.models.Aircraft;
 import com.example.flighthub.models.Flight;
 
 import java.sql.Connection;
@@ -20,8 +17,8 @@ public class FlightService {
 
     // Create a new flight
     public void createFlight(Flight flight) {
-        // Modify query to not include flightId column
-        String query = "INSERT INTO flights (flightNumber, aircraftId, departureAirportId, arrivalAirportId, departureTime, arrivalTime, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        // Modified query to match table name "flight" and not include flightId
+        String query = "INSERT INTO flight (flightNumber, aircraftId, departureAirportId, arrivalAirportId, departureTime, arrivalTime, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
@@ -37,6 +34,7 @@ public class FlightService {
             pstmt.executeUpdate();
             System.out.println("Flight created successfully.");
 
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,7 +42,7 @@ public class FlightService {
 
     // Read a flight by flightId
     public Flight getFlightById(int flightId) {
-        String query = "SELECT * FROM flights WHERE flightId = ?";
+        String query = "SELECT * FROM flight WHERE flightId = ?"; // Changed table name to "flight"
         Flight flight = null;
 
         try (Connection conn = databaseConnection.getConnection();
@@ -74,7 +72,7 @@ public class FlightService {
 
     // Read all flights
     public List<Flight> getAllFlights() {
-        String query = "SELECT * FROM flights";
+        String query = "SELECT * FROM flight"; // Changed table name to "flight"
         List<Flight> flights = new ArrayList<>();
 
         try (Connection conn = databaseConnection.getConnection();
@@ -105,7 +103,7 @@ public class FlightService {
 
     // Update an existing flight
     public void updateFlight(Flight flight) {
-        String query = "UPDATE flights SET flightNumber = ?, aircraftId = ?, departureAirportId = ?, arrivalAirportId = ?, departureTime = ?, arrivalTime = ?, price = ? WHERE flightId = ?";
+        String query = "UPDATE flight SET flightNumber = ?, aircraftId = ?, departureAirportId = ?, arrivalAirportId = ?, departureTime = ?, arrivalTime = ?, price = ? WHERE flightId = ?"; // Changed table name to "flight"
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
@@ -127,7 +125,7 @@ public class FlightService {
 
     // Delete a flight by flightId
     public void deleteFlight(int flightId) {
-        String query = "DELETE FROM flights WHERE flightId = ?";
+        String query = "DELETE FROM flight WHERE flightId = ?"; // Changed table name to "flight"
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 

@@ -52,13 +52,14 @@ public class BookingController {
     @FXML
     private void updateBooking() {
         try {
-            Booking booking = new Booking();
+            Booking booking = bookingService.getBookingById(Integer.parseInt(txtBookingId.getText()));
             booking.setStatus(txtStatus.getText());
             booking.setBookingDate(txtBookingDate.getText());
             booking.setPassengerId(Integer.parseInt(txtPassengerId.getText()));
             booking.setFlightId(Integer.parseInt(txtFlightId.getText()));
             bookingService.createBooking(booking);
             System.out.println("Booking Created!");
+
             bookingService.updateBooking(booking);
             System.out.println("Booking Updated!");
         } catch (Exception e) {

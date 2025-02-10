@@ -6,9 +6,24 @@ public class Aircraft {
     private String model;
     private int capacity;
     private boolean isAvailable;
+    private int flightId;
 
+    public int getAirportId() {
+        return flightId;
+    }
+    public void setFlightId(int airportId) {
+        this.flightId = airportId;
+    }
+
+    public Aircraft() {}
+    public Aircraft(int aircraftId, String model, int capacity, boolean isAvailable) {
+        this.aircraftId = aircraftId;
+        this.model = model;
+        this.capacity = capacity;
+        this.isAvailable = isAvailable;
+    }
     // Getters and Setters
-    public int getAircraftId() {
+    public int getFlightId() {
         return aircraftId;
     }
 
@@ -50,4 +65,3 @@ public class Aircraft {
                 '}';
     }
 }
-
