@@ -1,6 +1,7 @@
 package com.example.flighthub.controllers.login;
 
 import com.example.flighthub.services.LoginService;
+import com.example.flighthub.services.UserService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,6 +28,7 @@ public class LoginController {
     private Button buttonSignIn;
 
     private final LoginService loginService = new LoginService();
+    private final UserService userService = new UserService();
 
     @FXML
     private void initialize() {
@@ -48,7 +50,13 @@ public class LoginController {
 
             if (loginSuccess) {
                 showAlert("Success", "Login successful!", Alert.AlertType.INFORMATION);
+                switch (userService.getUserRole(username)){
+                    case "ADMIN": openAirportDashboard(); break;
+                    case "GESTIONNAIRE": openGestDashboard(); break;
+                    case "AGENT": openAgentDash(); break;
+                }
                 openAirportDashboard();
+
             } else {
                 showAlert("Login Failed", "Invalid username or password.", Alert.AlertType.ERROR);
             }
@@ -79,5 +87,33 @@ public class LoginController {
         Stage loginStage = (Stage) textfieldSignInUser.getScene().getWindow();
         loginStage.close();
     }
+
+    private void openGestDashboard() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/GestDash.fxml"));
+        Parent root = loader.load();
+        Stage dashboardStage = new Stage();
+        dashboardStage.setScene(new Scene(root));
+        dashboardStage.setTitle("Admin Dashboard");
+        dashboardStage.show();
+
+        // Fermer la fenêtre de connexion
+        Stage loginStage = (Stage) textfieldSignInUser.getScene().getWindow();
+        loginStage.close();
+    }
+
+
+    private void openAgentDash() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/booking_fl_dash.fxml"));
+        Parent root = loader.load();
+        Stage dashboardStage = new Stage();
+        dashboardStage.setScene(new Scene(root));
+        dashboardStage.setTitle("Admin Dashboard");
+        dashboardStage.show();
+
+        // Fermer la fenêtre de connexion
+        Stage loginStage = (Stage) textfieldSignInUser.getScene().getWindow();
+        loginStage.close();
+    }
+
 
 }

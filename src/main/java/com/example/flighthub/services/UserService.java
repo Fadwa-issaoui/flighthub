@@ -138,6 +138,19 @@ public class UserService {
         return user;
     }
 
+    public String getUserRole(String username){
+        final String sql = "SELECT role FROM user WHERE username = ?";
+        try {
+            PreparedStatement ps = connection.getConnection().prepareStatement(sql);
+            ps.setString(1, username);
+            ResultSet resultSet = ps.executeQuery();
+            return resultSet.getString("role");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public static void main(String[] args) {
         UserService userService = new UserService();
 
