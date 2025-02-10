@@ -69,21 +69,6 @@ public class AirportController {
         loadAirportData();
     }
 
-    // Add a new airport
-    private void addAirport() {
-        try {
-            int airportId = Integer.parseInt(textfieldAirportId.getText());
-            String name = textfieldName.getText();
-            String location = textfieldLocalisation.getText();
-            String code = textfieldCode.getText();
-
-            airportService.createAirport(new Airport(airportId, name, location, code));
-            loadAirportData();
-            clearFields();
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid Airport ID");
-        }
-    }
 
     // Search airports based on input
     private void searchAirport() {
@@ -106,35 +91,56 @@ public class AirportController {
         textfieldCode.clear();
     }
 
-    // Modify an existing airport (example logic, adjust as needed)
-    // Modify an existing airport
+    private void addAirport() {
+        try {
+            int airportId = Integer.parseInt(textfieldAirportId.getText());
+            String name = textfieldName.getText().trim();
+            String location = textfieldLocalisation.getText().trim();
+            String code = textfieldCode.getText().trim();
+
+            if (name.isEmpty() || location.isEmpty() || code.isEmpty()) {
+                airportService.showAlert("Input Error", "Fields Name, Localisation, and Code cannot be empty.");
+                return; // Prevent submission
+            }
+
+            int result = airportService.createAirport(new Airport(airportId, name, location, code));
+            if (result > 0) {
+                loadAirportData();
+                clearFields();
+            } else {
+                airportService.showAlert("Error", "Failed to add airport. ID may already exist.");
+            }
+        } catch (NumberFormatException e) {
+            airportService.showAlert("Input Error", "Invalid Airport ID");
+        }
+    }
+
     private void modifyAirport() {
         Airport selectedAirport = tableViewAirport.getSelectionModel().getSelectedItem();
         if (selectedAirport != null) {
-            // Populate fields with the selected airport's details
-            textfieldAirportId.setText(String.valueOf(selectedAirport.getAirportId()));
-            textfieldName.setText(selectedAirport.getName());
-            textfieldLocalisation.setText(selectedAirport.getLocation());
-            textfieldCode.setText(selectedAirport.getCode());
+            try {
+                int airportId = Integer.parseInt(textfieldAirportId.getText());
+                String name = textfieldName.getText().trim();
+                String location = textfieldLocalisation.getText().trim();
+                String code = textfieldCode.getText().trim();
 
-            // Add an event listener to the Modify button for saving changes
-            buttonModify.setOnAction(event -> {
-                try {
-                    int airportId = Integer.parseInt(textfieldAirportId.getText());
-                    String name = textfieldName.getText();
-                    String location = textfieldLocalisation.getText();
-                    String code = textfieldCode.getText();
-
-                    Airport updatedAirport = new Airport(airportId, name, location, code);
-                    airportService.updateAirport(updatedAirport);
-                    loadAirportData(); // Refresh the table
-                    clearFields(); // Clear input fields
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid Airport ID");
+                if (name.isEmpty() || location.isEmpty() || code.isEmpty()) {
+                    airportService.showAlert("Input Error", "Fields Name, Localisation, and Code cannot be empty.");
+                    return; // Prevent update
                 }
-            });
+
+                Airport updatedAirport = new Airport(airportId, name, location, code);
+                airportService.updateAirport(updatedAirport);
+                loadAirportData();
+                clearFields();
+            } catch (NumberFormatException e) {
+                airportService.showAlert("Input Error", "Invalid Airport ID");
+            }
+        } else {
+            airportService.showAlert("Selection Error", "Please select an airport to modify.");
         }
     }
+
 
 
     // Delete the selected airport
