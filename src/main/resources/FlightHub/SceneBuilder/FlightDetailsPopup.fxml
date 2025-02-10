@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox  style="-fx-background-color: white; -fx-padding: 20;" spacing="10" xmlns="http://javafx.com/javafx"
+       xmlns:fx="http://javafx.com/fxml"
+       fx:controller="com.example.flighthub.controllers.flight.FlightDetailsPopupController">
+
+    <Text fx:id="titleText" text="Flight Details" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-fill: #5067e9;" />
+
+    <VBox style="-fx-padding: 10;">
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Flight ID:" />
+        <Label fx:id="flightIdLabel" style="-fx-font-size: 14px;"/>
+    </VBox>
+
+    <VBox style="-fx-padding: 10;">
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Flight Number:" />
+        <Label fx:id="flightNumberLabel" style="-fx-font-size: 14px;"/>
+    </VBox>
+
+    <VBox style="-fx-padding: 10;">
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Aircraft ID:" />
+        <Label fx:id="aircraftIdLabel" style="-fx-font-size: 14px;"/>
+    </VBox>
+
+    <VBox style="-fx-padding: 10;">
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Departure Airport ID:" />
+        <Label fx:id="departureAirportIdLabel" style="-fx-font-size: 14px;"/>
+    </VBox>
+
+    <VBox style="-fx-padding: 10;">
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Arrival Airport ID:" />
+        <Label fx:id="arrivalAirportIdLabel" style="-fx-font-size: 14px;"/>
+    </VBox>
+
+    <VBox style="-fx-padding: 10;">
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Departure Time:" />
+        <Label fx:id="departureTimeLabel" style="-fx-font-size: 14px;"/>
+    </VBox>
+
+    <VBox style="-fx-padding: 10;">
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Arrival Time:" />
+        <Label fx:id="arrivalTimeLabel" style="-fx-font-size: 14px;"/>
+    </VBox>
+
+    <VBox style="-fx-padding: 10;">
+        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Price:" />
+        <Label fx:id="priceLabel" style="-fx-font-size: 14px;"/>
+    </VBox>
+</VBox>

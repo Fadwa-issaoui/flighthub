@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.dashboard.AdminDashboardController">
+   <center>
+      <StackPane fx:id="stackPaneDashAdmin" prefHeight="800.0" prefWidth="1050.0" style="-fx-background-color: #ECF0F1;">
+         <!-- Dynamically Changing Content Here -->
+      </StackPane>
+   </center>
+   <left>
+      <AnchorPane fx:id="anchorPaneDashAdmin" style="-fx-background-color: #5067e9;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="imgDashAdmin" fitHeight="152.0" fitWidth="259.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/FlightBlue.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="buttonUserAdmin" layoutX="42.0" layoutY="259.0" mnemonicParsing="false" onAction="#openUserInterface" prefHeight="56.0" prefWidth="151.0" style="-fx-background-color: #ffffff;" text="User" textFill="#5067e9">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonAirportAdmin" layoutX="42.0" layoutY="378.0" mnemonicParsing="false" onAction="#openAirportInterface" prefHeight="56.0" prefWidth="151.0" style="-fx-background-color: #ffffff;" text="Airport" textFill="#5067e9">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonAircraftAdmin" layoutX="42.0" layoutY="490.0" mnemonicParsing="false" onAction="#openAircraftInterface" prefHeight="56.0" prefWidth="151.0" style="-fx-background-color: #ffffff;" text="Aircraft" textFill="#5067e9">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonLogout" layoutX="42.0" layoutY="602.0" mnemonicParsing="false" onAction="#handleLogout" prefHeight="56.0" prefWidth="151.0" style="-fx-background-color: #ffffff;" text="Logout" textFill="#5067e9">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </left>
+</BorderPane>
