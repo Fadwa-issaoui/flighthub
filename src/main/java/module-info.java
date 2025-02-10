@@ -6,8 +6,11 @@ module Main {
     requires static lombok;
 
     opens Main to javafx.fxml;
-    // Allow JavaFX to access controllers
-
     exports Main;
+
+    // Allow JavaFX to access controllers
     opens com.example.flighthub.controllers.login to javafx.fxml;
+    opens com.example.flighthub.controllers.booking to javafx.fxml, javafx.graphics;
+
+    exports com.example.flighthub.controllers.booking;
 }
