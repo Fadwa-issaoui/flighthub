@@ -8,11 +8,11 @@ public class Aircraft {
     private boolean isAvailable;
     private int flightId;
 
-    public int getAirportId() {
+    public int getFlightId() {
         return flightId;
     }
-    public void setFlightId(int airportId) {
-        this.flightId = airportId;
+    public void setFlightId(int flightId) {
+        this.flightId = flightId;
     }
 
     public Aircraft() {}
@@ -27,10 +27,6 @@ public class Aircraft {
         return aircraftId;
     }
 
-    // Getters and Setters
-    public int getFlightId() {
-        return aircraftId;
-    }
 
     public void setAircraftId(int aircraftId) {
         this.aircraftId = aircraftId;
@@ -59,6 +55,7 @@ public class Aircraft {
     public void setAvailable(boolean available) {
         isAvailable = available;
     }
+
 
     @Override
     public String toString() {

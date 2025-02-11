@@ -144,11 +144,15 @@ public class UserService {
             PreparedStatement ps = connection.getConnection().prepareStatement(sql);
             ps.setString(1, username);
             ResultSet resultSet = ps.executeQuery();
-            return resultSet.getString("role");
+            if (resultSet.next()) { // Move cursor to the first row and check if a row exists
+                return resultSet.getString("role");
+            } else {
+                // Handle the case where no user is found with the given username
+                return null; // Or throw an exception, or return a default role, depending on your application's logic
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static void main(String[] args) {

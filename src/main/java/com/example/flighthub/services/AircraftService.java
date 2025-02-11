@@ -2,9 +2,12 @@ package com.example.flighthub.services;
 
 import com.example.flighthub.databaseConnection.DatabaseConnection;
 import com.example.flighthub.models.Aircraft;
+import com.example.flighthub.models.Flight;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +17,61 @@ public class AircraftService {
     private static final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
     public AircraftService() {
-        this.connection = databaseConnection.getConnection();
+        try {
+            this.connection = databaseConnection.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    // NEW METHOD: Get available aircraft for a given departure airport
+    public List<Aircraft> getAvailableAircraftForDepartureAirport(int departureAirportId) {
+        List<Aircraft> availableAircraft = new ArrayList<>();
 
+        // Get aircraft that are NOT assigned to any flight (flightId = 0)
+        String unassignedQuery = "SELECT * FROM aircraft WHERE flightId = 0";
+        try (PreparedStatement psUnassigned = connection.prepareStatement(unassignedQuery);
+             ResultSet rsUnassigned = psUnassigned.executeQuery()) {
+
+            while (rsUnassigned.next()) {
+                Aircraft aircraft = getAircraftById(rsUnassigned.getInt("aircraftId")); // Get full aircraft details
+                if (aircraft != null) {
+                    availableAircraft.add(aircraft);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving unassigned aircraft: " + e.getMessage());
+        }
+
+        // Get aircraft assigned to flights, and check arrival airport and time
+        String assignedQuery = "SELECT * FROM aircraft WHERE flightId != 0"; // Get aircraft assigned to flights
+        try (PreparedStatement psAssigned = connection.prepareStatement(assignedQuery);
+             ResultSet rsAssigned = psAssigned.executeQuery()) {
+
+            while (rsAssigned.next()) {
+                int aircraftId = rsAssigned.getInt("aircraftId");
+                int flightId = rsAssigned.getInt("flightId");
+
+                // Get the associated Flight
+                FlightService flightService = new FlightService();
+                Flight flight = flightService.getFlightById(flightId);
+
+                if (flight != null && flight.getArrivalAirportId() == departureAirportId) {
+                    // Check if the flight has ended
+                    LocalDateTime arrivalTime = LocalDateTime.parse(flight.getArrivalTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                    if (arrivalTime.isBefore(LocalDateTime.now())) {
+                        Aircraft aircraft = getAircraftById(aircraftId);
+                        if (aircraft != null) {
+                            availableAircraft.add(aircraft);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving assigned aircraft: " + e.getMessage());
+        }
+
+        return availableAircraft;
+    }
     // CREATE - Add a new aircraft
     public boolean createAircraft(Aircraft aircraft) {
         if (aircraft.getModel() == null || aircraft.getModel().trim().isEmpty()) {
@@ -24,7 +79,7 @@ public class AircraftService {
             return false; // Prevent insertion
         }
 
-        String query = "INSERT INTO aircraft (aircraftId, model, capacity, isAvailable) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO aircraft (aircraftId, model, capacity, isAvailable) VALUES (?, ?, ?, ?)"; // flightId not needed on creation
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, aircraft.getAircraftId());
             ps.setString(2, aircraft.getModel());
@@ -74,6 +129,7 @@ public class AircraftService {
                 aircraft.setModel(rs.getString("model"));
                 aircraft.setCapacity(rs.getInt("capacity"));
                 aircraft.setAvailable(rs.getBoolean("isAvailable"));
+                aircraft.setFlightId(rs.getInt("flightId")); // Load flightId
                 aircrafts.add(aircraft);
             }
         } catch (SQLException e) {
@@ -96,6 +152,7 @@ public class AircraftService {
                     aircraft.setModel(rs.getString("model"));
                     aircraft.setCapacity(rs.getInt("capacity"));
                     aircraft.setAvailable(rs.getBoolean("isAvailable"));
+                    aircraft.setFlightId(rs.getInt("flightId")); // Load flightId
                 }
             }
         } catch (SQLException e) {
@@ -119,32 +176,32 @@ public class AircraftService {
         }
     }
 
-    // Main method for testing
-    public static void main(String[] args) {
-        AircraftService aircraftService = new AircraftService();
-        Aircraft aircraft = new Aircraft();
-
-        // Set aircraft details
-        aircraft.setAircraftId(2);
-        aircraft.setModel("Boeing 737");
-        aircraft.setCapacity(150);
-        aircraft.setAvailable(true);
-
-        // Create the aircraft in the database
-        if (aircraftService.createAircraft(aircraft)) {
-            System.out.println("Aircraft created successfully!");
-        } else {
-            System.out.println("Failed to create aircraft.");
+    //  Update the flightId of an aircraft
+    public boolean updateAircraftFlightId(int aircraftId, int flightId) {
+        String query = "UPDATE aircraft SET flightId = ? WHERE aircraftId = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, flightId);
+            ps.setInt(2, aircraftId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error updating aircraft flightId: " + e.getMessage());
+            return false;
         }
-
-        // Fetch and print all aircrafts
-        List<Aircraft> aircrafts = aircraftService.getAllAircrafts();
-        for (Aircraft a : aircrafts) {
-            System.out.println(a);
-        }
-
-
     }
+
+    // Reset the flightId of an aircraft (set to 0, indicating no assigned flight)
+    public boolean resetAircraftFlightId(int aircraftId) {
+        String query = "UPDATE aircraft SET flightId = 0 WHERE aircraftId = ?"; // Setting to 0
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, aircraftId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            System.err.println("Error resetting aircraft flightId: " + e.getMessage());
+            return false;
+        }
+    }
+
+
     public void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
