@@ -39,7 +39,7 @@
                         <Image url="@../../images/iconAvatar.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="homeButton" layoutX="144.0" layoutY="10.0" mnemonicParsing="false" text="Home" />
+                  <Button fx:id="homeButton" layoutX="144.0" layoutY="10.0" mnemonicParsing="false" text="Home" onAction="#goToHome"/>
                   <Button layoutX="200.0" layoutY="10.0" mnemonicParsing="false" text="Flights" />
                   <Button layoutX="258.0" layoutY="10.0" mnemonicParsing="false" text="Contact" />
                </children>

@@ -4,6 +4,9 @@ module Main {
     requires com.dlsc.formsfx;
     requires java.sql;
     requires static lombok;
+    requires java.mail;
+    requires java.desktop;
+    requires activation;
 
     opens Main to javafx.fxml;
     exports Main;
