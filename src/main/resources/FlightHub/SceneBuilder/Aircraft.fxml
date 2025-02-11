@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="756.0" prefWidth="1066.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.example.flighthub.controllers.aircraft.AircraftController">
+
+    <StackPane prefHeight="600" prefWidth="900">
+
+        <!-- Image d'arrière-plan -->
+        <ImageView fitHeight="756.0" fitWidth="1066.0">
+            <image>
+                <Image url="@../../images/img.png" />
+            </image>
+        </ImageView>
+
+        <!-- Conteneur principal -->
+        <VBox alignment="CENTER" prefHeight="756.0" prefWidth="1066.0" spacing="15" style="-fx-background-color: rgba(255, 255, 255, 0.8); -fx-padding: 20;">
+
+            <!-- Titre -->
+            <Label style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Gestion des Avions" />
+
+            <!-- Formulaire -->
+            <GridPane alignment="CENTER" hgap="10" vgap="10">
+                <Label text="ID de l'Avion:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="aircraftIdField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label text="Modèle:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="modelField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Label text="Capacité:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <TextField fx:id="capacityField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                <Label text="Disponible:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <CheckBox fx:id="isAvailableCheckBox" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <columnConstraints>
+               <ColumnConstraints />
+               <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+               <RowConstraints />
+            </rowConstraints>
+            </GridPane>
+
+            <!-- Boutons -->
+            <HBox alignment="CENTER" spacing="20">
+                <Button onAction="#handleAddAircraft" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;" text="Ajouter" />
+                <Button onAction="#handleUpdateAircraft" style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;" text="Modifier" />
+                <Button onAction="#handleDeleteAircraft" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20;" text="Supprimer" />
+            </HBox>
+
+            <!-- TableView -->
+            <TableView fx:id="aircraftTableView" prefHeight="300" prefWidth="800" style="-fx-border-color: #2980b9; -fx-border-width: 2px; -fx-background-color: white;">
+                <columns>
+                    <TableColumn fx:id="colAircraftId" prefWidth="150" text="ID" />
+                    <TableColumn fx:id="colModel" prefWidth="250" text="Modèle" />
+                    <TableColumn fx:id="colCapacity" prefWidth="200" text="Capacité" />
+                    <TableColumn fx:id="colAvailable" prefWidth="200" text="Disponible" />
+                </columns>
+            </TableView>
+
+        </VBox>
+    </StackPane>
+</AnchorPane>

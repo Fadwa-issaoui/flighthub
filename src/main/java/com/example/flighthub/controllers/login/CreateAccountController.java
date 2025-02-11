@@ -67,24 +67,12 @@ public class CreateAccountController {
     }
     @FXML
     private void initialize() {
-        buttonSignInCreateAccount.setOnAction(event -> switchToSignUp());
+        buttonSignInCreateAccount.setOnAction(event -> signUp());
     }
 
-    private void switchToSignUp() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) buttonSignInCreateAccount.getScene().getWindow(); // Get current window
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @FXML
+    private  void signUp(){
+
     }
-    private void openSignUp() throws IOException {
-        Stage stage = (Stage) buttonSignInCreateAccount.getScene().getWindow(); // Get current stage
-        Parent root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
-        stage.setScene(new Scene(root));
-        stage.show();
-    }
+
 }

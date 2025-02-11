@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="paneAirport" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="756.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.Airport.AirportController">
+   <children>
+      <ImageView fx:id="imageViewAirport" fitHeight="1063.0" fitWidth="1260.0" layoutY="-226.0" opacity="0.07" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/flighthubbackground.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="iconAirport" fitHeight="50.0" fitWidth="48.0" layoutX="15.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/plane_flight_transport_airplane_airport_icon_209613.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="textfieldAirportId" layoutX="108.0" layoutY="105.0" prefHeight="42.0" prefWidth="49.0" promptText="Id" />
+      <TextField fx:id="textfieldName" layoutX="218.0" layoutY="103.0" prefHeight="42.0" prefWidth="171.0" promptText="Name" />
+      <Separator fx:id="separatorAirport" layoutX="1.0" layoutY="205.0" prefHeight="2.0" prefWidth="1066.0" style="-fx-background-color: #8470FF;" />
+      <Button fx:id="buttonAddAirport" layoutX="944.0" layoutY="109.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" text="Add" textAlignment="CENTER" textFill="#1c07d9">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <TextField fx:id="textfieldSearchAirport" layoutX="365.0" layoutY="231.0" prefHeight="42.0" prefWidth="171.0" promptText="Write here" />
+      <Button fx:id="buttonSearchAirport" layoutX="619.0" layoutY="239.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="83.0" text="Search" textAlignment="CENTER" textFill="#1c07d9">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tableViewAirport" layoutX="86.0" layoutY="308.0" prefHeight="301.0" prefWidth="858.0">
+        <columns>
+          <TableColumn fx:id="tableColumnAirportId" prefWidth="216.0" text="Airport ID" />
+            <TableColumn fx:id="tableColumnName" prefWidth="198.4000244140625" text="Name" />
+            <TableColumn fx:id="tableColumnCode" prefWidth="232.79998779296875" text="Code" />
+          <TableColumn fx:id="tableColumnLocalisation" minWidth="1.59991455078125" prefWidth="208.79995727539062" text="Localisation" />
+        </columns>
+      </TableView>
+      <TextField fx:id="textfieldLocalisation" layoutX="721.0" layoutY="105.0" prefHeight="42.0" prefWidth="171.0" promptText="Localisation" />
+      <TextField fx:id="textfieldCode" layoutX="469.0" layoutY="103.0" prefHeight="42.0" prefWidth="171.0" promptText="Code" />
+      <Button fx:id="buttonDelete" layoutX="701.0" layoutY="635.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="105.0" text="Delete" textFill="#1c07d9">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="buttonModify" layoutX="389.0" layoutY="635.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="105.0" text="Modify" textFill="#1c07d9">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
