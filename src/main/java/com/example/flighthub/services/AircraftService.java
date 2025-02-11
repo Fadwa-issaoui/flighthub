@@ -14,7 +14,11 @@ public class AircraftService {
     private static final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
     public AircraftService() {
-        this.connection = databaseConnection.getConnection();
+        try {
+            this.connection = databaseConnection.getConnection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // CREATE - Add a new aircraft
