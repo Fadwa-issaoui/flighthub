@@ -55,7 +55,6 @@ public class LoginController {
                     case "GESTIONNAIRE": openGestDashboard(); break;
                     case "AGENT": openAgentDash(); break;
                 }
-                openAirportDashboard();
 
             } else {
                 showAlert("Login Failed", "Invalid username or password.", Alert.AlertType.ERROR);
@@ -110,9 +109,9 @@ public class LoginController {
         dashboardStage.setTitle("Admin Dashboard");
         dashboardStage.show();
 
-        // Fermer la fenêtre de connexion
         Stage loginStage = (Stage) textfieldSignInUser.getScene().getWindow();
         loginStage.close();
+
     }
 
 

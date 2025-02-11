@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             // Load the Splash Screen
-            Parent splashScreenRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/SplashScreen.fxml"));
+            Parent splashScreenRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
             Scene splashScreenScene = new Scene(splashScreenRoot);
             primaryStage.setScene(splashScreenScene);
             primaryStage.setTitle("Splash Screen");
@@ -35,42 +35,14 @@ public class Main extends Application {
             primaryStage.show();
 
             // After 5 seconds, switch to the Login screen
-            new Thread(() -> {
-                try {
-                    Thread.sleep(5000);  // Wait for 5 seconds
-                    javafx.application.Platform.runLater(() -> openLoginScreen(primaryStage));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void openLoginScreen(Stage primaryStage) {
-        try {
-            // Load the Login screen (Login.fxml)
-            Parent loginRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
-            Scene loginScene = new Scene(loginRoot);
-            primaryStage.setScene(loginScene);
-            primaryStage.setTitle("Login");
 
-            // Simulate login delay and switch to Dashboard after a while
-            new Thread(() -> {
-                try {
-                    Thread.sleep(3000);  // Simulate login delay
-                    javafx.application.Platform.runLater(() -> openDashboardScreen(primaryStage));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private void openDashboardScreen(Stage primaryStage) {
         try {

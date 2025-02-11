@@ -34,7 +34,7 @@ public class SplashScreen implements Initializable {
         @Override
         public void run() {
             try {
-                        Parent root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
+                     /*   Parent root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
                         Stage loginStage = new Stage();
                         loginStage.setScene(new Scene(root));
                         loginStage.show();
@@ -42,14 +42,33 @@ public class SplashScreen implements Initializable {
                         // Close the splash screen
                         Stage splashStage = (Stage) stackPaneSplashScreen.getScene().getWindow();
                         splashStage.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+*/
+                javafx.application.Platform.runLater(() -> openLoginScreen(new Stage()));
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(5000);  // Wait for 5 seconds
+                        javafx.application.Platform.runLater(() -> openLoginScreen(new Stage()));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                });
+                }).start();
+
+
             } catch (Exception e) {
 
                 throw new RuntimeException(e);
             }
         }
     }
-}
+    private void openLoginScreen(Stage primaryStage) {
+        try {
+            // Load the Login screen (Login.fxml)
+            Parent loginRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
+            Scene loginScene = new Scene(loginRoot);
+            primaryStage.setScene(loginScene);
+            primaryStage.setTitle("Login");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }}
