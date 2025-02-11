@@ -84,8 +84,8 @@ public class EmailSender {
                 message.setContent(emailContent, "text/html");
 
                 // Add logo as an inline attachment
-                MimeBodyPart logoPart = new MimeBodyPart();
-                DataSource fds = new FileDataSource("C:/Users/maiss/flighthub/src/main/resources/images/flighthubIcone.png");
+                MimeBodyPart logoPart = new MimeBodyPart();//
+                DataSource fds = new FileDataSource("src/main/resources/images/flighthubIcone.png");
                 logoPart.setDataHandler(new DataHandler(fds));
                 logoPart.setHeader("Content-ID", "<logo>");
 
