@@ -39,9 +39,9 @@
                         <Image url="@../../images/iconAvatar.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="homeButton" layoutX="144.0" layoutY="10.0" mnemonicParsing="false" text="Home" onAction="#goToHome"/>
+                  <Button fx:id="homeButton" layoutX="144.0" layoutY="10.0" mnemonicParsing="false" onAction="#goToHome" text="Home" />
                   <Button layoutX="200.0" layoutY="10.0" mnemonicParsing="false" text="Flights" />
-                  <Button layoutX="258.0" layoutY="10.0" mnemonicParsing="false" text="Contact" />
+                  <Button layoutX="258.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
                </children>
             </Pane>
             <Pane layoutX="19.0" layoutY="88.0" prefHeight="70.0" prefWidth="562.0" style="-fx-background-color: #FFFFFF;">
@@ -61,21 +61,21 @@
                <children>
                   <Pane fx:id="flightRow1" layoutX="0.0" layoutY="0.0" prefHeight="40.0" prefWidth="561.0" style="-fx-background-color: transparent; cursor: hand;">
                      <children>
-                        <Label fx:id="flightDepHeure" layoutX="72.0" layoutY="24.0" prefHeight="18.0" prefWidth="65.0" text="heure dep" />
-                        <Line endX="64.0" endY="1.52587890625E-5" layoutX="273.0" layoutY="34.0" startX="-100.0" />
-                        <Label fx:id="flightArrivHeure" layoutX="378.0" layoutY="24.0" prefHeight="18.0" prefWidth="75.0" text="heure arriv" />
-                        <Label fx:id="flightPrice" layoutX="464.0" layoutY="27.0" prefHeight="18.0" prefWidth="86.0" text="prix" />
-                        <ImageView fitHeight="41.0" fitWidth="38.0" layoutX="18.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                        <Label fx:id="flightDepHeure" layoutX="42.0" layoutY="24.0" prefHeight="18.0" prefWidth="65.0" text="heure dep" />
+                        <Line endX="29.4000244140625" endY="1.52587890625E-5" layoutX="243.0" layoutY="33.0" startX="-100.0" />
+                        <Label fx:id="flightArrivHeure" layoutX="322.0" layoutY="25.0" prefHeight="18.0" prefWidth="75.0" text="heure arriv" />
+                        <Label fx:id="flightPrice" layoutX="401.0" layoutY="24.0" prefHeight="18.0" prefWidth="37.0" text="prix" />
+                        <ImageView fitHeight="41.0" fitWidth="38.0" layoutX="7.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/logoTayara.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="146.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="113.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/iconDecollage.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="349.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="291.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/iconAttirage.png" />
                            </image>
@@ -85,6 +85,7 @@
                               <Font size="24.0" />
                            </font>
                         </Label>
+                        <Button fx:id="select" layoutX="467.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleSelect" prefHeight="25.0" prefWidth="53.0" text="Search" />
                      </children>
                   </Pane>
                </children>

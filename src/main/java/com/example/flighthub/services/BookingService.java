@@ -14,15 +14,13 @@ public class BookingService {
 
     // Create a new booking
     public void createBooking(Booking booking) {
-        String query = "INSERT INTO bookings (bookingId, status, bookingDate, passengerId, flightId) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO booking (bookingDate, passengerId, flightId) VALUES (?, ?, ?)";
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            pstmt.setInt(1, booking.getBookingId());
-            pstmt.setString(2, booking.getStatus());
-            pstmt.setString(3, booking.getBookingDate());
-            pstmt.setInt(4, booking.getPassengerId());
-            pstmt.setInt(5, booking.getFlightId());
+            pstmt.setString(1,booking.getBookingDate());
+            pstmt.setInt(2, booking.getPassengerId());
+            pstmt.setInt(3, booking.getFlightId());
 
             pstmt.executeUpdate();
             System.out.println("Booking created successfully.");

@@ -61,6 +61,8 @@ public class AgentDashboardController {
     @FXML
     private TableColumn<TableRowData, Void> emailColumn;
 
+    private String flightNumber;
+
     @FXML
     private Label totalBookingsLabel;
     @FXML
@@ -116,8 +118,9 @@ public class AgentDashboardController {
             String query = "SELECT f.flightNumber, a1.location AS departure, a2.location AS arrival " +
                     "FROM flight f " +
                     "JOIN airport a1 ON f.departureAirportId = a1.airportId " +
-                    "JOIN airport a2 ON f.arrivalAirportId = a2.airportId " +
-                    "WHERE f.departureTime >= NOW()";
+                    "JOIN airport a2 ON f.arrivalAirportId = a2.airportId "
+                    //+ "WHERE f.departureTime >= NOW()"
+                    ;
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -342,7 +345,7 @@ public class AgentDashboardController {
                 String arrivalLocation = rs.getString("arrivalLocation");
                 System.out.println("Departure Location: " + departureLocation);  // Debugging line
                 System.out.println("Arrival Location: " + arrivalLocation);      // Debugging line
-
+                this.flightNumber = flightNumber;
                 flightDetails.put("flightNumber", rs.getString("flightNumber"));
                 flightDetails.put("departureLocation", departureLocation);
                 flightDetails.put("arrivalLocation", arrivalLocation);
@@ -417,6 +420,25 @@ public class AgentDashboardController {
         }
     }
 
+    public void handleLogout(){
+        try {
+            // Get the current stage (dashboard window) and close it
+            Stage stage = (Stage) emailButton.getScene().getWindow();
+            stage.close();
+
+            // Load the login window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml")); // Adjust path if needed
+            Parent root = loader.load();
+
+            // Create new stage for the login window
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.setTitle("Login");
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 
