@@ -49,7 +49,7 @@ public class FlightSearchController {
     @FXML
     private void goToHome() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/agent_dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/booking_fl_dash.fxml"));
             Parent root = loader.load();
 
             Stage stage = (Stage) homeButton.getScene().getWindow();

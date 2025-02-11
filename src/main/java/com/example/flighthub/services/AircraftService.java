@@ -17,10 +17,12 @@ public class AircraftService {
     private static final DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
     public AircraftService() {
+
         try {
             this.connection = databaseConnection.getConnection();
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
     // NEW METHOD: Get available aircraft for a given departure airport

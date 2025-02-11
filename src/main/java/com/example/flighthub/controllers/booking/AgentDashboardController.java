@@ -1,25 +1,31 @@
 package com.example.flighthub.controllers.booking;
 
 import com.example.flighthub.databaseConnection.DatabaseConnection;
+import com.example.flighthub.models.Booking;
+import com.example.flighthub.models.Flight;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.mail.MessagingException;
+import javax.mail.Transport;
+import javafx.geometry.Insets;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AgentDashboardController {
 
@@ -52,9 +58,13 @@ public class AgentDashboardController {
     private TableColumn<TableRowData, String> bookingDateCol;
     @FXML
     private TableColumn<TableRowData, String> flightInfoCol;
+    @FXML
+    private TableColumn<TableRowData, Void> emailColumn;
 
     @FXML
     private Label totalBookingsLabel;
+    @FXML
+    private Button emailButton;
 
     @FXML
     public void initialize() {
@@ -63,7 +73,10 @@ public class AgentDashboardController {
         loadUpcomingFlights();
         loadRecentBookings();
         loadTotalBookings();
+        setupEmailButton();
+
     }
+
 
     private void loadLocations() {
         ObservableList<String> locations = FXCollections.observableArrayList();
@@ -94,6 +107,7 @@ public class AgentDashboardController {
         passengerNameCol.setCellValueFactory(new PropertyValueFactory<>("column1"));
         bookingDateCol.setCellValueFactory(new PropertyValueFactory<>("column2"));
         flightInfoCol.setCellValueFactory(new PropertyValueFactory<>("column3"));
+        recentBookingsTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
     }
 
     private void loadUpcomingFlights() {
@@ -237,4 +251,173 @@ public class AgentDashboardController {
             return column3;
         }
     }
+
+    private void setupEmailButton() {
+        emailColumn.setCellFactory(col -> new TableCell<TableRowData, Void>() {
+            private final Button emailButton = new Button("Send Email");
+
+            {
+                emailButton.setOnAction(event -> {
+                    TableRowData rowData = getTableView().getItems().get(getIndex()); // Get selected row data
+                    if (rowData != null) {
+                        String passengerName = rowData.getColumn1();  // Assuming column1 has passenger name
+                        String flightId = rowData.getColumn3();  // Assuming column3 has flight ID
+
+                        // Fetch flight details
+                        Map<String, Object> flightDetails = fetchFlightDetails(flightId);
+
+                        if (flightDetails != null) {
+                            // Open the pop-up to enter the client's email
+                            showEmailPopup(passengerName, flightDetails, -1);  // Pass passengerId as needed
+                        }
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(emailButton);
+                }
+            }
+        });
+    }
+
+
+    // 2. Get Passenger ID from Name
+    private int fetchPassengerId(String passengerName) {
+        int passengerId = -1;
+        String[] nameParts = passengerName.split(" ");
+        if (nameParts.length < 2) {
+            System.out.println("Invalid passenger name format");
+            return passengerId;
+        }
+        String firstName = nameParts[0];
+        String lastName = nameParts[1];
+
+        String query = "SELECT passengerId FROM passenger WHERE firstName = ? AND lastName = ?";
+
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                passengerId = rs.getInt("passengerId");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return passengerId;
+    }
+
+    private Map<String, Object> fetchFlightDetails(String flightNumber) {
+        Map<String, Object> flightDetails = new HashMap<>();
+        String query = "SELECT f.flightNumber, f.departureAirportId, f.arrivalAirportId, " +
+                "f.departureTime, f.arrivalTime, a1.location AS departureLocation, " +
+                "a2.location AS arrivalLocation " +
+                "FROM flight f " +
+                "JOIN airport a1 ON f.departureAirportId = a1.airportId " +
+                "JOIN airport a2 ON f.arrivalAirportId = a2.airportId " +
+                "WHERE f.flightNumber = ?";
+
+        if (flightNumber == null || flightNumber.isEmpty()) {
+            System.out.println("Invalid flightNumber provided");
+            return null;  // Return null if flightNumber is invalid
+        }
+
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, flightNumber);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String departureLocation = rs.getString("departureLocation");
+                String arrivalLocation = rs.getString("arrivalLocation");
+                System.out.println("Departure Location: " + departureLocation);  // Debugging line
+                System.out.println("Arrival Location: " + arrivalLocation);      // Debugging line
+
+                flightDetails.put("flightNumber", rs.getString("flightNumber"));
+                flightDetails.put("departureLocation", departureLocation);
+                flightDetails.put("arrivalLocation", arrivalLocation);
+                flightDetails.put("departureTime", rs.getString("departureTime"));
+                flightDetails.put("arrivalTime", rs.getString("arrivalTime"));
+            } else {
+                System.out.println("No flight found with the given flightNumber: " + flightNumber);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return flightDetails;
+    }
+
+
+
+
+    // 4. Open the Pop-Up for Email Entry
+    private void showEmailPopup(String passengerName, Map<String, Object> flightDetails, int passengerId) {
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setTitle("Send Email");
+
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new Insets(15));
+
+        Label emailLabel = new Label("Client's Email:");
+        TextField emailField = new TextField();
+
+        String flightInfoText = String.format("Flight: %s\nFrom: %s\nTo: %s\nDate: %s",
+                flightDetails.get("flightNumber"),
+                flightDetails.get("departureLocation"),
+                flightDetails.get("arrivalLocation"),
+                flightDetails.get("departureTime"));
+        Label flightInfo = new Label(flightInfoText);
+
+        Button sendButton = new Button("Send Email");
+        sendButton.setOnAction(e -> {
+            String clientEmail = emailField.getText();
+            if (!clientEmail.isEmpty()) {
+                sendEmail(clientEmail, passengerName, flightDetails);
+                popupStage.close();
+            } else {
+                System.out.println("Email field is empty!");
+            }
+        });
+
+        vbox.getChildren().addAll(emailLabel, emailField, flightInfo, sendButton);
+
+        Scene scene = new Scene(vbox, 350, 250);
+        popupStage.setScene(scene);
+        popupStage.showAndWait();
+    }
+
+
+    // 5. Send Email Function
+    private void sendEmail(String clientEmail, String passengerName, Map<String, Object> flightDetails) {
+        try {
+            EmailSender.sendBookingEmail(clientEmail, passengerName,
+                    (String) flightDetails.get("flightNumber"),
+                    (String) flightDetails.get("departureLocation"),
+                    (String) flightDetails.get("arrivalLocation"),
+                    flightDetails.get("departureTime").toString(), true);
+
+            // Show confirmation alert if email is sent successfully
+            showAlert("Email Sent", "The email was successfully sent to " + clientEmail);
+        } catch (Exception e) {
+            // Show error alert if something goes wrong
+            showError("Email Sending Error", "Failed to send the email to " + clientEmail + ". Please try again.");
+            e.printStackTrace();
+        }
+    }
+
+
 }
+
+

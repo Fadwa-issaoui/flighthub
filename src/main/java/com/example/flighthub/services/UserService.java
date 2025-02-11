@@ -144,21 +144,23 @@ public class UserService {
             PreparedStatement ps = connection.getConnection().prepareStatement(sql);
             ps.setString(1, username);
             ResultSet resultSet = ps.executeQuery();
-            if (resultSet.next()) { // Move cursor to the first row and check if a row exists
-                return resultSet.getString("role");
-            } else {
-                // Handle the case where no user is found with the given username
-                return null; // Or throw an exception, or return a default role, depending on your application's logic
-            }
+            resultSet.next();
+            String s = resultSet.getString("role");
+            return s;
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
+
+        return Role.ADMIN.toString();
+
     }
 
     public static void main(String[] args) {
         UserService userService = new UserService();
 
-        User user = new User(0, "test12", "test12@mail.com", "test", Role.AGENT); // Password too short (less than 8 characters)
+        User user = new User(0, "test12", "test12@mail.com", "testtest", Role.AGENT); // Password too short (less than 8 characters)
+        user.setUsername("test");
         int result = userService.addUser(user);
 
         if (result > 0) {
