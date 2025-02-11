@@ -5,50 +5,91 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
 
-<VBox  style="-fx-background-color: white; -fx-padding: 20;" spacing="10" xmlns="http://javafx.com/javafx"
-       xmlns:fx="http://javafx.com/fxml"
-       fx:controller="com.example.flighthub.controllers.flight.FlightDetailsPopupController">
 
-    <Text fx:id="titleText" text="Flight Details" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-fill: #5067e9;" />
+<VBox style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #5067e9; -fx-border-width: 2; -fx-border-radius: 5;" spacing="10" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.flighthub.controllers.flight.FlightDetailsPopupController">
 
-    <VBox style="-fx-padding: 10;">
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Flight ID:" />
-        <Label fx:id="flightIdLabel" style="-fx-font-size: 14px;"/>
-    </VBox>
+    <HBox alignment="CENTER_RIGHT">
+        <Button fx:id="closeButton" text="X" style="-fx-background-color: transparent; -fx-text-fill: #5067e9; -fx-font-size: 18px;-fx-font-weight: bold;" />
+    </HBox>
 
-    <VBox style="-fx-padding: 10;">
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Flight Number:" />
-        <Label fx:id="flightNumberLabel" style="-fx-font-size: 14px;"/>
-    </VBox>
+    <Text fx:id="titleText" text="Flight Details" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #5067e9; -fx-alignment: center;" />
+    <Separator style="-fx-border-color: #5067e9; -fx-border-width: 1;"/>
 
-    <VBox style="-fx-padding: 10;">
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Aircraft ID:" />
-        <Label fx:id="aircraftIdLabel" style="-fx-font-size: 14px;"/>
-    </VBox>
+    <!-- Flight Number and ID -->
+    <HBox spacing="20" style="-fx-padding: 10;">
+        <VBox>
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Flight Number:" />
+            <Label fx:id="flightNumberLabel" style="-fx-font-size: 16px;"/>
+        </VBox>
+        <VBox>
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Flight ID:" />
+            <Label fx:id="flightIdLabel" style="-fx-font-size: 16px;"/>
+        </VBox>
+    </HBox>
 
-    <VBox style="-fx-padding: 10;">
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Departure Airport ID:" />
-        <Label fx:id="departureAirportIdLabel" style="-fx-font-size: 14px;"/>
-    </VBox>
 
-    <VBox style="-fx-padding: 10;">
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Arrival Airport ID:" />
-        <Label fx:id="arrivalAirportIdLabel" style="-fx-font-size: 14px;"/>
-    </VBox>
+    <!-- Aircraft Details -->
+    <HBox spacing="20" style="-fx-padding: 10;">
+        <VBox>
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Aircraft Model:" />
+            <Label fx:id="aircraftModelLabel" style="-fx-font-size: 16px;"/>
+        </VBox>
+        <VBox>
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Aircraft ID:" />
+            <Label fx:id="aircraftIdLabel" style="-fx-font-size: 16px;"/>
+        </VBox>
+    </HBox>
 
-    <VBox style="-fx-padding: 10;">
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Departure Time:" />
-        <Label fx:id="departureTimeLabel" style="-fx-font-size: 14px;"/>
-    </VBox>
+    <Separator style="-fx-border-color: #cccccc; -fx-border-width: 0.5;"/>
 
-    <VBox style="-fx-padding: 10;">
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Arrival Time:" />
-        <Label fx:id="arrivalTimeLabel" style="-fx-font-size: 14px;"/>
-    </VBox>
+    <!-- Departure and Arrival -->
+    <HBox fx:id="departureHbox" spacing="10" style="-fx-padding: 10; -fx-alignment: center-left;">
+        <ImageView fitHeight="24" fitWidth="24">
+            <Image url="@../../images/iconDecollage.png" />
 
-    <VBox style="-fx-padding: 10;">
-        <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Price:" />
-        <Label fx:id="priceLabel" style="-fx-font-size: 14px;"/>
-    </VBox>
+        </ImageView>
+        <VBox>
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Departure:" />
+            <Label fx:id="departureAirportNameLabel" style="-fx-font-size: 16px;"/>
+            <Label fx:id="departureTimeLabel" style="-fx-font-size: 14px;"/>
+        </VBox>
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <ImageView fx:id="departureWeatherIcon" fitHeight="20" fitWidth="20" />
+            <Label fx:id="departureWeatherLabel" style="-fx-font-size: 12px;"/>
+        </HBox>
+    </HBox>
+
+    <HBox fx:id="arrivalHbox" spacing="10" style="-fx-padding: 10; -fx-alignment: center-left;">
+        <ImageView fitHeight="24" fitWidth="24">
+            <Image url="@../../images/iconAttirage.png" />
+
+        </ImageView>
+        <VBox>
+            <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Arrival:" />
+            <Label fx:id="arrivalAirportNameLabel" style="-fx-font-size: 16px;"/>
+            <Label fx:id="arrivalTimeLabel" style="-fx-font-size: 14px;"/>
+        </VBox>
+        <HBox alignment="CENTER_LEFT" spacing="5">
+            <ImageView fx:id="arrivalWeatherIcon" fitHeight="20" fitWidth="20" />
+            <Label fx:id="arrivalWeatherLabel" style="-fx-font-size: 12px;"/>
+        </HBox>
+    </HBox>
+    <Separator style="-fx-border-color: #cccccc; -fx-border-width: 0.5;"/>
+    <!-- Price -->
+    <HBox spacing="20" style="-fx-padding: 10;">
+        <VBox>
+            <Label  style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Price:">
+            </Label>
+            <Label fx:id="priceLabel" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;"/>
+        </VBox>
+    </HBox>
+
 </VBox>

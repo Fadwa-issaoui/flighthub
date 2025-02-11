@@ -34,7 +34,14 @@ public class SplashScreen implements Initializable {
         @Override
         public void run() {
             try {
+          Thread.sleep(300); // Splash screen stays for 5 seconds
+                Platform.runLater(() -> {
+                    try {
+                        //Parent root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Flights.fxml"));
+
                      /*   Parent root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
+
                         Stage loginStage = new Stage();
                         loginStage.setScene(new Scene(root));
                         loginStage.show();

@@ -147,9 +147,11 @@ public class UserService {
             resultSet.next();
             String s = resultSet.getString("role");
             return s;
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
         return Role.ADMIN.toString();
 
     }
