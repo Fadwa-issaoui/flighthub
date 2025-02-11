@@ -32,23 +32,41 @@ public class SplashScreen implements Initializable {
         @Override
         public void run() {
             try {
+
+                Thread.sleep(300); // Splash screen stays for 5 seconds
                 Platform.runLater(() -> {
                     try {
                         Parent root = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
-                        Stage loginStage = new Stage();
-                        loginStage.setScene(new Scene(root));
-                        loginStage.show();
+                        javafx.application.Platform.runLater(() -> openLoginScreen(new Stage()));
+                        new Thread(() -> {
+                            try {
+                                Thread.sleep(5000);  // Wait for 5 seconds
+                                javafx.application.Platform.runLater(() -> openLoginScreen(new Stage()));
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }).start();
 
-                        // Close the splash screen
-                        Stage splashStage = (Stage) stackPaneSplashScreen.getScene().getWindow();
-                        splashStage.close();
-                    } catch (IOException e) {
+
+                    } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 });
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            }catch(Exception e){
+                e.printStackTrace();
             }
+    }
+    private void openLoginScreen(Stage primaryStage) {
+        try {
+            // Load the Login screen (Login.fxml)
+            Parent loginRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
+            Scene loginScene = new Scene(loginRoot);
+            primaryStage.setScene(loginScene);
+            primaryStage.setTitle("Login");
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
     }
 }

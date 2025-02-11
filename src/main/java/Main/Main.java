@@ -7,17 +7,32 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/car.fxml"));
-        primaryStage.setScene(new Scene(fxmlLoader.load()));
-        primaryStage.setTitle("Car Management");
-        primaryStage.show();
+    public void start(Stage primaryStage) {
+        try {
+            // Load the Splash Screen
+            Parent splashScreenRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
+            Scene splashScreenScene = new Scene(splashScreenRoot);
+            primaryStage.setScene(splashScreenScene);
+            primaryStage.setTitle("Splash Screen");
+
+            // Make the window borderless and completely transparent (no buttons, no border)
+            primaryStage.initStyle(StageStyle.TRANSPARENT); // Remove title bar and window decorations
+            primaryStage.setOpacity(1);  // Make sure opacity is fully visible
+
+            // Override the close request behavior (disables close button functionality)
+            primaryStage.setOnCloseRequest(event -> event.consume());  // Disables the close button
+
+            // Disable resizing to prevent dragging to resize
+            primaryStage.setResizable(false);
+
+            // Show the splash screen
+            primaryStage.show();
+
+            // After 5 seconds, switch to the Login screen
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-    public static void main(String[] args) {
-        launch(args);
-
-    }
-
-
 }

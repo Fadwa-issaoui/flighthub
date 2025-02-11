@@ -108,10 +108,6 @@ public class AircraftController {
         }
     }
 
-
-
-
-
     @FXML
     public void handleDeleteAircraft() {
         Aircraft selected = aircraftTableView.getSelectionModel().getSelectedItem();
