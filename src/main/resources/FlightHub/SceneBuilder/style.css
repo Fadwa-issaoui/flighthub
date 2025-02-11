@@ -1,0 +1,47 @@
+/* style.css */
+
+/* Custom Button Style */
+.custom-button {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-border-radius: 0; /* Remove rounded corners */
+    -fx-background-radius: 0; /* Remove rounded corners */
+    -fx-padding: 10 20; /* Add padding */
+    -fx-border-color: black; /* Add border */
+    -fx-border-width: 1; /* Border width */
+}
+
+.custom-button:hover {
+    -fx-background-color: #e0e0e0; /* Light gray on hover */
+}
+
+.custom-button:pressed {
+    -fx-background-color: #b0b0b0; /* Darker gray when pressed */
+}
+
+/* Customize the column resize indicator */
+.table-view .column-resize-line {
+    -fx-stroke: #4960e6; /* Change the color to blue */
+    -fx-stroke-width: 1px; /* Adjust the width if needed */
+}
+.table-view {
+    -fx-font-size: 16px; /* Change this value to adjust text size */
+}
+
+.table-column {
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+/* Change the color of the selected row */
+.table-row-cell:selected {
+    -fx-background-color: #2a3cad !important;  /* Dark blue */
+    -fx-text-fill: white;
+}
+
+/* Optional: Change hover effect */
+.table-row-cell:hover {
+    -fx-background-color: #3b4fcc !important;  /* Lighter blue */
+    -fx-text-fill: white;
+}
