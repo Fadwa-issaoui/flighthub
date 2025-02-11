@@ -15,6 +15,14 @@ public class DetailsButtonTableCell<Flight, Void> extends TableCell<Flight, Void
                 System.out.println("Details button for Flight ID: "+((com.example.flighthub.models.Flight)flight).getFlightId());
             }
         });
+
+        // Style for details button
+        button.setStyle("-fx-background-color: #5067e9; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 10; -fx-background-radius: 3;");
+
+        // Style when the button is hovered (optional)
+        button.setOnMouseEntered(event -> button.setStyle("-fx-background-color: #3a4ea0; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 10; -fx-background-radius: 3;"));
+        button.setOnMouseExited(event -> button.setStyle("-fx-background-color: #5067e9; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 10; -fx-background-radius: 3;"));
+
     }
     @Override
     protected void updateItem(Void item, boolean empty) {

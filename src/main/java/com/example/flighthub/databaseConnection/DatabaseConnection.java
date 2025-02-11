@@ -11,6 +11,7 @@ public class DatabaseConnection {
     // Database credentials
     private final String url = "jdbc:mysql://localhost:3306/flighthub";
     private final String username = "root";
+
     private final String password = "";
 
     // Private constructor to prevent instantiation

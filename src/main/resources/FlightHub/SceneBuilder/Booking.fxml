@@ -8,16 +8,16 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.flighthub.controllers.booking.BookingController">
 
-    <Text text="Booking Management" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+    <Text text="com.example.flighthub.models.Booking Management" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
 
     <GridPane hgap="10" vgap="10">
-        <Label text="Booking ID:" />
+        <Label text="com.example.flighthub.models.Booking ID:" />
         <TextField fx:id="txtBookingId" GridPane.columnIndex="1"/>
 
         <Label text="Status:" GridPane.rowIndex="1"/>
         <TextField fx:id="txtStatus" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-        <Label text="Booking Date:" GridPane.rowIndex="2"/>
+        <Label text="com.example.flighthub.models.Booking Date:" GridPane.rowIndex="2"/>
         <TextField fx:id="txtBookingDate" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
         <Label text="Passenger ID:" GridPane.rowIndex="3"/>
