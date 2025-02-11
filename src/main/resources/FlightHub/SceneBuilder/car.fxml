@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.flighthub.controllers.car.CarController">
+
+    <top>
+        <!-- FlightHub Header on Top of the Table -->
+        <VBox alignment="CENTER" spacing="10">
+            <Label text="FLIGHTHUB"/>
+        </VBox>
+    </top>
+
+    <center>
+        <!-- Main Content with Table and Buttons -->
+        <VBox alignment="CENTER" spacing="20">
+
+            <!-- FlightHub Header (Inside the Table Section as Backup) -->
+            <Label text="Car Details"/>
+
+            <!-- Table for Car Details -->
+            <TableView fx:id="carTable">
+                <columns>
+                    <TableColumn text="ID" fx:id="idColumn"/>
+                    <TableColumn text="Brand" fx:id="brandColumn"/>
+                    <TableColumn text="Model" fx:id="modelColumn"/>
+                    <TableColumn text="License Plate" fx:id="licensePlateColumn"/>
+                    <TableColumn text="Price per Day" fx:id="priceColumn"/>
+                    <TableColumn text="Available" fx:id="availableColumn"/>
+                </columns>
+            </TableView>
+
+            <!-- Buttons Under the Table -->
+            <HBox spacing="15" alignment="CENTER">
+                <Button text="Add" onAction="#addCar"/>
+                <Button text="Edit" onAction="#editCar"/>
+                <Button text="Delete" onAction="#deleteCar"/>
+            </HBox>
+
+        </VBox>
+    </center>
+</BorderPane>

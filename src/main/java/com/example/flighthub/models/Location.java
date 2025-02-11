@@ -1,5 +1,6 @@
 package com.example.flighthub.models;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Location {
@@ -8,7 +9,7 @@ public class Location {
     private String customerName;
     private LocalDate rentalDate;
     private int rentalDays;
-    private double totalCost;
+    private BigDecimal totalCost; // Changed from double to BigDecimal
 
     public Location(int id, Car car, String customerName, LocalDate rentalDate, int rentalDays) {
         this.id = id;
@@ -16,35 +17,46 @@ public class Location {
         this.customerName = customerName;
         this.rentalDate = rentalDate;
         this.rentalDays = rentalDays;
-        this.totalCost = car.getRentalPricePerDay() * rentalDays;
+        this.totalCost = car.getRentalPricePerDay().multiply(BigDecimal.valueOf(rentalDays)); // Fixed Calculation
         car.rentCar();
     }
 
-    public Location() {
-
-    }
+    public Location() {}
 
     public int getId() { return id; }
     public Car getCar() { return car; }
     public String getCustomerName() { return customerName; }
     public LocalDate getRentalDate() { return rentalDate; }
     public int getRentalDays() { return rentalDays; }
-    public double getTotalCost() { return totalCost; }
+    public BigDecimal getTotalCost() { return totalCost; } // Changed return type
 
     public void returnCar() {
         car.returnCar();
     }
 
-
-    // Setters for updating the Location object
+    // Setters
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
-        // Recalculate total cost if needed based on customer-related logic
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    public void setRentalDate(LocalDate rentalDate) {
+        this.rentalDate = rentalDate;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
     }
 
     public void setRentalDays(int rentalDays) {
         this.rentalDays = rentalDays;
-        this.totalCost = car.getRentalPricePerDay() * rentalDays;  // Recalculate total cost based on new rental days
+        this.totalCost = car.getRentalPricePerDay().multiply(BigDecimal.valueOf(rentalDays)); // Fixed Calculation
     }
 }
-

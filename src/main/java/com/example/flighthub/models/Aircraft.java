@@ -1,7 +1,6 @@
 package com.example.flighthub.models;
 
 public class Aircraft {
-
     private int aircraftId;
     private String model;
     private int capacity;
@@ -15,7 +14,6 @@ public class Aircraft {
         this.flightId = flightId;
     }
 
-    public Aircraft() {}
     public Aircraft(int aircraftId, String model, int capacity, boolean isAvailable) {
         this.aircraftId = aircraftId;
         this.model = model;
@@ -59,11 +57,6 @@ public class Aircraft {
 
     @Override
     public String toString() {
-        return "Aircraft{" +
-                "aircraftId=" + aircraftId +
-                ", model='" + model + '\'' +
-                ", capacity=" + capacity +
-                ", isAvailable=" + isAvailable +
-                '}';
+        return "Aircraft{" + "aircraftId=" + aircraftId + ", model='" + model + '\'' + ", capacity=" + capacity + ", isAvailable=" + isAvailable + '}';
     }
 }

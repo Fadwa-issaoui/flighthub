@@ -29,6 +29,7 @@ module Main {
     opens com.example.flighthub.controllers.aircraft to javafx.fxml;
     opens com.example.flighthub.controllers.dashboard to javafx.fxml;
     opens com.example.flighthub.controllers.login to javafx.fxml;
+
     opens com.example.flighthub.controllers.Airport to javafx.fxml;
     exports com.example.flighthub.models.weatherstack to com.fasterxml.jackson.databind;
 

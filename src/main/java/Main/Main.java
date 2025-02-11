@@ -2,16 +2,10 @@ package Main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import java.io.IOException;
-
 
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -40,23 +34,5 @@ public class Main extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-
-
-    private void openDashboardScreen(Stage primaryStage) {
-        try {
-            // Load the Dashboard screen (Dashboard.fxml)
-            Parent dashboardRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/AdminDashboard.fxml"));
-            Scene dashboardScene = new Scene(dashboardRoot);
-            primaryStage.setScene(dashboardScene);
-            primaryStage.setTitle("Dashboard");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
