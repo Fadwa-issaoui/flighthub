@@ -40,28 +40,30 @@
                         </Pane>
 
                         <!-- Upcoming Flights -->
-                        <Pane layoutX="14.0" layoutY="200.0" prefHeight="160.0" prefWidth="582.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+                        <Pane layoutX="14.0" layoutY="380.0" prefHeight="160.0" prefWidth="582.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
                             <children>
                                 <Text layoutX="20.0" layoutY="20.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #555555;" text="Upcoming Flights" />
-                                <TableView id="upcomingFlightsTable" fx:id="upcomingFlightsTable" layoutX="20.0" layoutY="40.0" prefHeight="100.0" prefWidth="550.0">
+                                <TableView fx:id="upcomingFlightsTable" layoutX="20.0" layoutY="40.0" prefHeight="100.0" prefWidth="550.0">
                                     <columns>
                                         <TableColumn fx:id="flightNumberCol" prefWidth="120.0" text="Flight Number" />
                                         <TableColumn fx:id="departureCol" prefWidth="200.0" text="Departure" />
                                         <TableColumn fx:id="arrivalCol" prefWidth="200.0" text="Arrival" />
+
                                     </columns>
                                 </TableView>
                             </children>
                         </Pane>
 
                         <!-- Recent Bookings -->
-                        <Pane layoutX="14.0" layoutY="380.0" prefHeight="160.0" prefWidth="582.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+                        <Pane layoutX="14.0" layoutY="200.0" prefHeight="160.0" prefWidth="582.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
                             <children>
                                 <Text layoutX="20.0" layoutY="20.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #555555;" text="Recent Bookings" />
-                                <TableView id="recentBookingsTable" fx:id="recentBookingsTable" layoutX="20.0" layoutY="40.0" prefHeight="100.0" prefWidth="550.0">
+                                <TableView fx:id="recentBookingsTable" layoutX="20.0" layoutY="40.0" prefHeight="100.0" prefWidth="550.0">
                                     <columns>
                                         <TableColumn fx:id="passengerNameCol" prefWidth="200.0" text="Passenger Name" />
-                                        <TableColumn fx:id="bookingDateCol" prefWidth="150.0" text="Booking Date" />
-                                        <TableColumn fx:id="flightInfoCol" prefWidth="200.0" text="Flight Info" />
+                                        <TableColumn fx:id="bookingDateCol" prefWidth="125.60005187988281" text="Booking Date" />
+                                        <TableColumn fx:id="flightInfoCol" prefWidth="79.20001220703125" text="Flight Id" />
+                                        <TableColumn fx:id="emailColumn" prefWidth="142.4000244140625" text="Send Email" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -102,7 +104,7 @@
                         </ImageView>
                   <Button layoutX="135.0" layoutY="18.0" mnemonicParsing="false" text="Home" />
                   <Button layoutX="189.0" layoutY="18.0" mnemonicParsing="false" text="Flights" />
-                  <Button layoutX="245.0" layoutY="18.0" mnemonicParsing="false" text="Contact" />
+                  <Button fx:id="emailButton" layoutX="245.0" layoutY="18.0" mnemonicParsing="false" text="Contact" />
                     </children>
                 </Pane>
 
