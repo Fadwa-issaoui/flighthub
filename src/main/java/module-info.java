@@ -8,7 +8,6 @@ module Main {
     requires com.fasterxml.jackson.annotation;
     requires com.fasterxml.jackson.databind;
 
-
     requires java.mail;
     requires java.desktop;
     requires activation;
@@ -20,10 +19,7 @@ module Main {
     opens Main to javafx.fxml;
     exports Main;
 
-
-    exports Main to javafx.graphics;
     exports com.example.flighthub.controllers.booking;
-    opens com.example.flighthub.models to javafx.base;
     opens com.example.flighthub.models to javafx.base;
     opens com.example.flighthub.controllers.booking to javafx.fxml, javafx.graphics;
 
