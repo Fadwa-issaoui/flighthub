@@ -159,7 +159,7 @@ public class UserService {
     public static void main(String[] args) {
         UserService userService = new UserService();
 
-        User user = new User(0, "test12", "test12@mail.com", "testtest", Role.AGENT); // Password too short (less than 8 characters)
+        User user = new User(0, "test12", "test12@mail.com", "testtest", Role.GESTIONNAIRE); // Password too short (less than 8 characters)
         user.setUsername("test");
         int result = userService.addUser(user);
 

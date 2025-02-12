@@ -5,6 +5,7 @@ import com.example.flighthub.models.Booking;
 import com.example.flighthub.models.Flight;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -228,6 +229,26 @@ public class AgentDashboardController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void handleRent(ActionEvent actionEvent) {
+        try {
+            // Get the current stage (dashboard window) and close it
+            Stage stage = (Stage) emailButton.getScene().getWindow();
+            stage.close();
+
+            // Load the login window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/rent_car.fxml")); // Adjust path if needed
+            Parent root = loader.load();
+
+            // Create new stage for the login window
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.setTitle("rent");
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Custom data holder for rows in the tables

@@ -13,7 +13,7 @@ public class DatabaseConnection {
     private final String url = "jdbc:mysql://localhost:3306/flighthub";
     private final String username = "root";
 
-    private final String password = "mysql";
+    private final String password = "";
 
     // Private constructor to prevent instantiation
     private DatabaseConnection() {

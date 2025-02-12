@@ -32,10 +32,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.IOException;
+
 public class Main extends Application {
     @Override
 
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         try {
             // Load the Splash Screen
             Object splashScreenRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
@@ -58,8 +60,10 @@ public class Main extends Application {
             primaryStage.show();
 
             // After 5 seconds, switch to the Login screen
-
-
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     public static void main(String[] args) {
         launch(args);
     }

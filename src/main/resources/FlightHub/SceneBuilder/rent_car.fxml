@@ -4,10 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.car.RentCarController" style="-fx-background-color: blue;">
-    <!-- White Header -->
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.car.RentCarController" style="-fx-background-color: #4242ec;">
+    <!-- White Header with Back Button -->
     <top>
-        <HBox style="-fx-background-color: white; -fx-padding: 10;">
+        <HBox style="-fx-background-color: white; -fx-padding: 10;" spacing="10">
+            <Button text="Back" onAction="#handleBackToDashboard" style="-fx-background-color: white; -fx-text-fill: black; -fx-font-size: 14px;"/>
             <Label text="Rent Management" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: black;"/>
         </HBox>
     </top>

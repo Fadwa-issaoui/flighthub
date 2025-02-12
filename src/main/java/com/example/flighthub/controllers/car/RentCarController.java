@@ -3,8 +3,11 @@ package com.example.flighthub.controllers.car;
 import com.example.flighthub.models.Car;
 import com.example.flighthub.models.Location;
 import com.example.flighthub.services.CarRentalService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
@@ -109,6 +112,17 @@ public class RentCarController {
         // Optional: Print debug information
         System.out.println("Rent list refreshed. Total rents: " + locations.size());
     }
+
+    @FXML
+    private void handleBackToDashboard(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/booking_fl_dash.fxml"));
+        Parent dashboardRoot = loader.load();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(dashboardRoot));
+        stage.show();
+    }
+
 
 
 

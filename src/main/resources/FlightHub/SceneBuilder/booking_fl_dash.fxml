@@ -102,9 +102,9 @@
                                 <Image url="@../../images/iconAvatar.png" />
                             </image>
                         </ImageView>
-                  <Button layoutX="135.0" layoutY="18.0" mnemonicParsing="false" text="Home" />
+                  <Button fx:id="rent" layoutX="135.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleRent" text="Rent" />
                   <Button layoutX="189.0" layoutY="18.0" mnemonicParsing="false" text="Flights" />
-                  <Button fx:id="emailButton" onAction="#handleLogout" layoutX="245.0" layoutY="18.0" mnemonicParsing="false" text="Logout" />
+                  <Button fx:id="emailButton" layoutX="245.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
                     </children>
                 </Pane>
 
