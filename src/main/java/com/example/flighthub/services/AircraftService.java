@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class AircraftService {
     }
     // NEW METHOD: Get available aircraft for a given departure airport
     public List<Aircraft> getAvailableAircraftForDepartureAirport(int departureAirportId) {
+        //the same code
         List<Aircraft> availableAircraft = new ArrayList<>();
 
         // Get aircraft that are NOT assigned to any flight (flightId = 0)
@@ -72,19 +74,20 @@ public class AircraftService {
 
         return availableAircraft;
     }
-    // CREATE - Add a new aircraft
+    // CREATE - Add a new aircraft + Initialize flightID
     public boolean createAircraft(Aircraft aircraft) {
         if (aircraft.getModel() == null || aircraft.getModel().trim().isEmpty()) {
             showAlert("Input Error", "Model field cannot be empty.");
-            return false; // Prevent insertion
+            return false;
         }
 
-        String query = "INSERT INTO aircraft (aircraftId, model, capacity, isAvailable) VALUES (?, ?, ?, ?)"; // flightId not needed on creation
+        String query = "INSERT INTO aircraft (aircraftId, model, capacity, isAvailable, flightId) VALUES (?, ?, ?, ?, 0)"; // Set flightId to 0
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, aircraft.getAircraftId());
             ps.setString(2, aircraft.getModel());
             ps.setInt(3, aircraft.getCapacity());
             ps.setBoolean(4, aircraft.isAvailable());
+            // flightId is set to 0 in the query itself
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -93,8 +96,10 @@ public class AircraftService {
         }
     }
 
+
     // UPDATE - Update an existing aircraft
     public boolean updateAircraft(Aircraft aircraft) {
+        //the same code
         if (aircraft.getModel() == null || aircraft.getModel().trim().isEmpty()) {
             showAlert("Input Error", "Model field cannot be empty.");
             return false; // Prevent update
@@ -117,6 +122,7 @@ public class AircraftService {
 
     // Get all aircrafts
     public List<Aircraft> getAllAircrafts() {
+        //the same code
         List<Aircraft> aircrafts = new ArrayList<>();
         String query = "SELECT * FROM aircraft";
 
@@ -140,6 +146,7 @@ public class AircraftService {
 
     // Get an aircraft by ID
     public Aircraft getAircraftById(int aircraftId) {
+        //the same code
         String query = "SELECT * FROM aircraft WHERE aircraftId = ?";
         Aircraft aircraft = null;
 
@@ -164,6 +171,7 @@ public class AircraftService {
 
     // Delete an aircraft by ID
     public boolean deleteAircraft(int aircraftId) {
+        //the same code
         String query = "DELETE FROM aircraft WHERE aircraftId = ?";
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -178,6 +186,7 @@ public class AircraftService {
 
     //  Update the flightId of an aircraft
     public boolean updateAircraftFlightId(int aircraftId, int flightId) {
+        //the same code
         String query = "UPDATE aircraft SET flightId = ? WHERE aircraftId = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, flightId);
@@ -191,6 +200,7 @@ public class AircraftService {
 
     // Reset the flightId of an aircraft (set to 0, indicating no assigned flight)
     public boolean resetAircraftFlightId(int aircraftId) {
+        //the same code
         String query = "UPDATE aircraft SET flightId = 0 WHERE aircraftId = ?"; // Setting to 0
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, aircraftId);
@@ -207,5 +217,46 @@ public class AircraftService {
         alert.setTitle(title);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    //In AircraftService
+    public int getAvailableAircraftCount() {
+        // This is the same logic as getAvailableAircraftForDepartureAirport,
+        // but we just count instead of returning the list.  This is more efficient.
+        int availableCount = 0;
+        String unassignedQuery = "SELECT COUNT(*) FROM aircraft WHERE flightId = 0";
+        try (PreparedStatement psUnassigned = connection.prepareStatement(unassignedQuery);
+             ResultSet rsUnassigned = psUnassigned.executeQuery()) {
+
+            if (rsUnassigned.next()) {
+                availableCount += rsUnassigned.getInt(1); // Get the count directly
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving unassigned aircraft count: " + e.getMessage());
+            return 0; // Or throw, depending on error handling.
+        }
+
+        // Get aircraft assigned to *completed* flights.
+        String assignedQuery = "SELECT a.aircraftId, f.arrivalTime FROM aircraft a JOIN flight f ON a.flightId = f.flightId WHERE f.flightId != 0";
+        try (PreparedStatement psAssigned = connection.prepareStatement(assignedQuery);
+             ResultSet rsAssigned = psAssigned.executeQuery()) {
+
+            while (rsAssigned.next()) {
+                String arrivalTimeString = rsAssigned.getString("arrivalTime"); // Get as String
+                LocalDateTime arrivalTime = LocalDateTime.parse(arrivalTimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                if (arrivalTime.isBefore(LocalDateTime.now())) {
+                    availableCount++;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving assigned aircraft count: " + e.getMessage());
+            return 0; //Or throw
+
+        } catch (DateTimeParseException e) {
+            System.err.println("Error parsing arrival time: " + e.getMessage()); // Handle parsing errors!
+            return 0;
+        }
+
+        return availableCount;
     }
 }

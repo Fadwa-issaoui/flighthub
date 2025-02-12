@@ -7,6 +7,10 @@ public class Aircraft {
     private boolean isAvailable;
     private int flightId;
 
+    public Aircraft() {
+
+    }
+
     public int getFlightId() {
         return flightId;
     }

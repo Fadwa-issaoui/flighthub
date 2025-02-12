@@ -12,10 +12,19 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.flight.FlightController">
+<VBox fx:id="mainVbox" spacing="0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.flight.FlightController">
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: #5067e9; -fx-padding: 15;">
+        <!-- Home Icon (as Back Button) - Moved to the LEFT -->
+        <ImageView fx:id="homeIcon" fitHeight="29.0" fitWidth="34.0" style="-fx-cursor: hand;">
+            <image>
+                <Image url="@../../images/home.png" />
+            </image>
+            <HBox.margin>
+                <Insets right="10" />
+            </HBox.margin>
+        </ImageView>
         <ImageView fitHeight="80" fitWidth="240" preserveRatio="true">
             <Image url="@../../images/LogoTransparent.png" />
         </ImageView>
@@ -31,6 +40,7 @@
         <Button fx:id="clearSearchButton" style="-fx-background-color: white; -fx-text-fill:#5067e9; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 5 10; -fx-background-radius: 5;" text="Clear" />
 
 
+
         <Button fx:id="addButton" style="-fx-background-color: white; -fx-text-fill:#5067e9; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 5;" text="Add Flight">
             <HBox.margin>
                 <Insets left="10" right="0" />
@@ -38,11 +48,11 @@
         </Button>
     </HBox>
 
-    <!-- ScrollPane to handle table overflow -->
-    <ScrollPane fitToWidth="true" prefHeight="480.0" prefWidth="945.0" vbarPolicy="ALWAYS">
+    <!-- ScrollPane and TableView (No Changes) -->
+    <ScrollPane fitToWidth="true" vbarPolicy="ALWAYS">
         <content>
             <VBox>
-                <TableView fx:id="flightTable" prefHeight="473.0" prefWidth="873.0" style="-fx-font-size: 14px;">
+                <TableView fx:id="flightTable" style="-fx-font-size: 14px;">
                     <columns>
                         <TableColumn fx:id="idColumn" prefWidth="50" style="-fx-alignment: center;" text="ID" />
                         <TableColumn fx:id="flightNumberColumn" prefWidth="150" style="-fx-alignment: center;" text="Flight Number" />

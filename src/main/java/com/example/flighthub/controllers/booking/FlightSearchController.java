@@ -1,10 +1,14 @@
 package com.example.flighthub.controllers.booking;
 
 import com.example.flighthub.databaseConnection.DatabaseConnection;
+import com.example.flighthub.models.Aircraft;
+import com.example.flighthub.services.FlightService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -17,7 +21,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
 
 public class FlightSearchController {
 
@@ -46,6 +49,8 @@ public class FlightSearchController {
     private String departure;
     private String destination;
     private LocalDate date;
+    private int flightId;
+
     @FXML
     private void goToHome() {
         try {
@@ -66,16 +71,17 @@ public class FlightSearchController {
     }
 
     public void setFlightData(String departure, String destination, LocalDate date) {
+
         this.departure = departure;
         this.destination = destination;
         this.date = date;
-
         departureChoiceBox.setValue(departure);
         destinationChoiceBox.setValue(destination);
         datePicker.setValue(date);
         reloadLocations();
-        fetchFlightData(); // Fetch flight details based on the input
+        fetchFlightData();
     }
+
 
     public void fetchFlightData() {
         String query = "SELECT TIME(f.departureTime) AS departureTime, " +"TIME(f.arrivalTime) AS arrivalTime, " +"f.price " +"FROM flight f " +"JOIN airport a1 ON f.departureAirportId = a1.airportId " +"JOIN airport a2 ON f.arrivalAirportId = a2.airportId " +"WHERE a1.location = ? AND a2.location = ? " +"AND DATE(f.departureTime) = ?";
@@ -89,10 +95,8 @@ public class FlightSearchController {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 int flightCount = 0;
-
                 while (rs.next()) {
                     flightCount++;
-
                     // If it's the first flight, display the details
                     if (flightCount == 1) {
                         flightDepHeure.setText(rs.getString("departureTime"));
@@ -122,11 +126,9 @@ public class FlightSearchController {
     @FXML
     private void reloadLocations() {
         ObservableList<String> locations = FXCollections.observableArrayList();
-
         try (Connection connection = DatabaseConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement("SELECT DISTINCT location FROM airport");
              ResultSet rs = stmt.executeQuery()) {
-
             while (rs.next()) {
                 locations.add(rs.getString("location"));
             }
@@ -138,6 +140,7 @@ public class FlightSearchController {
             // Set the current values after reloading
             departureChoiceBox.setValue(departure);
             destinationChoiceBox.setValue(destination);
+
         } catch (SQLException e) {
             e.printStackTrace();
             showError("Database Error", "Could not load locations from the database.");
@@ -178,9 +181,44 @@ public class FlightSearchController {
 
         // Update the flight data with the new values
         setFlightData(departureLocation, destinationLocation, selectedDate);
-
-
-
     }
 
+    public void handleSelect(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/booking_form.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+            BookingController controller = loader.getController();
+
+            // Pass the flight data to the booking form controller
+            controller.setFlightData(this.date,this.destination,this.departure,this.flightId);
+            // Switch scene
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void handleLogout(ActionEvent actionEvent) {
+        try {
+            // Get the current stage (dashboard window) and close it
+            Stage stage = (Stage) homeButton.getScene().getWindow();
+            stage.close();
+
+            // Load the login window
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml")); // Adjust path if needed
+            Parent root = loader.load();
+
+            // Create new stage for the login window
+            Stage loginStage = new Stage();
+            loginStage.setScene(new Scene(root));
+            loginStage.setTitle("Login");
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
