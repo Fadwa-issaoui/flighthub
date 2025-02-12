@@ -80,6 +80,8 @@ public class AgentDashboardController {
     private TableColumn<TableRowData, Void> emailColumn;
     @FXML
     private TableColumn<TableRowData, Void> ticketColumn;
+    @FXML
+    private TableColumn<TableRowData, String> statusCol;
 
     @FXML
     private Label totalBookingsLabel;
@@ -168,30 +170,111 @@ public class AgentDashboardController {
         }
     }
 
+    // HashMap to store booking IDs separately
+    // HashMaps to store booking IDs and statuses separately
+    private final Map<Integer, Integer> bookingIdMap = new HashMap<>();
+    private final Map<Integer, String> statusMap = new HashMap<>();
+
     private void loadRecentBookings() {
         ObservableList<TableRowData> bookingRows = FXCollections.observableArrayList();
+        bookingIdMap.clear();
+        statusMap.clear(); // Clear previous statuses
+
         try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            String query = "SELECT b.bookingDate, p.firstName, p.lastName, f.flightNumber " +
+            String query = "SELECT b.bookingDate, p.firstName, p.lastName, f.flightNumber, b.status, b.bookingId " +
                     "FROM booking b " +
                     "JOIN passenger p ON b.passengerId = p.passengerId " +
                     "JOIN flight f ON b.flightId = f.flightId " +
                     "ORDER BY b.bookingDate DESC LIMIT 5";
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
+            int index = 0; // Track row index
+
             while (rs.next()) {
                 String fullName = rs.getString("firstName") + " " + rs.getString("lastName");
+
+                // Store bookingId and status separately
+                bookingIdMap.put(index, rs.getInt("bookingId"));
+                statusMap.put(index, rs.getString("status"));
+
                 bookingRows.add(new TableRowData(
                         fullName,
                         rs.getString("bookingDate"),
-                        rs.getString("flightNumber")
+                        rs.getString("flightNumber") // Only pass 3 arguments
                 ));
+                index++;
             }
             recentBookingsTable.setItems(bookingRows);
+
+            // Setup ChoiceBox for status column
+            statusCol.setCellFactory(col -> new TableCell<TableRowData, String>() {
+                private final ChoiceBox<String> choiceBox = new ChoiceBox<>(FXCollections.observableArrayList("Confirmed", "Canceled"));
+                private boolean updating = false; // Flag to prevent infinite loop
+
+                {
+                    choiceBox.setOnAction(event -> {
+                        if (!updating) { // Only update if not in UI update phase
+                            int rowIndex = getIndex();
+                            if (rowIndex >= 0 && rowIndex < recentBookingsTable.getItems().size()) {
+                                Integer bookingId = bookingIdMap.get(rowIndex);
+                                if (bookingId != null) {
+                                    String newStatus = choiceBox.getValue();
+                                    updateBookingStatus(bookingId, newStatus);
+                                    statusMap.put(rowIndex, newStatus);
+                                    recentBookingsTable.refresh(); // Ensure UI updates correctly
+                                }
+                            }
+                        }
+                    });
+                }
+
+                @Override
+                protected void updateItem(String status, boolean empty) {
+                    super.updateItem(status, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        int rowIndex = getIndex();
+                        String storedStatus = statusMap.get(rowIndex); // Get correct status
+
+                        updating = true; // Disable event temporarily
+                        choiceBox.setValue(storedStatus != null ? storedStatus : "Confirmed"); // Set value safely
+                        updating = false; // Re-enable event
+
+                        setGraphic(choiceBox);
+                    }
+                }
+            });
+
+
+
         } catch (SQLException e) {
             e.printStackTrace();
             showError("Database Error", "Could not load recent bookings.");
         }
     }
+
+    private void updateBookingStatus(int bookingId, String newStatus) {
+        try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
+            String query = "UPDATE booking SET status = ? WHERE bookingId = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, bookingId);
+            stmt.executeUpdate();
+            showSuccess("Booking status updated to " + newStatus);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showError("Database Error", "Could not update booking status.");
+        }
+    }
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     private void loadTotalBookings() {
         try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
@@ -499,7 +582,7 @@ public class AgentDashboardController {
             Color darkGray = new DeviceRgb(50, 50, 50);
 
             // Add some basic text
-            String logoPath = "C:/Users/maiss/flighthub/src/main/resources/images/logoTranspAzrek.png";  // Adjust to your logo's path
+            String logoPath = "/src/main/resources/images/logoTranspAzrek.png";  // Adjust to your logo's path
             Image logo = new Image(ImageDataFactory.create(logoPath));
             logo.setFixedPosition(20, 790);  // Position the logo at top left
             logo.scaleToFit(100, 100);  // Resize to fit

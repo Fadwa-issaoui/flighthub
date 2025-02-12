@@ -14,64 +14,65 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.booking.AgentDashboardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="651.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.booking.AgentDashboardController">
     <center>
         <AnchorPane prefHeight="474.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
 
                 <!-- Background Image -->
-                <ImageView fitHeight="668.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="false">
+                <ImageView fitHeight="668.0" fitWidth="651.0" pickOnBounds="true" preserveRatio="false">
                     <image>
                         <Image url="@../../images/back_plane.jpg" />
                     </image>
                 </ImageView>
 
                 <!-- Transparent Overlay to Improve Readability -->
-                <Pane layoutX="0.0" layoutY="0.0" prefHeight="668.0" prefWidth="600.0" style="-fx-background-color: rgba(0, 0, 0, 0.4);">
+                <Pane layoutX="0.0" layoutY="0.0" prefHeight="668.0" prefWidth="651.0" style="-fx-background-color: rgba(0, 0, 0, 0.4);">
                     <children>
                         <!-- Flight Selection Section -->
-                        <Pane layoutX="14.0" layoutY="82.0" prefHeight="100.0" prefWidth="582.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+                        <Pane layoutX="14.0" layoutY="82.0" prefHeight="100.0" prefWidth="640.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
                             <children>
                                 <ChoiceBox fx:id="departureChoiceBox" layoutX="14.0" layoutY="35.0" prefHeight="30.0" prefWidth="150.0" style="-fx-font-size: 14px; -fx-background-radius: 5px;" />
-                                <ChoiceBox fx:id="destinationChoiceBox" layoutX="174.0" layoutY="35.0" prefHeight="30.0" prefWidth="150.0" style="-fx-font-size: 14px; -fx-background-radius: 5px;" />
-                                <DatePicker fx:id="datePicker" layoutX="334.0" layoutY="35.0" prefHeight="30.0" prefWidth="140.0" style="-fx-font-size: 14px; -fx-background-radius: 5px;" />
-                                <Button fx:id="searchButton" layoutX="484.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleSearchButtonAction" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #5067E9; -fx-text-fill: white; -fx-background-radius: 5px; -fx-font-size: 14px;" text="Search" />
+                                <ChoiceBox fx:id="destinationChoiceBox" layoutX="188.0" layoutY="35.0" prefHeight="30.0" prefWidth="150.0" style="-fx-font-size: 14px; -fx-background-radius: 5px;" />
+                                <DatePicker fx:id="datePicker" layoutX="365.0" layoutY="35.0" prefHeight="30.0" prefWidth="150.0" style="-fx-font-size: 14px; -fx-background-radius: 5px;" />
+                                <Button fx:id="searchButton" layoutX="538.0" layoutY="35.0" mnemonicParsing="false" onAction="#handleSearchButtonAction" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #5067E9; -fx-text-fill: white; -fx-background-radius: 5px; -fx-font-size: 14px;" text="Search" />
                             </children>
                         </Pane>
 
                         <!-- Upcoming Flights -->
-                        <Pane layoutX="14.0" layoutY="380.0" prefHeight="160.0" prefWidth="582.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+                        <Pane layoutX="14.0" layoutY="380.0" prefHeight="160.0" prefWidth="638.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
                             <children>
                                 <Text layoutX="20.0" layoutY="20.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #555555;" text="Upcoming Flights" />
-                                <TableView fx:id="upcomingFlightsTable" layoutX="20.0" layoutY="40.0" prefHeight="100.0" prefWidth="550.0">
+                                <TableView fx:id="upcomingFlightsTable" layoutX="20.0" layoutY="40.0" prefHeight="100.0" prefWidth="612.0">
                                     <columns>
-                                        <TableColumn fx:id="flightNumberCol" prefWidth="120.0" text="Flight Number" />
-                                        <TableColumn fx:id="departureCol" prefWidth="176.8000030517578" text="Departure" />
-                                        <TableColumn fx:id="arrivalCol" prefWidth="172.7999267578125" text="Arrival" />
-                                        <TableColumn fx:id="fullCol" prefWidth="78.79998779296875" text="Full" />
+                                        <TableColumn fx:id="flightNumberCol" prefWidth="136.80005645751953" text="Flight Number" />
+                                        <TableColumn fx:id="departureCol" prefWidth="179.20001220703125" text="Departure" />
+                                        <TableColumn fx:id="arrivalCol" prefWidth="171.19998168945312" text="Arrival" />
+                                        <TableColumn fx:id="fullCol" prefWidth="122.4000244140625" text="Full" />
                                     </columns>
                                 </TableView>
                             </children>
                         </Pane>
 
                         <!-- Recent Bookings -->
-                        <Pane layoutX="14.0" layoutY="200.0" prefHeight="160.0" prefWidth="582.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+                        <Pane layoutX="14.0" layoutY="200.0" prefHeight="160.0" prefWidth="638.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
                             <children>
                                 <Text layoutX="20.0" layoutY="20.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #555555;" text="Recent Bookings" />
-                                <TableView fx:id="recentBookingsTable" layoutX="20.0" layoutY="40.0" prefHeight="100.0" prefWidth="550.0">
+                                <TableView fx:id="recentBookingsTable" layoutX="20.0" layoutY="40.0" prefHeight="100.0" prefWidth="613.0">
                                     <columns>
-                                        <TableColumn fx:id="passengerNameCol" prefWidth="179.19997787475586" text="Passenger Name" />
-                                        <TableColumn fx:id="bookingDateCol" prefWidth="124.00001525878906" text="Booking Date" />
-                                        <TableColumn fx:id="flightInfoCol" prefWidth="62.39996337890625" text="Flight Id" />
-                                        <TableColumn fx:id="emailColumn" prefWidth="88.0" text="Send Email" />
-                                        <TableColumn fx:id="ticketColumn" prefWidth="95.199951171875" text="Get ticket" />
+                                        <TableColumn fx:id="passengerNameCol" prefWidth="140.79999542236328" text="Passenger Name" />
+                                        <TableColumn fx:id="bookingDateCol" prefWidth="125.5999755859375" text="Booking Date" />
+                                        <TableColumn fx:id="flightInfoCol" prefWidth="62.4000244140625" text="Flight Id" />
+                                        <TableColumn fx:id="statusCol" prefWidth="112.79998779296875" text="Status" />
+                                        <TableColumn fx:id="emailColumn" prefWidth="86.39999389648438" text="Send Email" />
+                                        <TableColumn fx:id="ticketColumn" prefWidth="83.4000244140625" text="Get ticket" />
                                     </columns>
                                 </TableView>
                             </children>
                         </Pane>
 
                         <!-- Total Bookings Made -->
-                        <Pane layoutX="14.0" layoutY="550.0" prefHeight="100.0" prefWidth="582.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+                        <Pane layoutX="14.0" layoutY="550.0" prefHeight="100.0" prefWidth="639.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
                             <children>
                                 <Text layoutX="20.0" layoutY="20.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #555555;" text="Total Bookings Made" />
                                 <Label fx:id="totalBookingsLabel" layoutX="20.0" layoutY="40.0" style="-fx-font-size: 16px; -fx-fill: #555555;" text="0" />
@@ -81,7 +82,7 @@
                 </Pane>
 
                 <!-- Navigation Bar -->
-                <Pane layoutX="-7.0" prefHeight="60.0" prefWidth="606.0" style="-fx-background-color: rgba(255, 255, 255, 0.8); -fx-background-radius: 10px;">
+                <Pane layoutX="-7.0" prefHeight="60.0" prefWidth="657.0" style="-fx-background-color: rgba(255, 255, 255, 0.8); -fx-background-radius: 10px;">
                     <children>
                         <Text fill="BLACK" layoutX="516.0" layoutY="35.0" text="Help">
                             <font>
