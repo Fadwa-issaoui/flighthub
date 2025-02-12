@@ -10,12 +10,8 @@ public class Aircraft {
     public int getFlightId() {
         return flightId;
     }
-
     public void setFlightId(int flightId) {
         this.flightId = flightId;
-    }
-
-    public Aircraft() {
     }
 
     public Aircraft(int aircraftId, String model, int capacity, boolean isAvailable) {
@@ -28,6 +24,7 @@ public class Aircraft {
     public int getAircraftId() {
         return aircraftId;
     }
+
 
     public void setAircraftId(int aircraftId) {
         this.aircraftId = aircraftId;
@@ -56,6 +53,7 @@ public class Aircraft {
     public void setAvailable(boolean available) {
         isAvailable = available;
     }
+
 
     @Override
     public String toString() {

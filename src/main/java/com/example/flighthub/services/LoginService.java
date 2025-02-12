@@ -42,6 +42,7 @@ public class LoginService {
         return false;
     }
 
+
     // Method to hash password using SHA-256
     private String hashPassword(String password) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");

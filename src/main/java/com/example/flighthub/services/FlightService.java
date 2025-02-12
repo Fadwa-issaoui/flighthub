@@ -1,13 +1,10 @@
+
 package com.example.flighthub.services;
 
 import com.example.flighthub.databaseConnection.DatabaseConnection;
-import com.example.flighthub.models.Aircraft;
 import com.example.flighthub.models.Flight;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +13,11 @@ public class FlightService {
     private static DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
     // Create a new flight
-    public void createFlight(Flight flight) {
-        // Modified query to match table name "flight" and not include flightId
+    public int createFlight(Flight flight) {
+        // Modified query to match table name "flight" and return the generated flightId
         String query = "INSERT INTO flight (flightNumber, aircraftId, departureAirportId, arrivalAirportId, departureTime, arrivalTime, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = databaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
+             PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             pstmt.setString(1, flight.getFlightNumber());
             pstmt.setInt(2, flight.getAircraftId());
@@ -31,18 +27,27 @@ public class FlightService {
             pstmt.setString(6, flight.getArrivalTime());
             pstmt.setDouble(7, flight.getPrice());
 
-            pstmt.executeUpdate();
-            System.out.println("Flight created successfully.");
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating flight failed, no rows affected.");
+            }
 
-
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1); // Return the generated flightId
+                } else {
+                    throw new SQLException("Creating flight failed, no ID obtained.");
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
+            return -1; // Indicate failure
         }
     }
 
     // Read a flight by flightId
     public Flight getFlightById(int flightId) {
-        String query = "SELECT * FROM flight WHERE flightId = ?"; // Changed table name to "flight"
+        String query = "SELECT * FROM flight WHERE flightId = ?";
         Flight flight = null;
 
         try (Connection conn = databaseConnection.getConnection();
@@ -72,7 +77,7 @@ public class FlightService {
 
     // Read all flights
     public List<Flight> getAllFlights() {
-        String query = "SELECT * FROM flight"; // Changed table name to "flight"
+        String query = "SELECT * FROM flight";
         List<Flight> flights = new ArrayList<>();
 
         try (Connection conn = databaseConnection.getConnection();
@@ -100,10 +105,9 @@ public class FlightService {
         return flights;
     }
 
-
     // Update an existing flight
     public void updateFlight(Flight flight) {
-        String query = "UPDATE flight SET flightNumber = ?, aircraftId = ?, departureAirportId = ?, arrivalAirportId = ?, departureTime = ?, arrivalTime = ?, price = ? WHERE flightId = ?"; // Changed table name to "flight"
+        String query = "UPDATE flight SET flightNumber = ?, aircraftId = ?, departureAirportId = ?, arrivalAirportId = ?, departureTime = ?, arrivalTime = ?, price = ? WHERE flightId = ?";
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
@@ -123,9 +127,9 @@ public class FlightService {
         }
     }
 
-    // Delete a flight by flightId
+
     public void deleteFlight(int flightId) {
-        String query = "DELETE FROM flight WHERE flightId = ?"; // Changed table name to "flight"
+        String query = "DELETE FROM flight WHERE flightId = ?";
         try (Connection conn = databaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 

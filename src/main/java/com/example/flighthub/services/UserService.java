@@ -138,10 +138,29 @@ public class UserService {
         return user;
     }
 
+    public String getUserRole(String username){
+        final String sql = "SELECT role FROM user WHERE username = ?";
+        try {
+            PreparedStatement ps = connection.getConnection().prepareStatement(sql);
+            ps.setString(1, username);
+            ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+            String s = resultSet.getString("role");
+            return s;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return Role.ADMIN.toString();
+
+    }
+
     public static void main(String[] args) {
         UserService userService = new UserService();
 
-        User user = new User(0, "test12", "test12@mail.com", "test", Role.AGENT); // Password too short (less than 8 characters)
+        User user = new User(0, "test12", "test12@mail.com", "testtest", Role.AGENT); // Password too short (less than 8 characters)
+        user.setUsername("test");
         int result = userService.addUser(user);
 
         if (result > 0) {
