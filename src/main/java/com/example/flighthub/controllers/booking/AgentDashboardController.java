@@ -3,6 +3,18 @@ package com.example.flighthub.controllers.booking;
 import com.example.flighthub.databaseConnection.DatabaseConnection;
 import com.example.flighthub.models.Booking;
 import com.example.flighthub.models.Flight;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.geom.Line;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.element.Image;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,7 +33,12 @@ import javafx.stage.Stage;
 import javax.mail.MessagingException;
 import javax.mail.Transport;
 import javafx.geometry.Insets;
+
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -49,7 +66,8 @@ public class AgentDashboardController {
     private TableColumn<TableRowData, String> departureCol;
     @FXML
     private TableColumn<TableRowData, String> arrivalCol;
-
+    @FXML
+    private TableColumn<TableRowData, String> fullCol;
     @FXML
     private TableView<TableRowData> recentBookingsTable;
     @FXML
@@ -60,6 +78,8 @@ public class AgentDashboardController {
     private TableColumn<TableRowData, String> flightInfoCol;
     @FXML
     private TableColumn<TableRowData, Void> emailColumn;
+    @FXML
+    private TableColumn<TableRowData, Void> ticketColumn;
 
     @FXML
     private Label totalBookingsLabel;
@@ -74,7 +94,7 @@ public class AgentDashboardController {
         loadRecentBookings();
         loadTotalBookings();
         setupEmailButton();
-
+        setupTicketButton();
     }
 
 
@@ -113,7 +133,7 @@ public class AgentDashboardController {
     private void loadUpcomingFlights() {
         ObservableList<TableRowData> flightRows = FXCollections.observableArrayList();
         try (Connection connection = DatabaseConnection.getInstance().getConnection()) {
-            String query = "SELECT f.flightNumber, a1.location AS departure, a2.location AS arrival " +
+            String query = "SELECT f.flightNumber, a1.location AS departure, a2.location AS arrival , f.full " +
                     "FROM flight f " +
                     "JOIN airport a1 ON f.departureAirportId = a1.airportId " +
                     "JOIN airport a2 ON f.arrivalAirportId = a2.airportId " +
@@ -121,13 +141,27 @@ public class AgentDashboardController {
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
+                // Retrieve the flight details
+                String fullStatus = rs.getInt("full") == 1 ? "Yes" : "No";
+
+                // Add the data to the flightRows list
                 flightRows.add(new TableRowData(
                         rs.getString("flightNumber"),
                         rs.getString("departure"),
                         rs.getString("arrival")
                 ));
             }
+
+            // Set the items to the table
             upcomingFlightsTable.setItems(flightRows);
+
+            // Set the cell value factory for the 'fullCol' column
+            fullCol.setCellValueFactory(cellData -> {
+                TableRowData row = cellData.getValue();
+                // Use logic to set "full" status directly
+                String fullStatus = (row.getColumn1().equals("Yes")) ? "Yes" : "No";
+                return new SimpleStringProperty(fullStatus);
+            });
         } catch (SQLException e) {
             e.printStackTrace();
             showError("Database Error", "Could not load upcoming flights.");
@@ -416,6 +450,111 @@ public class AgentDashboardController {
             e.printStackTrace();
         }
     }
+    private void setupTicketButton() {
+        ticketColumn.setCellFactory(col -> new TableCell<TableRowData, Void>() {
+            private final Button ticketButton = new Button("Get Ticket");
+
+            {
+                ticketButton.setOnAction(event -> {
+                    TableRowData rowData = getTableView().getItems().get(getIndex()); // Get row data
+                    if (rowData != null) {
+                        String passengerName = rowData.getColumn1();  // Assuming column1 has passenger name
+                        String flightId = rowData.getColumn3();  // Assuming column3 has flight ID
+
+                        // Fetch flight details
+                        Map<String, Object> flightDetails = fetchFlightDetails(flightId);
+                        if (flightDetails != null) {
+                            generateTicketPDF(passengerName, flightDetails);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(ticketButton);
+                }
+            }
+        });
+    }
+    private void generateTicketPDF(String passengerName, Map<String, Object> flightDetails) {
+        String timestamp = java.time.LocalDateTime.now().toString().replace(":", "-");
+        String fileName = passengerName.replace(" ", "_") + "_" + timestamp + "_ticket.pdf";
+        String filePath = "tickets/" + fileName;
+
+        try {
+            // Ensure the directory exists
+            Files.createDirectories(Paths.get("tickets"));
+
+            PdfWriter writer = new PdfWriter(filePath);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf);
+            document.setMargins(40, 40, 40, 40);
+            Color primaryColor = new DeviceRgb(80, 103, 233); // #5067E9
+            Color whiteColor = new DeviceRgb(255, 255, 255);
+            Color darkGray = new DeviceRgb(50, 50, 50);
+
+            // Add some basic text
+            String logoPath = "C:/Users/maiss/flighthub/src/main/resources/images/logoTranspAzrek.png";  // Adjust to your logo's path
+            Image logo = new Image(ImageDataFactory.create(logoPath));
+            logo.setFixedPosition(20, 790);  // Position the logo at top left
+            logo.scaleToFit(100, 100);  // Resize to fit
+            document.add(logo);
+
+            // Add header with airline name (larger font)
+            document.add(new Paragraph("FLIGHT HUB")
+                    .setFontSize(24)
+                    .setBold()
+                    .setFontColor(primaryColor)
+                    .setTextAlignment(TextAlignment.CENTER));
+
+            // Add the passenger details section
+            document.add(new Paragraph("Passenger: " + passengerName)
+                    .setFontSize(14)
+                    .setFontColor(darkGray));
+            document.add(new Paragraph("Flight Number: " + flightDetails.get("flightNumber"))
+                    .setFontSize(12)
+                    .setFontColor(darkGray));
+            document.add(new Paragraph("From: " + flightDetails.get("departureLocation"))
+                    .setFontSize(12)
+                    .setFontColor(darkGray));
+            document.add(new Paragraph("To: " + flightDetails.get("arrivalLocation"))
+                    .setFontSize(12)
+                    .setFontColor(darkGray));
+            document.add(new Paragraph("Departure Time: " + flightDetails.get("departureTime"))
+                    .setFontSize(12)
+                    .setFontColor(darkGray));
+            document.add(new Paragraph("Arrival Time: " + flightDetails.get("arrivalTime"))
+                    .setFontSize(12)
+                    .setFontColor(darkGray));
+
+            // Add footer with thank you message
+            document.add(new Paragraph("Thank you for flying with FlightHub!")
+                    .setFontSize(10)
+                    .setFontColor(darkGray)
+                    .setTextAlignment(TextAlignment.CENTER));
+
+            document.close();
+
+            System.out.println("Ticket PDF generated: " + filePath);
+
+            // Open the generated PDF
+            java.awt.Desktop.getDesktop().open(new java.io.File(filePath));
+
+            // Show a confirmation message
+            showAlert("Ticket Generated", "The ticket has been successfully generated and opened.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("File Error", "Could not generate the ticket.");
+        }
+    }
+
+
+
 
 
 }

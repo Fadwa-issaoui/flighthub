@@ -46,9 +46,9 @@
                                 <TableView fx:id="upcomingFlightsTable" layoutX="20.0" layoutY="40.0" prefHeight="100.0" prefWidth="550.0">
                                     <columns>
                                         <TableColumn fx:id="flightNumberCol" prefWidth="120.0" text="Flight Number" />
-                                        <TableColumn fx:id="departureCol" prefWidth="200.0" text="Departure" />
-                                        <TableColumn fx:id="arrivalCol" prefWidth="200.0" text="Arrival" />
-
+                                        <TableColumn fx:id="departureCol" prefWidth="176.8000030517578" text="Departure" />
+                                        <TableColumn fx:id="arrivalCol" prefWidth="172.7999267578125" text="Arrival" />
+                                        <TableColumn fx:id="fullCol" prefWidth="78.79998779296875" text="Full" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -60,10 +60,11 @@
                                 <Text layoutX="20.0" layoutY="20.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #555555;" text="Recent Bookings" />
                                 <TableView fx:id="recentBookingsTable" layoutX="20.0" layoutY="40.0" prefHeight="100.0" prefWidth="550.0">
                                     <columns>
-                                        <TableColumn fx:id="passengerNameCol" prefWidth="200.0" text="Passenger Name" />
-                                        <TableColumn fx:id="bookingDateCol" prefWidth="125.60005187988281" text="Booking Date" />
-                                        <TableColumn fx:id="flightInfoCol" prefWidth="79.20001220703125" text="Flight Id" />
-                                        <TableColumn fx:id="emailColumn" prefWidth="142.4000244140625" text="Send Email" />
+                                        <TableColumn fx:id="passengerNameCol" prefWidth="179.19997787475586" text="Passenger Name" />
+                                        <TableColumn fx:id="bookingDateCol" prefWidth="124.00001525878906" text="Booking Date" />
+                                        <TableColumn fx:id="flightInfoCol" prefWidth="62.39996337890625" text="Flight Id" />
+                                        <TableColumn fx:id="emailColumn" prefWidth="88.0" text="Send Email" />
+                                        <TableColumn fx:id="ticketColumn" prefWidth="95.199951171875" text="Get ticket" />
                                     </columns>
                                 </TableView>
                             </children>

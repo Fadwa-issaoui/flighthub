@@ -7,6 +7,9 @@ module Main {
     requires java.mail;
     requires java.desktop;
     requires activation;
+    requires kernel;
+    requires layout;
+    requires io;
 
     opens Main to javafx.fxml;
     exports Main;
