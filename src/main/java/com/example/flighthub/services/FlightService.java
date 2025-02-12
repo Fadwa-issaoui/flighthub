@@ -18,7 +18,7 @@ public class FlightService {
 
     private static DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
 
-    // ... (Other methods remain the same) ...
+
     public Map<String, Integer> getFlightCountsByDepartureLocation() {
         //the same code
         Map<String, Integer> counts = new HashMap<>();
