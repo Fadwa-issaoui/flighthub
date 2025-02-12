@@ -3,7 +3,8 @@ module Main {
     requires javafx.fxml;
     requires java.sql;
     requires static lombok;
-    
+    requires java.mail;
+
     exports com.example.flighthub.controllers.dashboard to javafx.fxml;
     exports com.example.flighthub.controllers.login to javafx.fxml;
 

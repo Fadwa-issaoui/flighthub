@@ -55,14 +55,14 @@ public class CarController {
         // Set table data from the carService (retrieve all cars)
         carTable.setItems(carService.getAllCars());
 
-        //backgroundImage.fitHeightProperty().bind(root.heightProperty());
-        //backgroundImage.fitWidthProperty().bind(root.widthProperty());
+
     }
+
+
 
     @FXML
     private void addCar() {
         try {
-            // Load the FXML file for the "Add Car" pop-up window
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/add-car-dialog.fxml"));
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Add Car");
@@ -70,15 +70,19 @@ public class CarController {
             dialogStage.initOwner(carTable.getScene().getWindow());
             dialogStage.setScene(new Scene(loader.load()));
 
-            // Get the controller
             AddCarDialogController controller = loader.getController();
 
-            // Show the dialog and wait for it to close
             dialogStage.showAndWait();
 
-            // Add the new car to the database and refresh the table
             Car newCar = controller.getNewCar();
             if (newCar != null) {
+                // Vérifier si l'immatriculation existe déjà
+                if (carService.licensePlateExists(newCar.getLicensePlate())) {
+                    showError("A car with the same license plate already exists!");
+                    return;
+                }
+
+                // Ajouter la voiture et rafraîchir la table
                 carService.addCar(newCar);
                 carTable.setItems(carService.getAllCars());
             }
@@ -87,6 +91,7 @@ public class CarController {
             showError("Failed to load the add dialog.");
         }
     }
+
 
     @FXML
     private void editCar() {
