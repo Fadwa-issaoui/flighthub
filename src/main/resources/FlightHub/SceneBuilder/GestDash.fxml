@@ -1,14 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.flighthub.controllers.dashboard.GestDash"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.dashboard.GestDash">
+    <children>
+        <!-- Background Image -->
+        <ImageView fitHeight="700.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="false">
+            <image>
+                <Image url="@../../images/back_plane.jpg" />
+            </image>
+        </ImageView>
 
+        <!-- Transparent Overlay -->
+        <Pane prefHeight="700.0" prefWidth="800.0" style="-fx-background-color: rgba(0, 0, 0, 0.4);" />
+
+        <!-- Navigation Bar (Top) -->
+        <HBox alignment="CENTER_LEFT" layoutY="0.0" prefHeight="60.0" prefWidth="800.0" style="-fx-background-color: #5067e9; -fx-padding: 15;">
+            <children>
+                <ImageView fitHeight="48.0" fitWidth="240.0" preserveRatio="true">
+                    <image>
+                        <Image url="@../../images/LogoTransparent.png" />
+                    </image>
+                </ImageView>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="flightsButton" mnemonicParsing="false" style="-fx-background-color: white; -fx-text-fill: #5067e9; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 5;" text="Flights">
+                    <HBox.margin>
+                        <Insets right="10.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="carsButton" mnemonicParsing="false" style="-fx-background-color: white; -fx-text-fill: #5067e9; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 5;" text="Cars" />
+            </children>
+        </HBox>
+        <HBox layoutX="14.0" layoutY="70.0" prefHeight="586.0" prefWidth="770.0" spacing="20.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="75.0">
+            <children>
+                <!-- Charts Pane -->
+                <Pane prefHeight="508.0" prefWidth="520.0" style="-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 10px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Text layoutX="20.0" layoutY="30.0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #555555;" text="Flight Statistics" />
+                        <PieChart fx:id="departurePieChart" layoutX="61.0" layoutY="55.0" prefHeight="220" prefWidth="402.0" />
+                        <BarChart fx:id="flightsPerMonthChart" layoutX="28.0" layoutY="314.0" prefHeight="249.0" prefWidth="435.0">
+                            <xAxis>
+                                <CategoryAxis side="BOTTOM" fx:id="xAxis" />
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="yAxis" side="LEFT" />
+                            </yAxis>
+                        </BarChart>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </Pane>
+                <!-- Statistics Pane (Now Below Charts) -->
+                <VBox prefHeight="400" prefWidth="250.0" spacing="10.0" style="-fx-background-color: white; -fx-border-color: #a9a9a9; -fx-border-radius: 5; -fx-padding: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);">
+                    <children>
+                        <Label text="Total Flights:" />
+                        <Label fx:id="totalFlightsLabel" alignment="CENTER" prefWidth="250.0" text="0">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                            <padding>
+                                <Insets left="5.0" />
+                            </padding>
+                        </Label>
+                        <Label text="Total Aircrafts" />
+                        <Label fx:id="totalAircraftsLabel" alignment="CENTER" prefWidth="250.0" text="0">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                            <padding>
+                                <Insets left="5.0" />
+                            </padding>
+                        </Label>
+                        <Label text="Total Airports" />
+                        <Label fx:id="totalAirportsLabel" alignment="CENTER" prefWidth="250.0" text="0">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                            <padding>
+                                <Insets left="5.0" />
+                            </padding>
+                        </Label>
+                        <Label text="Average Flight Price:" />
+                        <Label fx:id="averageFlightPriceLabel" alignment="CENTER" prefWidth="250.0" text="0.00">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                            <padding>
+                                <Insets left="5.0" />
+                            </padding>
+                        </Label>
+                        <Label text="Most Popular Destination:" />
+                        <Label fx:id="mostPopularDestinationLabel" alignment="CENTER" prefWidth="250.0" text="N/A">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                            <padding>
+                                <Insets left="5.0" />
+                            </padding>
+                        </Label>
+                        <Label text="Available Aircraft:" />
+                        <Label fx:id="availableAircraftLabel" alignment="CENTER" prefWidth="250.0" text="0">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                            <padding>
+                                <Insets left="5.0" />
+                            </padding>
+                        </Label>
+                        <Label text="Flights Done:" />
+                        <Label fx:id="flightsDoneLabel" alignment="CENTER" prefWidth="250.0" text="0">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                            <padding>
+                                <Insets left="5.0" />
+                            </padding>
+                        </Label>
+                        <Label text="Flights Not Done:" />
+                        <Label fx:id="flightsNotDoneLabel" alignment="CENTER" prefWidth="250.0" text="0">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                            <padding>
+                                <Insets left="5.0" />
+                            </padding>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+        </HBox>
+    </children>
 </AnchorPane>

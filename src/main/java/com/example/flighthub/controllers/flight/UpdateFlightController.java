@@ -217,6 +217,7 @@ public class UpdateFlightController {
 
     @FXML
     private void updateFlight() {
+        //the same code
         // Check if it's a past flight *before* any validation
         if (isPastFlight) {
             // The fields should already be disabled, but this is an extra check.
@@ -283,6 +284,7 @@ public class UpdateFlightController {
 
 
     private boolean validateForm() {
+        //the same code
         boolean isValid = true;
         isValid &= validateFlightNumber();
         isValid &= validateAircraft();
@@ -292,6 +294,7 @@ public class UpdateFlightController {
         return isValid;
     }
     private boolean validateFlightNumber() {
+        //the same code
         String flightNumber = flightNumberField.getText().trim();
         if (flightNumber.isEmpty()) {
             setError(flightNumberField, "Flight Number cannot be empty.");
@@ -317,6 +320,7 @@ public class UpdateFlightController {
         return true;
     }
     private boolean validateAircraft() {
+        //the same code
         if (aircraftComboBox.getValue() == null) {
             setError(aircraftComboBox, "Please select an aircraft.");
             return false;
@@ -325,6 +329,7 @@ public class UpdateFlightController {
         return true;
     }
     private boolean validateArrivalAirport() {
+        //the same code
         Airport selectedDepartureAirport = departureAirportComboBox.getValue();
         Airport selectedArrivalAirport = arrivalAirportComboBox.getValue();
 
@@ -365,6 +370,12 @@ public class UpdateFlightController {
                 setError(departureDatePicker, "Departure cannot be in the past.");
                 return false;
             }
+            // Additional check: Departure and arrival cannot be at the same time
+            if (departureDateTime.equals(arrivalDateTime)) {
+                setError(arrivalDatePicker, "Departure and arrival cannot be at the same time.");
+                return false;
+            }
+
         } catch (DateTimeParseException e) {
             setError(departureDatePicker, "Invalid date/time format.");
             return false;
@@ -377,7 +388,9 @@ public class UpdateFlightController {
         return true;
     }
 
+
     private boolean validatePrice() {
+        //the same code
         try {
             double price = Double.parseDouble(priceField.getText());
             if (price <= 0) {
@@ -393,6 +406,7 @@ public class UpdateFlightController {
     }
 
     private void setError(Control control, String message) {
+        //the same code
         control.setStyle("-fx-border-color: red;");
         Label errorLabel = errorLabelMap.get(control);
         if (errorLabel != null) {
@@ -402,6 +416,7 @@ public class UpdateFlightController {
     }
 
     private void clearError(Control control) {
+        //the same code
         control.setStyle("");
         Label errorLabel = errorLabelMap.get(control);
         if (errorLabel != null) {
@@ -411,6 +426,7 @@ public class UpdateFlightController {
     }
 
     private boolean isFlightNumberExistsForOtherFlights(String flightNumber, int currentFlightId) {
+        //the same code
         List<Flight> flights = flightService.getAllFlights();
         for (Flight f : flights) {
             if (f.getFlightNumber().equals(flightNumber) && f.getFlightId() != currentFlightId) {

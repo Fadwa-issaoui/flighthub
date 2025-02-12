@@ -2,16 +2,19 @@ package Main;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
             // Load the Splash Screen
-            Parent splashScreenRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
-            Scene splashScreenScene = new Scene(splashScreenRoot);
+            Object splashScreenRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/Login.fxml"));
+            //Object splashScreenRoot = FXMLLoader.load(getClass().getResource("/FlightHub/SceneBuilder/GestDash.fxml"));
+            Scene splashScreenScene = new Scene((Parent) splashScreenRoot);
             primaryStage.setScene(splashScreenScene);
             primaryStage.setTitle("Splash Screen");
 

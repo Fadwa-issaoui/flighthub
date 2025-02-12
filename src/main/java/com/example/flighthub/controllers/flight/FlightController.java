@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FlightController {
@@ -38,6 +40,7 @@ public class FlightController {
     @FXML private Button addButton;
     @FXML private TextField searchFlightNumberField;
     @FXML private Button clearSearchButton;
+    @FXML private ImageView homeIcon;
 
     private ObservableList<Flight> observableFlights = FXCollections.observableArrayList();
 
@@ -48,8 +51,9 @@ public class FlightController {
         departureTimeColumn.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
         arrivalTimeColumn.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        detailsColumn.setCellFactory(param -> new DetailsButtonTableCell<>()); // Use the updated cell factory
+        detailsColumn.setCellFactory(param -> new DetailsButtonTableCell<>());
         functionsColumn.setCellFactory(param -> new FunctionsButtonTableCell());
+
 
         flightTable.setRowFactory(new FlightRowFactory());
 
@@ -64,7 +68,27 @@ public class FlightController {
         clearSearchButton.setOnAction(event -> {
             searchFlightNumberField.clear();
         });
+
+        homeIcon.setOnMouseClicked(event -> goBackToGestDash());
+        homeIcon.setPickOnBounds(true);
     }
+
+
+    private void goBackToGestDash() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/GestDash.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) homeIcon.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Gestionnaire Dashboard");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error loading FXML: " + e.getMessage());
+
+        }
+    }
+
 
     private void loadFlights() {
         List<Flight> flightList = flightService.getAllFlights();
@@ -83,8 +107,8 @@ public class FlightController {
             flightTable.setItems(FXCollections.observableArrayList(filteredList));
         }
     }
-
     private class FlightRowFactory implements Callback<TableView<Flight>, TableRow<Flight>> {
+        //the same code
         @Override
         public TableRow<Flight> call(TableView<Flight> tableView) {
             return new TableRow<Flight>() {
@@ -111,10 +135,8 @@ public class FlightController {
             };
         }
     }
-
-
-    // Inner class for the custom cell factory for Details button
     private class DetailsButtonTableCell<S, T> extends TableCell<S, T> {
+        //the same code
         private final Button detailsButton = new Button("Details");
 
         public DetailsButtonTableCell() {
@@ -146,22 +168,21 @@ public class FlightController {
 
 
     private void showFlightDetailsPopup(Flight flight) {
+        //the same code
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/FlightDetailsPopup.fxml"));
             Parent root = loader.load();
 
             FlightDetailsPopupController controller = loader.getController();
-            controller.setFlightData(flight); // Pass the flight data
+            controller.setFlightData(flight);
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED); // Remove window decorations
-            stage.setScene(new Scene(root));
-            stage.setTitle("Flight Details"); // Set a title (optional)
+            stage.initStyle(StageStyle.UNDECORATED);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
 
-            // Add a close button to your popup's FXML and set its action
-            // OR
-            // Make the popup close when clicking outside of it:
+
             stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
                 if (!isNowFocused) {
                     stage.close();
@@ -169,10 +190,10 @@ public class FlightController {
             });
 
 
-            stage.showAndWait(); // Show the popup and wait for it to close
+            stage.showAndWait();
+
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle the exception (e.g., show an error message)
         }
     }
     private class FunctionsButtonTableCell extends TableCell<Flight, Void> {
@@ -203,7 +224,7 @@ public class FlightController {
             if (empty) {
                 setGraphic(null);
             } else {
-                HBox container = new HBox(8); // space of 8 between buttons
+                HBox container = new HBox(8);
                 container.getChildren().addAll(deleteButton, updateButton);
                 setGraphic(container);
             }
@@ -211,12 +232,21 @@ public class FlightController {
     }
 
     private void handleDeleteAction(Flight flight) {
-        flightService.deleteFlight(flight.getFlightId());
-        loadFlights();
-        System.out.println("Delete button for Flight ID:" + flight.getFlightId());
+        // Show confirmation dialog
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Deletion");
+        alert.setHeaderText("Delete Flight");
+        alert.setContentText("Are you sure you want to delete flight number " + flight.getFlightNumber() + "?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK){
+            flightService.deleteFlight(flight.getFlightId());
+            loadFlights(); // Refresh table
+        }
     }
 
     private void handleUpdateAction(Flight flight) {
+        //the same code
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/UpdateFlight.fxml"));
             Parent root = loader.load();
@@ -236,6 +266,7 @@ public class FlightController {
     }
 
     private void handleAddButton() {
+        //the same code
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/CreateFlight.fxml"));
             Parent root = loader.load();

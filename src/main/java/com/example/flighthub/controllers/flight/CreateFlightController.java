@@ -170,6 +170,7 @@ public class CreateFlightController {
 
     @FXML
     private void createFlight() {
+        //the same code
         if (validateForm()) { // Only create if validation passes
             try {
                 Flight newFlight = new Flight();
@@ -215,6 +216,7 @@ public class CreateFlightController {
 
 
     private boolean validateForm() {
+        //the same code
         boolean isValid = true;
         isValid &= validateFlightNumber();
         isValid &= validateAircraft();
@@ -225,6 +227,7 @@ public class CreateFlightController {
         return isValid;
     }
     private boolean validateFlightNumber() {
+        //the same code
         String flightNumber = flightNumberField.getText().trim();
         if (flightNumber.isEmpty()) {
             setError(flightNumberField, "Flight Number cannot be empty.");
@@ -248,6 +251,7 @@ public class CreateFlightController {
         return true;
     }
     private boolean validateAircraft() {
+        //the same code
         if (aircraftComboBox.getValue() == null) {
             setError(aircraftComboBox, "Please select an aircraft.");
             return false;
@@ -256,6 +260,7 @@ public class CreateFlightController {
         return true;
     }
     private boolean validateDepartureAirport() {
+        //the same code
         if (departureAirportComboBox.getValue() == null) {
             setError(departureAirportComboBox, "Please select a departure airport.");
             return false;
@@ -264,6 +269,7 @@ public class CreateFlightController {
         return true;
     }
     private boolean validateArrivalAirport() {
+        //the same code
         Airport selectedDepartureAirport = departureAirportComboBox.getValue();
         Airport selectedArrivalAirport = arrivalAirportComboBox.getValue();
 
@@ -288,8 +294,8 @@ public class CreateFlightController {
         String arrivalTime = arrivalTimeComboBox.getValue();
 
         if (departureDate == null || departureTime == null || arrivalDate == null || arrivalTime == null) {
-            setError(departureDatePicker, "Select date and time."); // Show error on one field
-            return false; // But return false for the whole validation
+            setError(departureDatePicker, "Select date and time.");
+            return false;
         }
 
         try {
@@ -304,6 +310,12 @@ public class CreateFlightController {
                 setError(departureDatePicker, "Departure cannot be in the past.");
                 return false;
             }
+            // Additional check: Departure and arrival cannot be at the same time
+            if (departureDateTime.equals(arrivalDateTime)) {
+                setError(arrivalDatePicker, "Departure and arrival cannot be at the same time.");
+                return false;
+            }
+
         } catch (DateTimeParseException e) {
             setError(departureDatePicker, "Invalid date/time format.");
             return false;
@@ -316,6 +328,7 @@ public class CreateFlightController {
         return true;
     }
     private boolean validatePrice() {
+        //the same code
         try {
             double price = Double.parseDouble(priceField.getText());
             if (price <= 0) {
@@ -331,6 +344,7 @@ public class CreateFlightController {
     }
 
     private void setError(Control control, String message) {
+        //the same code
         control.setStyle("-fx-border-color: red;");
         Label errorLabel = errorLabelMap.get(control);
         if (errorLabel != null) {
@@ -340,6 +354,7 @@ public class CreateFlightController {
     }
 
     private void clearError(Control control) {
+        //the same code
         control.setStyle(""); // Reset to default style
         Label errorLabel = errorLabelMap.get(control);
         if (errorLabel != null) {
@@ -348,6 +363,7 @@ public class CreateFlightController {
         }
     }
     private boolean isFlightNumberExists(String flightNumber) {
+        //the same code
         List<Flight> flights = flightService.getAllFlights();
         for (Flight flight : flights) {
             if (flight.getFlightNumber().equals(flightNumber)) {
