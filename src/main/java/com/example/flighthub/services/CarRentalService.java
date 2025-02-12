@@ -148,11 +148,26 @@ public class CarRentalService {
     }
 
     public void deleteLocation(int locationId) {
-        String sql = "DELETE FROM location WHERE id = ?"; // Use "location" table
+        // Step 1: Fetch the car ID associated with the rent being deleted
+        String fetchCarIdSql = "SELECT car_id FROM location WHERE id = ?";
         try (Connection connection = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, locationId);
-            pstmt.executeUpdate();
+             PreparedStatement fetchCarIdStmt = connection.prepareStatement(fetchCarIdSql)) {
+            fetchCarIdStmt.setInt(1, locationId);
+            ResultSet rs = fetchCarIdStmt.executeQuery();
+
+            if (rs.next()) {
+                int carId = rs.getInt("car_id");
+
+                // Step 2: Delete the rent
+                String deleteLocationSql = "DELETE FROM location WHERE id = ?";
+                try (PreparedStatement deleteLocationStmt = connection.prepareStatement(deleteLocationSql)) {
+                    deleteLocationStmt.setInt(1, locationId);
+                    deleteLocationStmt.executeUpdate();
+                }
+
+                // Step 3: Update the car's availability to 1 (true)
+                updateCarAvailability(carId, true);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -180,3 +195,4 @@ public class CarRentalService {
         return null;
     }
 }
+

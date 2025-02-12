@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.flighthub.controllers.car.RentDialogController" spacing="10">
+    <HBox spacing="10">
+        <Label text="Customer Name:"/>
+        <TextField fx:id="customerNameField" promptText="Enter customer name"/>
+    </HBox>
+    <HBox spacing="10">
+        <Label text="Rental Date:"/>
+        <DatePicker fx:id="rentalDatePicker"/>
+    </HBox>
+    <HBox spacing="10">
+        <Label text="Rental Days:"/>
+        <TextField fx:id="rentalDaysField" promptText="Enter rental days"/>
+    </HBox>
+    <HBox spacing="10">
+        <Label text="Select Car:"/>
+        <ComboBox fx:id="carComboBox" promptText="Select a car"/>
+    </HBox>
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Save" onAction="#handleSave"/> <!-- Link to handleSave -->
+        <Button fx:id="saveAndSendEmailButton" text="Save and Send Email" onAction="#handleSaveAndSendEmail" />
+        <Button text="Cancel" onAction="#handleCancel"/> <!-- Link to handleCancel -->
+    </HBox>
+</VBox>

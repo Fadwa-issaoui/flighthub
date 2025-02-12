@@ -4,81 +4,115 @@ import com.example.flighthub.models.Car;
 import com.example.flighthub.models.Location;
 import com.example.flighthub.services.CarRentalService;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 public class RentCarController {
-    @FXML private TextField customerNameField;
-    @FXML private DatePicker rentalDatePicker;
-    @FXML private TextField rentalDaysField;
-    @FXML private ComboBox<Car> carComboBox;
+    @FXML private ListView<Location> locationListView;
     @FXML private Label statusLabel;
 
     private final CarRentalService carRentalService;
 
     public RentCarController() {
-        this.carRentalService = new CarRentalService(); // Initialize CarRentalService
+        this.carRentalService = new CarRentalService();
     }
 
     @FXML
     public void initialize() {
-        // Fetch available cars using CarRentalService
-        List<Car> availableCars = carRentalService.getAvailableCars();
+        loadAllLocations();
+    }
 
-        // Populate the ComboBox with available cars
-        carComboBox.getItems().addAll(availableCars);
-
-        // Optional: Customize how cars are displayed in the ComboBox
-        carComboBox.setCellFactory(param -> new ListCell<Car>() {
+    private void loadAllLocations() {
+        List<Location> locations = carRentalService.getAllLocations();
+        locationListView.getItems().clear();
+        locationListView.getItems().addAll(locations);
+        locationListView.setCellFactory(param -> new ListCell<Location>() {
             @Override
-            protected void updateItem(Car car, boolean empty) {
-                super.updateItem(car, empty);
-                if (empty || car == null) {
+            protected void updateItem(Location location, boolean empty) {
+                super.updateItem(location, empty);
+                if (empty || location == null) {
                     setText(null);
                 } else {
-                    setText(car.getBrand() + " " + car.getModel() + " (" + car.getLicensePlate() + ")");
-                }
-            }
-        });
-
-        // Optional: Customize how the selected car is displayed in the ComboBox button
-        carComboBox.setButtonCell(new ListCell<Car>() {
-            @Override
-            protected void updateItem(Car car, boolean empty) {
-                super.updateItem(car, empty);
-                if (empty || car == null) {
-                    setText(null);
-                } else {
-                    setText(car.getBrand() + " " + car.getModel() + " (" + car.getLicensePlate() + ")");
+                    setText(location.getCustomerName() + " - " + location.getCar().getBrand() + " " + location.getCar().getModel() + " (" + location.getRentalDate() + ")");
                 }
             }
         });
     }
 
     @FXML
-    public void handleRentCar() {
-        String customerName = customerNameField.getText();
-        LocalDate rentalDate = rentalDatePicker.getValue();
-        int rentalDays = Integer.parseInt(rentalDaysField.getText());
-        Car selectedCar = carComboBox.getSelectionModel().getSelectedItem();
+    public void handleAddRent() {
+        showRentDialog(null);
+    }
 
-        if (selectedCar != null && rentalDate != null && !customerName.isEmpty()) {
-            // Create a new Location object
-            Location location = new Location(0, selectedCar, customerName, rentalDate, rentalDays);
-
-            // Rent the car using CarRentalService
-            carRentalService.rentCar(location);
-
-            // Update the UI
-            statusLabel.setText("Car rented successfully!");
-
-            // Refresh the ComboBox to reflect the updated availability
-            carComboBox.getItems().clear();
-            carComboBox.getItems().addAll(carRentalService.getAvailableCars());
+    @FXML
+    public void handleUpdateRent() {
+        Location selectedLocation = locationListView.getSelectionModel().getSelectedItem();
+        if (selectedLocation != null) {
+            showRentDialog(selectedLocation);
         } else {
-            statusLabel.setText("Please fill all fields and select a car.");
+            statusLabel.setText("Please select a rent to update.");
         }
+    }
+
+    @FXML
+    public void handleDeleteRent() {
+        Location selectedLocation = locationListView.getSelectionModel().getSelectedItem();
+        if (selectedLocation != null) {
+            carRentalService.deleteLocation(selectedLocation.getId());
+            statusLabel.setText("Rent deleted successfully!");
+            loadAllLocations();
+        } else {
+            statusLabel.setText("Please select a rent to delete.");
+        }
+    }
+
+
+
+    private void showRentDialog(Location location) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/rent_dialog.fxml"));
+            VBox dialogRoot = loader.load();
+
+            RentDialogController dialogController = loader.getController();
+            dialogController.setRentCarController(this);
+            dialogController.setLocation(location);
+
+            // Create a new Stage for the dialog
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle(location == null ? "Add Rent" : "Update Rent");
+            dialogStage.initModality(Modality.APPLICATION_MODAL); // Make the dialog modal
+            dialogStage.setScene(new Scene(dialogRoot));
+            dialogStage.showAndWait(); // Show the dialog and wait for it to close
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void refreshRentList() {
+        // Reload all locations from the database
+        List<Location> locations = carRentalService.getAllLocations();
+
+        // Clear the ListView and add the updated data
+        locationListView.getItems().clear();
+        locationListView.getItems().addAll(locations);
+
+        // Optional: Print debug information
+        System.out.println("Rent list refreshed. Total rents: " + locations.size());
+    }
+
+
+
+    public CarRentalService getCarRentalService() {
+        return carRentalService;
     }
 }

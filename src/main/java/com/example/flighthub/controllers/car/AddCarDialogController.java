@@ -15,12 +15,29 @@ public class AddCarDialogController {
     private Car newCar;
 
     @FXML
+    public void initialize() {
+        // Empêcher les caractères invalides dans le champ de prix
+        priceField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*\\.?\\d*")) {
+                priceField.setText(oldValue); // Empêche la saisie de caractères non numériques
+            }
+        });
+    }
+
+
+    @FXML
     private void handleAdd() {
         try {
             String brand = brandField.getText();
             String model = modelField.getText();
             String licensePlate = licensePlateField.getText();
             BigDecimal price = new BigDecimal(priceField.getText().trim().replace(",", "."));
+
+            // Vérifier que le prix est positif
+            if (price.compareTo(BigDecimal.ZERO) < 0) {
+                showError("Price cannot be negative!");
+                return;
+            }
 
             // Create a new car object
             newCar = new Car(0, brand, model, licensePlate, price);

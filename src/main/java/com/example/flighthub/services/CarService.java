@@ -45,6 +45,17 @@ public class CarService {
         }
     }
 
+    public boolean licensePlateExists(String licensePlate) {
+        ObservableList<Car> allCars = getAllCars();
+        for (Car car : allCars) {
+            if (car.getLicensePlate().equalsIgnoreCase(licensePlate)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     // Update car in the database
     public void updateCar(Car car) {
         // Validate and format the price

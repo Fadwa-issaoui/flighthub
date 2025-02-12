@@ -1,3 +1,28 @@
+//package Main;
+//
+//import javafx.application.Application;
+//import javafx.fxml.FXMLLoader;
+//import javafx.scene.Scene;
+//import javafx.stage.Stage;
+//
+//public class Main extends Application {
+//    @Override
+//    public void start(Stage primaryStage) throws Exception {
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FlightHub/SceneBuilder/car.fxml"));
+//        primaryStage.setScene(new Scene(fxmlLoader.load()));
+//        primaryStage.setTitle("Car Management");
+//        primaryStage.show();
+//    }
+//
+//    public static void main(String[] args) {
+//        launch(args);
+//
+//    }
+//
+//
+//}
+
+
 package Main;
 
 import javafx.application.Application;
@@ -9,6 +34,7 @@ import javafx.stage.StageStyle;
 
 public class Main extends Application {
     @Override
+
     public void start(Stage primaryStage) {
         try {
             // Load the Splash Screen
@@ -34,8 +60,7 @@ public class Main extends Application {
             // After 5 seconds, switch to the Login screen
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) {
+        launch(args);
     }
 }
