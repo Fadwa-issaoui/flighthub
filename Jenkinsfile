@@ -9,25 +9,25 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo '===== 📥 Récupération du code depuis Git ====='
+                echo '=====  Récupération du code depuis Git ====='
                 checkout scm
-                echo '✅ Code récupéré avec succès'
+                echo ' Code récupéré avec succès'
             }
         }
         
         stage('Vérification') {
             steps {
-                echo '===== 🔍 Vérification des fichiers ====='
+                echo '=====  Vérification des fichiers ====='
                 sh 'ls -la'
                 sh 'pwd'
-                echo '===== 📄 Affichage du pom.xml ====='
+                echo '=====  Affichage du pom.xml ====='
                 sh 'cat pom.xml | head -30'
             }
         }
         
         stage('Build') {
             steps {
-                echo '===== 🔨 Compilation avec Maven ====='
+                echo '=====  Compilation avec Maven ====='
                 sh 'mvn --version'
                 sh 'mvn clean compile'
             }
@@ -35,14 +35,14 @@ pipeline {
         
         stage('Test') {
             steps {
-                echo '===== 🧪 Exécution des tests ====='
+                echo '=====  Exécution des tests ====='
                 sh 'mvn test || true'
             }
         }
         
         stage('Package') {
             steps {
-                echo '===== 📦 Création du package ====='
+                echo '=====  Création du package ====='
                 sh 'mvn package -DskipTests'
             }
         }
@@ -50,17 +50,17 @@ pipeline {
     
     post {
         success {
-            echo '✅ ========================================='
-            echo '✅ BUILD RÉUSSI !'
-            echo '✅ ========================================='
+            echo ' ========================================='
+            echo ' BUILD RÉUSSI !'
+            echo ' ========================================='
         }
         failure {
-            echo '❌ ========================================='
-            echo '❌ BUILD ÉCHOUÉ !'
-            echo '❌ ========================================='
+            echo ' ========================================='
+            echo ' BUILD ÉCHOUÉ !'
+            echo ' ========================================='
         }
         always {
-            echo '📊 Build terminé'
+            echo ' Build terminé'
         }
     }
 }
