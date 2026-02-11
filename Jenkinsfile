@@ -9,58 +9,50 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo '=====  Récupération du code depuis Git ====='
+                echo '===== Récupération du code depuis GitHub ====='
                 checkout scm
                 echo ' Code récupéré avec succès'
             }
         }
         
-        stage('Vérification') {
-            steps {
-                echo '=====  Vérification des fichiers ====='
-                sh 'ls -la'
-                sh 'pwd'
-                echo '=====  Affichage du pom.xml ====='
-                sh 'cat pom.xml | head -30'
-            }
-        }
-        
         stage('Build') {
             steps {
-                echo '=====  Compilation avec Maven ====='
-                sh 'mvn --version'
+                echo '===== Compilation du code avec Maven ====='
                 sh 'mvn clean compile'
+                echo ' Compilation terminée'
             }
         }
         
         stage('Test') {
             steps {
-                echo '=====  Exécution des tests ====='
-                sh 'mvn test || true'
+                echo '===== Exécution des tests ====='
+                sh 'mvn test'
             }
         }
         
         stage('Package') {
             steps {
-                echo '=====  Création du package ====='
+                echo '===== Création du fichier JAR ====='
                 sh 'mvn package -DskipTests'
+                echo ' Package créé dans target/'
             }
         }
     }
     
     post {
         success {
-            echo ' ========================================='
+            echo '========================================='
             echo ' BUILD RÉUSSI !'
-            echo ' ========================================='
+            echo 'Fichier JAR disponible dans target/'
+            echo '========================================='
         }
         failure {
-            echo ' ========================================='
+            echo '========================================='
             echo ' BUILD ÉCHOUÉ !'
-            echo ' ========================================='
+            echo '========================================='
         }
         always {
-            echo ' Build terminé'
+            echo 'Build terminé'
         }
     }
 }
